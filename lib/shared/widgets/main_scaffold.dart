@@ -8,81 +8,69 @@ class MainScaffold extends StatelessWidget {
 
   const MainScaffold({super.key, required this.child});
 
-  static const _navItems = [
-    _NavItemData(
-      path: '/dashboard',
-      icon: Icons.dashboard_outlined,
-      activeIcon: Icons.dashboard,
-      label: 'Dashboard',
-    ),
-    _NavItemData(
-      path: '/analytics',
-      icon: Icons.analytics_outlined,
-      activeIcon: Icons.analytics,
-      label: 'Analytics',
-    ),
-    _NavItemData(
-      path: '/upload',
-      icon: Icons.add_photo_alternate_outlined,
-      activeIcon: Icons.add_photo_alternate,
-      label: 'Upload',
-    ),
-    _NavItemData(
-      path: '/settings',
-      icon: Icons.settings_outlined,
-      activeIcon: Icons.settings,
-      label: 'Settings',
-    ),
+  // PC 사이드바: 7개 메뉴
+  static const _sidebarItems = [
+    _NavItemData(path: '/', icon: Icons.home_outlined, activeIcon: Icons.home, label: 'Home'),
+    _NavItemData(path: '/challenges', icon: Icons.emoji_events_outlined, activeIcon: Icons.emoji_events, label: 'Challenges'),
+    _NavItemData(path: '/analytics', icon: Icons.analytics_outlined, activeIcon: Icons.analytics, label: 'Analytics'),
+    _NavItemData(path: '/upload', icon: Icons.add_photo_alternate_outlined, activeIcon: Icons.add_photo_alternate, label: 'Upload'),
+    _NavItemData(path: '/notices', icon: Icons.notifications_outlined, activeIcon: Icons.notifications, label: 'Notices', hasBadge: true),
+    _NavItemData(path: '/feedback', icon: Icons.chat_bubble_outline, activeIcon: Icons.chat_bubble, label: 'Feedback'),
+    _NavItemData(path: '/more', icon: Icons.more_horiz, activeIcon: Icons.more_horiz, label: 'More'),
   ];
 
-  int _getCurrentIndex(BuildContext context) {
+  // 모바일 하단 네비: 5개 메뉴
+  static const _mobileNavItems = [
+    _NavItemData(path: '/', icon: Icons.home_outlined, activeIcon: Icons.home, label: 'Home'),
+    _NavItemData(path: '/challenges', icon: Icons.emoji_events_outlined, activeIcon: Icons.emoji_events, label: 'Challenges'),
+    _NavItemData(path: '/analytics', icon: Icons.analytics_outlined, activeIcon: Icons.analytics, label: 'Analytics'),
+    _NavItemData(path: '/upload', icon: Icons.add_photo_alternate_outlined, activeIcon: Icons.add_photo_alternate, label: 'Upload'),
+    _NavItemData(path: '/more', icon: Icons.more_horiz, activeIcon: Icons.more_horiz, label: 'More'),
+  ];
+
+  int _getCurrentIndex(BuildContext context, List<_NavItemData> items) {
     final location = GoRouterState.of(context).uri.path;
-    for (int i = 0; i < _navItems.length; i++) {
-      if (location == _navItems[i].path) return i;
+    for (int i = 0; i < items.length; i++) {
+      if (location == items[i].path) return i;
     }
     return 0;
   }
 
-  void _onTap(BuildContext context, int index) {
-    context.go(_navItems[index].path);
+  void _onTap(BuildContext context, String path) {
+    context.go(path);
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = _getCurrentIndex(context);
-
     return ResponsiveLayout(
-      // 모바일: 하단 네비게이션
       mobile: _MobileScaffold(
         child: child,
-        currentIndex: currentIndex,
-        navItems: _navItems,
-        onTap: (index) => _onTap(context, index),
+        currentIndex: _getCurrentIndex(context, _mobileNavItems),
+        navItems: _mobileNavItems,
+        onTap: (path) => _onTap(context, path),
       ),
-      // 태블릿: 사이드 Rail (아이콘만)
       tablet: _TabletScaffold(
         child: child,
-        currentIndex: currentIndex,
-        navItems: _navItems,
-        onTap: (index) => _onTap(context, index),
+        currentIndex: _getCurrentIndex(context, _sidebarItems),
+        navItems: _sidebarItems,
+        onTap: (path) => _onTap(context, path),
       ),
-      // 데스크톱: 넓은 사이드바
       desktop: _DesktopScaffold(
         child: child,
-        currentIndex: currentIndex,
-        navItems: _navItems,
-        onTap: (index) => _onTap(context, index),
+        currentIndex: _getCurrentIndex(context, _sidebarItems),
+        navItems: _sidebarItems,
+        onTap: (path) => _onTap(context, path),
       ),
     );
   }
 }
 
-/// 모바일 레이아웃 - 하단 네비게이션
+/// 모바일 레이아웃 - 하단 네비게이션 (5개)
 class _MobileScaffold extends StatelessWidget {
   final Widget child;
   final int currentIndex;
   final List<_NavItemData> navItems;
-  final ValueChanged<int> onTap;
+  final ValueChanged<String> onTap;
 
   const _MobileScaffold({
     required this.child,
@@ -107,16 +95,17 @@ class _MobileScaffold extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(
-                navItems.length,
-                (index) => _BottomNavItem(
-                  icon: navItems[index].icon,
-                  activeIcon: navItems[index].activeIcon,
-                  label: navItems[index].label,
+              children: navItems.asMap().entries.map((entry) {
+                final index = entry.key;
+                final item = entry.value;
+                return _BottomNavItem(
+                  icon: item.icon,
+                  activeIcon: item.activeIcon,
+                  label: item.label,
                   isActive: currentIndex == index,
-                  onTap: () => onTap(index),
-                ),
-              ),
+                  onTap: () => onTap(item.path),
+                );
+              }).toList(),
             ),
           ),
         ),
@@ -130,7 +119,7 @@ class _TabletScaffold extends StatelessWidget {
   final Widget child;
   final int currentIndex;
   final List<_NavItemData> navItems;
-  final ValueChanged<int> onTap;
+  final ValueChanged<String> onTap;
 
   const _TabletScaffold({
     required this.child,
@@ -144,7 +133,6 @@ class _TabletScaffold extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          // NavigationRail
           Container(
             width: 72,
             decoration: const BoxDecoration(
@@ -157,7 +145,6 @@ class _TabletScaffold extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 16),
-                  // 로고
                   Container(
                     width: 40,
                     height: 40,
@@ -171,22 +158,22 @@ class _TabletScaffold extends StatelessWidget {
                       size: 24,
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  // 네비게이션 아이템들
-                  ...List.generate(
-                    navItems.length,
-                    (index) => _RailNavItem(
-                      icon: navItems[index].icon,
-                      activeIcon: navItems[index].activeIcon,
+                  const SizedBox(height: 24),
+                  ...navItems.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final item = entry.value;
+                    return _RailNavItem(
+                      icon: item.icon,
+                      activeIcon: item.activeIcon,
                       isActive: currentIndex == index,
-                      onTap: () => onTap(index),
-                    ),
-                  ),
+                      hasBadge: item.hasBadge,
+                      onTap: () => onTap(item.path),
+                    );
+                  }),
                 ],
               ),
             ),
           ),
-          // 컨텐츠
           Expanded(child: child),
         ],
       ),
@@ -199,7 +186,7 @@ class _DesktopScaffold extends StatelessWidget {
   final Widget child;
   final int currentIndex;
   final List<_NavItemData> navItems;
-  final ValueChanged<int> onTap;
+  final ValueChanged<String> onTap;
 
   const _DesktopScaffold({
     required this.child,
@@ -213,7 +200,6 @@ class _DesktopScaffold extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          // 사이드바
           Container(
             width: 260,
             decoration: const BoxDecoration(
@@ -259,51 +245,104 @@ class _DesktopScaffold extends StatelessWidget {
                   const Divider(color: AppColors.border, height: 1),
                   const SizedBox(height: 16),
                   // 네비게이션 아이템들
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Column(
-                      children: List.generate(
-                        navItems.length,
-                        (index) => _SidebarNavItem(
-                          icon: navItems[index].icon,
-                          activeIcon: navItems[index].activeIcon,
-                          label: navItems[index].label,
-                          isActive: currentIndex == index,
-                          onTap: () => onTap(index),
-                        ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Column(
+                        children: navItems.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final item = entry.value;
+                          return _SidebarNavItem(
+                            icon: item.icon,
+                            activeIcon: item.activeIcon,
+                            label: item.label,
+                            isActive: currentIndex == index,
+                            hasBadge: item.hasBadge,
+                            onTap: () => onTap(item.path),
+                          );
+                        }).toList(),
                       ),
                     ),
                   ),
-                  const Spacer(),
+                  // 하단 링크들
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      children: [
+                        const Divider(color: AppColors.border, height: 1),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            _buildFooterLink('Terms'),
+                            const Text(' · ', style: TextStyle(color: AppColors.textMuted)),
+                            _buildFooterLink('Privacy'),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                      ],
+                    ),
+                  ),
                   // 하단 유저 정보 영역
                   const Divider(color: AppColors.border, height: 1),
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Row(
                       children: [
-                        CircleAvatar(
-                          radius: 18,
-                          backgroundColor: AppColors.profit.withValues(alpha: 0.2),
-                          child: const Icon(
-                            Icons.person,
-                            color: AppColors.profit,
-                            size: 20,
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [AppColors.profit, AppColors.profit.withValues(alpha: 0.6)],
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'G',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.background,
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 12),
-                        const Expanded(
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Guest User',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary,
-                                ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Guest',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.textPrimary,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.profit.withValues(alpha: 0.15),
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: const Text(
+                                      'Lv.1',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.profit,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
+                              const SizedBox(height: 2),
+                              const Text(
                                 'Free Plan',
                                 style: TextStyle(
                                   fontSize: 12,
@@ -313,6 +352,13 @@ class _DesktopScaffold extends StatelessWidget {
                             ],
                           ),
                         ),
+                        Row(
+                          children: [
+                            _buildIconButton(Icons.card_giftcard, AppColors.promotion),
+                            const SizedBox(width: 4),
+                            _buildIconButton(Icons.logout, AppColors.loss),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -320,27 +366,52 @@ class _DesktopScaffold extends StatelessWidget {
               ),
             ),
           ),
-          // 컨텐츠
           Expanded(child: child),
         ],
       ),
     );
   }
+
+  Widget _buildFooterLink(String text) {
+    return GestureDetector(
+      onTap: () {},
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 12,
+          color: AppColors.textMuted,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIconButton(IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Icon(icon, size: 16, color: color),
+    );
+  }
 }
 
-// === 네비게이션 아이템 위젯들 ===
+// === 네비게이션 아이템 데이터 ===
 
 class _NavItemData {
   final String path;
   final IconData icon;
   final IconData activeIcon;
   final String label;
+  final bool hasBadge;
 
   const _NavItemData({
     required this.path,
     required this.icon,
     required this.activeIcon,
     required this.label,
+    this.hasBadge = false,
   });
 }
 
@@ -366,7 +437,7 @@ class _BottomNavItem extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -379,7 +450,7 @@ class _BottomNavItem extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
                 color: isActive ? AppColors.profit : AppColors.textMuted,
               ),
@@ -396,12 +467,14 @@ class _RailNavItem extends StatelessWidget {
   final IconData icon;
   final IconData activeIcon;
   final bool isActive;
+  final bool hasBadge;
   final VoidCallback onTap;
 
   const _RailNavItem({
     required this.icon,
     required this.activeIcon,
     required this.isActive,
+    this.hasBadge = false,
     required this.onTap,
   });
 
@@ -412,18 +485,37 @@ class _RailNavItem extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        child: Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            color: isActive ? AppColors.profit.withValues(alpha: 0.15) : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(
-            isActive ? activeIcon : icon,
-            color: isActive ? AppColors.profit : AppColors.textMuted,
-            size: 24,
-          ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: isActive ? AppColors.profit.withValues(alpha: 0.15) : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                isActive ? activeIcon : icon,
+                color: isActive ? AppColors.profit : AppColors.textMuted,
+                size: 24,
+              ),
+            ),
+            if (hasBadge)
+              Positioned(
+                top: 6,
+                right: 6,
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: AppColors.loss,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.card, width: 1.5),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
@@ -436,6 +528,7 @@ class _SidebarNavItem extends StatelessWidget {
   final IconData activeIcon;
   final String label;
   final bool isActive;
+  final bool hasBadge;
   final VoidCallback onTap;
 
   const _SidebarNavItem({
@@ -443,6 +536,7 @@ class _SidebarNavItem extends StatelessWidget {
     required this.activeIcon,
     required this.label,
     required this.isActive,
+    this.hasBadge = false,
     required this.onTap,
   });
 
@@ -463,18 +557,39 @@ class _SidebarNavItem extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(
-                  isActive ? activeIcon : icon,
-                  color: isActive ? AppColors.profit : AppColors.textMuted,
-                  size: 22,
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Icon(
+                      isActive ? activeIcon : icon,
+                      color: isActive ? AppColors.profit : AppColors.textMuted,
+                      size: 22,
+                    ),
+                    if (hasBadge)
+                      Positioned(
+                        top: -2,
+                        right: -2,
+                        child: Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: AppColors.loss,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: isActive ? AppColors.profit.withValues(alpha: 0.15) : AppColors.card, width: 1.5),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
                 const SizedBox(width: 14),
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
-                    color: isActive ? AppColors.profit : AppColors.textSecondary,
+                Expanded(
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
+                      color: isActive ? AppColors.profit : AppColors.textSecondary,
+                    ),
                   ),
                 ),
               ],
