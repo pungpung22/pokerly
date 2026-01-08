@@ -70,19 +70,58 @@ export interface CreateSessionDto {
 }
 
 // Challenge types
+export type ChallengeType = 'sessions' | 'profit' | 'hours' | 'streak' | 'venue';
+export type ChallengeStatus = 'active' | 'completed' | 'failed' | 'expired';
+
+export const challengeTypeLabels: Record<ChallengeType, string> = {
+  sessions: '세션 수',
+  profit: '수익',
+  hours: '플레이 시간',
+  streak: '연속 기록',
+  venue: '장소',
+};
+
+export const challengeStatusLabels: Record<ChallengeStatus, string> = {
+  active: '진행 중',
+  completed: '완료',
+  failed: '실패',
+  expired: '만료',
+};
+
 export interface Challenge {
   id: string;
   userId: string;
   title: string;
   description: string;
+  type: ChallengeType;
   targetValue: number;
   currentValue: number;
-  reward: number;
+  rewardPoints: number;
   startDate: string;
   endDate: string;
-  isCompleted: boolean;
+  status: ChallengeStatus;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CreateChallengeDto {
+  title: string;
+  description: string;
+  type: ChallengeType;
+  targetValue: number;
+  rewardPoints: number;
+  startDate: string;
+  endDate: string;
+}
+
+export interface ChallengeStats {
+  total: number;
+  active: number;
+  completed: number;
+  failed: number;
+  expired: number;
+  completionRate: number;
+  totalRewardsEarned: number;
 }
 
 // Trophy types

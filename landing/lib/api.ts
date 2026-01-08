@@ -4,6 +4,8 @@ import type {
   Session,
   CreateSessionDto,
   Challenge,
+  CreateChallengeDto,
+  ChallengeStats,
   Trophy,
   Notice,
   Feedback,
@@ -120,7 +122,40 @@ export const sessionsApi = {
 // Challenges API
 export const challengesApi = {
   getAll: () => fetchWithAuth<Challenge[]>('/challenges'),
+
   getActive: () => fetchWithAuth<Challenge[]>('/challenges/active'),
+
+  getById: (id: string) => fetchWithAuth<Challenge>(`/challenges/${id}`),
+
+  getStats: () => fetchWithAuth<ChallengeStats>('/challenges/stats'),
+
+  create: (data: CreateChallengeDto) =>
+    fetchWithAuth<Challenge>('/challenges', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  update: (id: string, data: Partial<CreateChallengeDto>) =>
+    fetchWithAuth<Challenge>(`/challenges/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+
+  updateProgress: (id: string, increment: number) =>
+    fetchWithAuth<Challenge>(`/challenges/${id}/progress`, {
+      method: 'PATCH',
+      body: JSON.stringify({ increment }),
+    }),
+
+  delete: (id: string) =>
+    fetchWithAuth<void>(`/challenges/${id}`, {
+      method: 'DELETE',
+    }),
+
+  checkExpired: () =>
+    fetchWithAuth<number>('/challenges/check-expired', {
+      method: 'POST',
+    }),
 };
 
 // Trophies API
