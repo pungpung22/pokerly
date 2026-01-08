@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: pokerly-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pokerly
+    ports:
+      - "5434:5432"
+    volumes:
+      - pokerly_postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: pokerly-redis
+    ports:
+      - "6381:6379"
+    volumes:
+      - pokerly_redis_data:/data
+
+volumes:
+  pokerly_postgres_data:
+  pokerly_redis_data:
