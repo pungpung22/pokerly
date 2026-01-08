@@ -53,6 +53,7 @@ app.*.map.json
 server/.env
 server/dist/
 server/node_modules/
+server/uploads/
 
 # Landing
 landing/node_modules/
