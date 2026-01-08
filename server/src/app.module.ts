@@ -12,6 +12,7 @@ import { TrophiesModule } from './trophies/trophies.module';
 import { NoticesModule } from './notices/notices.module';
 import { FeedbacksModule } from './feedbacks/feedbacks.module';
 import { RewardsModule } from './rewards/rewards.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RewardsModule } from './rewards/rewards.module';
     NoticesModule,
     FeedbacksModule,
     RewardsModule,
+    UploadsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
