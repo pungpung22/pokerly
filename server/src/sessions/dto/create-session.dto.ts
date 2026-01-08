@@ -1,4 +1,5 @@
-import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString, IsEnum } from 'class-validator';
+import { GameType } from '../../entities/session.entity';
 
 export class CreateSessionDto {
   @IsDateString()
@@ -8,9 +9,9 @@ export class CreateSessionDto {
   @IsNotEmpty()
   venue: string;
 
-  @IsString()
-  @IsNotEmpty()
-  gameType: string;
+  @IsEnum(GameType)
+  @IsOptional()
+  gameType?: GameType;
 
   @IsString()
   @IsNotEmpty()
@@ -28,4 +29,8 @@ export class CreateSessionDto {
   @IsString()
   @IsOptional()
   notes?: string;
+
+  @IsString()
+  @IsOptional()
+  screenshotUrl?: string;
 }
