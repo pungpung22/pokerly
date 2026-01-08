@@ -190,3 +190,69 @@ export const feedbackApi = {
     }),
   getMyFeedbacks: () => fetchWithAuth<Feedback[]>('/feedbacks/me'),
 };
+
+// Uploads API
+interface ScreenshotResult {
+  filename: string;
+  originalName: string;
+  path: string;
+  size: number;
+  status: 'success' | 'pending_ocr';
+  message: string;
+}
+
+export const uploadsApi = {
+  uploadScreenshot: async (file: File): Promise<ScreenshotResult> => {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('Not authenticated');
+    }
+    const token = await user.getIdToken();
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE_URL}/uploads/screenshot`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: 'Upload failed' }));
+      throw new Error(error.message || `HTTP ${response.status}`);
+    }
+
+    return response.json();
+  },
+
+  uploadScreenshots: async (files: File[]): Promise<{ results: ScreenshotResult[]; totalProcessed: number }> => {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('Not authenticated');
+    }
+    const token = await user.getIdToken();
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('files', file);
+    });
+
+    const response = await fetch(`${API_BASE_URL}/uploads/screenshots`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: 'Upload failed' }));
+      throw new Error(error.message || `HTTP ${response.status}`);
+    }
+
+    return response.json();
+  },
+};
