@@ -67,3 +67,6 @@ lib/firebase_options.dart
 
 # Markdown files
 *.md
+
+# Claude Code
+.claude/
