@@ -5,9 +5,13 @@ import { UploadsService } from './uploads.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { AuthModule } from '../auth/auth.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
+    AuthModule,
+    UsersModule,
     MulterModule.register({
       storage: diskStorage({
         destination: './uploads',
