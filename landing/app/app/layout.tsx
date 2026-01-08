@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../contexts/AuthContext';
@@ -16,10 +16,14 @@ import {
   Menu,
   X,
   Trophy,
-  Star
+  Star,
+  Bell,
+  MoreHorizontal,
+  MessageSquare,
+  Megaphone,
 } from 'lucide-react';
-import { useState } from 'react';
 
+// Full navigation items for sidebar
 const navItems = [
   { href: '/app', icon: LayoutDashboard, label: '대시보드' },
   { href: '/app/sessions', icon: History, label: '세션 기록' },
@@ -27,7 +31,18 @@ const navItems = [
   { href: '/app/level', icon: Star, label: '레벨' },
   { href: '/app/analytics', icon: TrendingUp, label: '분석' },
   { href: '/app/upload', icon: Upload, label: '업로드' },
+  { href: '/app/notices', icon: Megaphone, label: '공지사항' },
+  { href: '/app/feedback', icon: MessageSquare, label: '피드백' },
   { href: '/app/settings', icon: Settings, label: '설정' },
+];
+
+// Bottom tab items (5 main tabs)
+const bottomTabItems = [
+  { href: '/app', icon: LayoutDashboard, label: '홈' },
+  { href: '/app/challenges', icon: Trophy, label: '챌린지' },
+  { href: '/app/upload', icon: Upload, label: '업로드' },
+  { href: '/app/analytics', icon: TrendingUp, label: '분석' },
+  { href: '/app/more', icon: MoreHorizontal, label: '더보기' },
 ];
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -35,6 +50,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, loading, signOut } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -42,10 +58,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     }
   }, [user, loading, router]);
 
+  // Close more menu when pathname changes
+  useEffect(() => {
+    setShowMoreMenu(false);
+  }, [pathname]);
+
   const handleSignOut = async () => {
     await signOut();
     router.push('/');
   };
+
+  // Check if current page is in "more" menu
+  const isMoreActive = ['/app/sessions', '/app/level', '/app/notices', '/app/feedback', '/app/settings'].some(
+    (path) => pathname === path || pathname.startsWith(path + '/')
+  );
 
   if (loading) {
     return (
@@ -205,12 +231,40 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <BarChart3 style={{ width: '28px', height: '28px', color: '#6366F1' }} />
           <span style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>Pokerly</span>
         </Link>
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}
-        >
-          {mobileMenuOpen ? <X style={{ width: '24px', height: '24px' }} /> : <Menu style={{ width: '24px', height: '24px' }} />}
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {/* Notification Icon */}
+          <Link
+            href="/app/notices"
+            style={{
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              background: pathname === '/app/notices' ? 'rgba(99, 102, 241, 0.2)' : 'transparent',
+              color: pathname === '/app/notices' ? '#6366F1' : '#71717A',
+            }}
+          >
+            <Bell style={{ width: '22px', height: '22px' }} />
+          </Link>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            style={{
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'transparent',
+              border: 'none',
+              color: 'white',
+              cursor: 'pointer',
+            }}
+          >
+            {mobileMenuOpen ? <X style={{ width: '24px', height: '24px' }} /> : <Menu style={{ width: '24px', height: '24px' }} />}
+          </button>
+        </div>
       </header>
 
       {/* Mobile Menu Overlay */}
@@ -289,6 +343,141 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
+      {/* Mobile Bottom Tab Navigation */}
+      <nav className="mobile-bottom-nav">
+        {bottomTabItems.map((item) => {
+          const isActive = item.href === '/app/more'
+            ? isMoreActive || showMoreMenu
+            : pathname === item.href || (item.href !== '/app' && pathname.startsWith(item.href));
+
+          if (item.href === '/app/more') {
+            return (
+              <button
+                key={item.href}
+                onClick={() => setShowMoreMenu(!showMoreMenu)}
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '4px',
+                  padding: '8px 0',
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: isActive ? '#6366F1' : '#71717A',
+                }}
+              >
+                <item.icon style={{ width: '22px', height: '22px' }} />
+                <span style={{ fontSize: '11px', fontWeight: isActive ? 500 : 400 }}>{item.label}</span>
+              </button>
+            );
+          }
+
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '4px',
+                padding: '8px 0',
+                textDecoration: 'none',
+                color: isActive ? '#6366F1' : '#71717A',
+              }}
+            >
+              <item.icon style={{ width: '22px', height: '22px' }} />
+              <span style={{ fontSize: '11px', fontWeight: isActive ? 500 : 400 }}>{item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* More Menu Popup */}
+      {showMoreMenu && (
+        <>
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 55,
+            }}
+            onClick={() => setShowMoreMenu(false)}
+          />
+          <div
+            className="more-menu-popup"
+            style={{
+              position: 'fixed',
+              bottom: '70px',
+              left: '16px',
+              right: '16px',
+              background: '#1C1C1E',
+              borderRadius: '16px',
+              padding: '8px',
+              zIndex: 60,
+              boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            {[
+              { href: '/app/sessions', icon: History, label: '세션 기록' },
+              { href: '/app/level', icon: Star, label: '레벨' },
+              { href: '/app/notices', icon: Megaphone, label: '공지사항' },
+              { href: '/app/feedback', icon: MessageSquare, label: '피드백' },
+              { href: '/app/settings', icon: Settings, label: '설정' },
+            ].map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setShowMoreMenu(false)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '14px',
+                    padding: '14px 16px',
+                    borderRadius: '12px',
+                    textDecoration: 'none',
+                    color: isActive ? 'white' : '#A1A1AA',
+                    background: isActive ? 'rgba(99, 102, 241, 0.2)' : 'transparent',
+                  }}
+                >
+                  <item.icon style={{ width: '22px', height: '22px', color: isActive ? '#6366F1' : '#71717A' }} />
+                  <span style={{ fontSize: '15px', fontWeight: isActive ? 500 : 400 }}>{item.label}</span>
+                </Link>
+              );
+            })}
+            <div style={{ borderTop: '1px solid #27272A', margin: '8px 0' }} />
+            <button
+              onClick={() => {
+                setShowMoreMenu(false);
+                handleSignOut();
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px',
+                width: '100%',
+                padding: '14px 16px',
+                borderRadius: '12px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                color: '#EF4444',
+              }}
+            >
+              <LogOut style={{ width: '22px', height: '22px' }} />
+              <span style={{ fontSize: '15px' }}>로그아웃</span>
+            </button>
+          </div>
+        </>
+      )}
+
       <style jsx global>{`
         @media (min-width: 768px) {
           .desktop-sidebar {
@@ -297,14 +486,35 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           .mobile-header {
             display: none !important;
           }
+          .mobile-bottom-nav {
+            display: none !important;
+          }
+          .more-menu-popup {
+            display: none !important;
+          }
           .app-main {
             margin-left: 260px;
             padding-top: 0;
+            padding-bottom: 0;
           }
         }
         @media (max-width: 767px) {
           .app-main {
             padding-top: 60px;
+            padding-bottom: 70px;
+          }
+          .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: #141416;
+            border-top: 1px solid #27272A;
+            display: flex;
+            align-items: center;
+            z-index: 50;
+            padding-bottom: env(safe-area-inset-bottom, 0);
           }
         }
       `}</style>
