@@ -17,11 +17,14 @@ import {
   Sparkles,
   Sun,
   CalendarDays,
-  Hash
+  Hash,
+  Trophy,
+  Check
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { sessionsApi } from '@/lib/api';
-import type { Session, DashboardStats } from '@/lib/types';
+import { sessionsApi, challengesApi } from '@/lib/api';
+import type { Session, DashboardStats, Challenge, ChallengeType } from '@/lib/types';
+import { challengeTypeLabels } from '@/lib/types';
 
 const emptyStats: DashboardStats = {
   totalProfit: 0,
@@ -55,6 +58,7 @@ export default function DashboardPage() {
   const { user } = useAuth();
   const [stats, setStats] = useState<DashboardStats>(emptyStats);
   const [recentSessions, setRecentSessions] = useState<Session[]>([]);
+  const [activeChallenges, setActiveChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showWelcomeBanner, setShowWelcomeBanner] = useState(true);
@@ -72,12 +76,14 @@ export default function DashboardPage() {
       setLoading(true);
       setError(null);
       try {
-        const [statsData, sessionsData] = await Promise.all([
+        const [statsData, sessionsData, challengesData] = await Promise.all([
           sessionsApi.getStats(),
           sessionsApi.getAll(5),
+          challengesApi.getActive().catch(() => []),
         ]);
         setStats(statsData);
         setRecentSessions(sessionsData);
+        setActiveChallenges(challengesData);
       } catch (err) {
         console.error('Failed to fetch data:', err);
         setError(err instanceof Error ? err.message : '데이터를 불러오는데 실패했습니다');
@@ -298,6 +304,75 @@ export default function DashboardPage() {
           <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{(stats.totalHands || 0).toLocaleString()}</p>
         </div>
       </div>
+
+      {/* Active Challenges Widget */}
+      {activeChallenges.length > 0 && (
+        <div className="card" style={{ padding: '0', overflow: 'hidden', marginBottom: '24px' }}>
+          <div style={{ padding: '20px 24px', borderBottom: '1px solid #27272A', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <Trophy style={{ width: '20px', height: '20px', color: '#6366F1' }} />
+              <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>진행 중인 챌린지</h2>
+            </div>
+            <Link href="/app/challenges" style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#6366F1', textDecoration: 'none', fontSize: '14px' }}>
+              전체 보기
+              <ArrowUpRight style={{ width: '16px', height: '16px' }} />
+            </Link>
+          </div>
+          <div style={{ padding: '16px 24px' }}>
+            {activeChallenges.slice(0, 3).map((challenge, index) => {
+              const progress = Math.min((challenge.currentValue / challenge.targetValue) * 100, 100);
+              const progressColor = progress >= 100 ? '#10B981' : progress >= 50 ? '#6366F1' : '#F59E0B';
+              const daysRemaining = Math.max(0, Math.ceil((new Date(challenge.endDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
+
+              return (
+                <div
+                  key={challenge.id}
+                  style={{
+                    padding: '16px 0',
+                    borderBottom: index < Math.min(activeChallenges.length, 3) - 1 ? '1px solid #27272A' : 'none',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ fontWeight: 500, color: 'white' }}>{challenge.title}</span>
+                      <span
+                        style={{
+                          padding: '2px 6px',
+                          background: 'rgba(99, 102, 241, 0.2)',
+                          borderRadius: '4px',
+                          fontSize: '11px',
+                          color: '#6366F1',
+                        }}
+                      >
+                        {challengeTypeLabels[challenge.type]}
+                      </span>
+                    </div>
+                    <span style={{ fontSize: '13px', color: daysRemaining <= 3 ? '#EF4444' : '#71717A' }}>
+                      {daysRemaining}일 남음
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div style={{ flex: 1, height: '6px', background: '#27272A', borderRadius: '3px', overflow: 'hidden' }}>
+                      <div
+                        style={{
+                          height: '100%',
+                          width: `${progress}%`,
+                          background: progressColor,
+                          borderRadius: '3px',
+                          transition: 'width 0.3s ease',
+                        }}
+                      />
+                    </div>
+                    <span style={{ fontSize: '13px', color: progressColor, fontWeight: 500, minWidth: '40px', textAlign: 'right' }}>
+                      {progress.toFixed(0)}%
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Recent Sessions */}
       <div className="card" style={{ padding: '0', overflow: 'hidden' }}>

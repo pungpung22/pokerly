@@ -14,13 +14,15 @@ import {
   LogOut,
   Loader2,
   Menu,
-  X
+  X,
+  Trophy
 } from 'lucide-react';
 import { useState } from 'react';
 
 const navItems = [
   { href: '/app', icon: LayoutDashboard, label: '대시보드' },
   { href: '/app/sessions', icon: History, label: '세션 기록' },
+  { href: '/app/challenges', icon: Trophy, label: '챌린지' },
   { href: '/app/analytics', icon: TrendingUp, label: '분석' },
   { href: '/app/upload', icon: Upload, label: '업로드' },
   { href: '/app/settings', icon: Settings, label: '설정' },
