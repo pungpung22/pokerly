@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/dashboard/presentation/dashboard_screen.dart';
 import '../../features/analytics/presentation/analytics_screen.dart';
 import '../../features/upload/presentation/upload_screen.dart';
+import '../../features/upload/presentation/manual_entry_screen.dart';
 import '../../features/challenges/presentation/challenges_screen.dart';
 import '../../features/notices/presentation/notices_screen.dart';
 import '../../features/feedback/presentation/feedback_screen.dart';
@@ -17,6 +18,12 @@ class AppRouter {
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/',
     routes: [
+      // Manual entry route outside ShellRoute
+      GoRoute(
+        path: '/upload/manual',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const ManualEntryScreen(),
+      ),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) => MainScaffold(child: child),
