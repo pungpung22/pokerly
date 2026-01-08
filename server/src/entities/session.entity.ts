@@ -1,9 +1,30 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { User } from './user.entity';
+
+export enum GameType {
+  CASH = 'cash',
+  TOURNAMENT = 'tournament',
+}
 
 @Entity('sessions')
 export class Session {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ name: 'user_id' })
+  userId: string;
+
+  @ManyToOne(() => User, (user) => user.sessions)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column({ type: 'timestamp' })
   date: Date;
@@ -11,8 +32,8 @@ export class Session {
   @Column()
   venue: string;
 
-  @Column({ name: 'game_type' })
-  gameType: string;
+  @Column({ name: 'game_type', type: 'enum', enum: GameType, default: GameType.CASH })
+  gameType: GameType;
 
   @Column()
   stakes: string;
@@ -28,6 +49,9 @@ export class Session {
 
   @Column({ nullable: true })
   notes: string;
+
+  @Column({ name: 'screenshot_url', nullable: true })
+  screenshotUrl: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

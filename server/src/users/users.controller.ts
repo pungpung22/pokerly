@@ -1,0 +1,37 @@
+import {
+  Controller,
+  Get,
+  Patch,
+  Body,
+  UseGuards,
+  Post,
+} from '@nestjs/common';
+import { UsersService } from './users.service';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { FirebaseAuthGuard } from '../auth/guards/firebase-auth.guard';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { User } from '../entities/user.entity';
+
+@Controller('users')
+@UseGuards(FirebaseAuthGuard)
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get('me')
+  async getMe(@CurrentUser() user: User) {
+    return this.usersService.getProfile(user.id);
+  }
+
+  @Patch('me')
+  async updateMe(
+    @CurrentUser() user: User,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.usersService.update(user.id, updateUserDto);
+  }
+
+  @Post('me/claim-points')
+  async claimPoints(@CurrentUser() user: User) {
+    return this.usersService.claimPendingPoints(user.id);
+  }
+}
