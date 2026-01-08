@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/layout/responsive_layout.dart';
 
@@ -160,7 +161,7 @@ class _UploadScreenState extends State<UploadScreen> {
 
   Widget _buildManualEntryButton() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => context.push('/upload/manual'),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20),
