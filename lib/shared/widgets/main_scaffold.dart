@@ -114,7 +114,7 @@ class _MobileScaffold extends StatelessWidget {
   }
 }
 
-/// 태블릿 레이아웃 - NavigationRail (아이콘만)
+/// 태블릿 레이아웃 - 컴팩트 사이드바 (아이콘 + 레이블)
 class _TabletScaffold extends StatelessWidget {
   final Widget child;
   final int currentIndex;
@@ -134,7 +134,7 @@ class _TabletScaffold extends StatelessWidget {
       body: Row(
         children: [
           Container(
-            width: 72,
+            width: 200, // 태블릿에서도 텍스트 보이도록 넓힘
             decoration: const BoxDecoration(
               color: AppColors.card,
               border: Border(
@@ -143,33 +143,60 @@ class _TabletScaffold extends StatelessWidget {
             ),
             child: SafeArea(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 16),
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: AppColors.profit.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Icon(
-                      Icons.casino,
-                      color: AppColors.profit,
-                      size: 24,
+                  // 로고 + 타이틀
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: AppColors.profit.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            Icons.casino,
+                            color: AppColors.profit,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        const Text(
+                          'Pokerly',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  ...navItems.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final item = entry.value;
-                    return _RailNavItem(
-                      icon: item.icon,
-                      activeIcon: item.activeIcon,
-                      isActive: currentIndex == index,
-                      hasBadge: item.hasBadge,
-                      onTap: () => onTap(item.path),
-                    );
-                  }),
+                  const Divider(color: AppColors.border, height: 1),
+                  const SizedBox(height: 12),
+                  // 네비게이션 아이템들
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Column(
+                        children: navItems.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final item = entry.value;
+                          return _CompactSidebarNavItem(
+                            icon: item.icon,
+                            activeIcon: item.activeIcon,
+                            label: item.label,
+                            isActive: currentIndex == index,
+                            hasBadge: item.hasBadge,
+                            onTap: () => onTap(item.path),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -462,17 +489,19 @@ class _BottomNavItem extends StatelessWidget {
   }
 }
 
-/// 태블릿 Rail 네비게이션 아이템
-class _RailNavItem extends StatelessWidget {
+/// 태블릿 컴팩트 사이드바 네비게이션 아이템
+class _CompactSidebarNavItem extends StatelessWidget {
   final IconData icon;
   final IconData activeIcon;
+  final String label;
   final bool isActive;
   final bool hasBadge;
   final VoidCallback onTap;
 
-  const _RailNavItem({
+  const _CompactSidebarNavItem({
     required this.icon,
     required this.activeIcon,
+    required this.label,
     required this.isActive,
     this.hasBadge = false,
     required this.onTap,
@@ -481,41 +510,61 @@ class _RailNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: isActive ? AppColors.profit.withValues(alpha: 0.15) : Colors.transparent,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(
-                isActive ? activeIcon : icon,
-                color: isActive ? AppColors.profit : AppColors.textMuted,
-                size: 24,
-              ),
+      padding: const EdgeInsets.only(bottom: 2),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: isActive ? AppColors.profit.withValues(alpha: 0.15) : Colors.transparent,
+              borderRadius: BorderRadius.circular(8),
             ),
-            if (hasBadge)
-              Positioned(
-                top: 6,
-                right: 6,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: AppColors.loss,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.card, width: 1.5),
+            child: Row(
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Icon(
+                      isActive ? activeIcon : icon,
+                      color: isActive ? AppColors.profit : AppColors.textMuted,
+                      size: 20,
+                    ),
+                    if (hasBadge)
+                      Positioned(
+                        top: -2,
+                        right: -2,
+                        child: Container(
+                          width: 6,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            color: AppColors.loss,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: isActive ? AppColors.profit.withValues(alpha: 0.15) : AppColors.card,
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
+                      color: isActive ? AppColors.profit : AppColors.textSecondary,
+                    ),
                   ),
                 ),
-              ),
-          ],
+              ],
+            ),
+          ),
         ),
       ),
     );

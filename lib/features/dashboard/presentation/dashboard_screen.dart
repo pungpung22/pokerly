@@ -17,8 +17,7 @@ class DashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final padding = ResponsiveGrid.padding(context);
-    final isDesktop = Breakpoints.isDesktop(context);
-    final isTablet = Breakpoints.isTablet(context);
+    final screenType = Breakpoints.getScreenType(context);
     final statsAsync = ref.watch(sessionNotifierProvider);
 
     return SafeArea(
@@ -28,14 +27,19 @@ class DashboardScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!isDesktop && !isTablet) ...[
+              if (screenType == ScreenType.mobile) ...[
                 _buildHeader(),
                 const SizedBox(height: 24),
               ],
               statsAsync.when(
-                data: (stats) => isDesktop
-                    ? _buildDesktopLayout(context, ref, stats)
-                    : _buildMobileLayout(context, ref, stats),
+                data: (stats) {
+                  if (screenType == ScreenType.largeDesktop) {
+                    return _buildLargeDesktopLayout(context, ref, stats);
+                  } else if (screenType == ScreenType.desktop || screenType == ScreenType.tablet) {
+                    return _buildDesktopLayout(context, ref, stats);
+                  }
+                  return _buildMobileLayout(context, ref, stats);
+                },
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Center(child: Text('Error: $e')),
               ),
@@ -46,7 +50,103 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
+  /// Large Desktop: 3열 레이아웃
+  Widget _buildLargeDesktopLayout(BuildContext context, WidgetRef ref, SessionStats stats) {
+    final spacing = ResponsiveGrid.spacing(context);
+
+    return Column(
+      children: [
+        // 상단: Welcome + Challenge + Total Profit
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: WelcomeBanner(userName: 'Player', level: _calculateLevel(stats.totalSessions)),
+            ),
+            SizedBox(width: spacing),
+            Expanded(
+              flex: 2,
+              child: ChallengeStatusWidget(onViewAll: () => context.go('/challenges')),
+            ),
+            SizedBox(width: spacing),
+            Expanded(
+              flex: 1,
+              child: _buildTotalProfitCard(stats.totalProfit),
+            ),
+          ],
+        ),
+        SizedBox(height: spacing),
+        // 중단: Stats cards + Rewards
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 3,
+              child: Row(
+                children: [
+                  Expanded(child: _buildStatCard(
+                    title: 'Today',
+                    value: _formatProfit(stats.todayProfit),
+                    isProfit: stats.todayProfit >= 0,
+                    icon: Icons.today,
+                  )),
+                  SizedBox(width: spacing / 2),
+                  Expanded(child: _buildStatCard(
+                    title: 'This Week',
+                    value: _formatProfit(stats.weekProfit),
+                    isProfit: stats.weekProfit >= 0,
+                    icon: Icons.date_range,
+                  )),
+                  SizedBox(width: spacing / 2),
+                  Expanded(child: _buildStatCard(
+                    title: 'Sessions',
+                    value: stats.totalSessions.toString(),
+                    isProfit: true,
+                    icon: Icons.casino,
+                  )),
+                ],
+              ),
+            ),
+            SizedBox(width: spacing),
+            const Expanded(
+              flex: 2,
+              child: RewardSummary(),
+            ),
+          ],
+        ),
+        SizedBox(height: spacing),
+        // 하단: Chart 전체 폭 + Recent Sessions
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 3,
+              child: _buildMiniChart(ref, context),
+            ),
+            SizedBox(width: spacing),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  _buildRecentSessionsCard(stats.recentSessions),
+                  SizedBox(height: spacing),
+                  ActionButtons(
+                    onUpload: () => context.go('/upload'),
+                    onAnalytics: () => context.go('/analytics'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget _buildDesktopLayout(BuildContext context, WidgetRef ref, SessionStats stats) {
+    final spacing = ResponsiveGrid.spacing(context);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -55,13 +155,13 @@ class DashboardScreen extends ConsumerWidget {
           child: Column(
             children: [
               WelcomeBanner(userName: 'Player', level: _calculateLevel(stats.totalSessions)),
-              const SizedBox(height: 20),
+              SizedBox(height: spacing),
               ChallengeStatusWidget(onViewAll: () => context.go('/challenges')),
-              const SizedBox(height: 20),
+              SizedBox(height: spacing),
               _buildDesktopTopSection(stats),
-              const SizedBox(height: 20),
-              _buildMiniChart(ref),
-              const SizedBox(height: 20),
+              SizedBox(height: spacing),
+              _buildMiniChart(ref, context),
+              SizedBox(height: spacing),
               ActionButtons(
                 onUpload: () => context.go('/upload'),
                 onAnalytics: () => context.go('/analytics'),
@@ -69,13 +169,13 @@ class DashboardScreen extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(width: 24),
+        SizedBox(width: spacing),
         Expanded(
           flex: 2,
           child: Column(
             children: [
               const RewardSummary(),
-              const SizedBox(height: 20),
+              SizedBox(height: spacing),
               _buildRecentSessionsCard(stats.recentSessions),
             ],
           ),
@@ -103,7 +203,7 @@ class DashboardScreen extends ConsumerWidget {
           onAnalytics: () => context.go('/analytics'),
         ),
         const SizedBox(height: 24),
-        _buildMiniChart(ref),
+        _buildMiniChart(ref, context),
         const SizedBox(height: 24),
         _buildRecentSessionsHeader(),
         const SizedBox(height: 12),
@@ -289,11 +389,14 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildMiniChart(WidgetRef ref) {
+  Widget _buildMiniChart(WidgetRef ref, BuildContext context) {
     final weeklyAsync = ref.watch(weeklyDataProvider);
+    final cardPadding = ResponsiveGrid.cardPadding(context);
+    final chartHeight = ResponsiveChart.height(context);
+    final titleSize = ResponsiveText.titleSize(context);
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: cardPadding,
       decoration: BoxDecoration(color: AppColors.card, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.border)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -301,17 +404,17 @@ class DashboardScreen extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Weekly Overview', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+              Text('Weekly Overview', style: TextStyle(fontSize: titleSize, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(color: AppColors.background, borderRadius: BorderRadius.circular(6)),
-                child: const Text('Last 7 days', style: TextStyle(fontSize: 12, color: AppColors.textMuted)),
+                child: Text('Last 7 days', style: TextStyle(fontSize: ResponsiveText.captionSize(context), color: AppColors.textMuted)),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: ResponsiveGrid.spacing(context)),
           SizedBox(
-            height: 180,
+            height: chartHeight,
             child: weeklyAsync.when(
               data: (dailyProfits) => _buildChart(dailyProfits),
               loading: () => const Center(child: CircularProgressIndicator()),

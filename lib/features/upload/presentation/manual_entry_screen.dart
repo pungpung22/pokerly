@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/layout/responsive_layout.dart';
-import '../../../shared/models/session.dart';
 import '../../dashboard/providers/dashboard_provider.dart';
 
 class ManualEntryScreen extends ConsumerStatefulWidget {
@@ -344,19 +343,23 @@ class _ManualEntryScreenState extends ConsumerState<ManualEntryScreen> {
   Future<void> _submitSession() async {
     setState(() => _isLoading = true);
 
-    final session = Session(
-      id: '',
-      date: _selectedDate,
-      venue: _venue,
-      gameType: _gameType,
-      stakes: _stakes,
-      durationMinutes: _hours * 60 + _minutes,
-      buyIn: _buyIn,
-      cashOut: _cashOut,
-      notes: _notes.isEmpty ? null : _notes,
-    );
+    // Determine game type based on selection
+    final gameTypeValue = _gameType.toLowerCase().contains('tournament')
+        ? 'tournament'
+        : 'cash';
 
-    final success = await ref.read(sessionNotifierProvider.notifier).addSession(session);
+    final sessionData = {
+      'date': _selectedDate.toIso8601String(),
+      'venue': _venue,
+      'gameType': gameTypeValue,
+      'stakes': _stakes,
+      'durationMinutes': _hours * 60 + _minutes,
+      'buyIn': _buyIn,
+      'cashOut': _cashOut,
+      'notes': _notes.isEmpty ? null : _notes,
+    };
+
+    final success = await ref.read(sessionNotifierProvider.notifier).addSessionData(sessionData);
 
     setState(() => _isLoading = false);
 

@@ -16,7 +16,9 @@ class _UploadScreenState extends State<UploadScreen> {
   @override
   Widget build(BuildContext context) {
     final padding = ResponsiveGrid.padding(context);
-    final isDesktop = Breakpoints.isDesktop(context);
+    final spacing = ResponsiveGrid.spacing(context);
+    // 태블릿 이상에서 2열 레이아웃 사용
+    final useDesktopLayout = Breakpoints.isDesktopOrTablet(context);
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -25,12 +27,12 @@ class _UploadScreenState extends State<UploadScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(),
-              const SizedBox(height: 24),
-              if (isDesktop)
-                _buildDesktopLayout()
+              _buildHeader(context),
+              SizedBox(height: spacing),
+              if (useDesktopLayout)
+                _buildDesktopLayout(context)
               else
-                _buildMobileLayout(),
+                _buildMobileLayout(context),
             ],
           ),
         ),
@@ -38,7 +40,10 @@ class _UploadScreenState extends State<UploadScreen> {
     );
   }
 
-  Widget _buildDesktopLayout() {
+  Widget _buildDesktopLayout(BuildContext context) {
+    final spacing = ResponsiveGrid.spacing(context);
+    final cardPadding = ResponsiveGrid.cardPadding(context);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -47,20 +52,20 @@ class _UploadScreenState extends State<UploadScreen> {
           flex: 3,
           child: Column(
             children: [
-              _buildUploadZone(),
-              const SizedBox(height: 24),
+              _buildUploadZone(context),
+              SizedBox(height: spacing),
               _buildOrDivider(),
-              const SizedBox(height: 24),
-              _buildManualEntryButton(),
+              SizedBox(height: spacing),
+              _buildManualEntryButton(context),
             ],
           ),
         ),
-        const SizedBox(width: 24),
+        SizedBox(width: spacing),
         // 오른쪽: 최근 업로드
         Expanded(
           flex: 2,
           child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: cardPadding,
             decoration: BoxDecoration(
               color: AppColors.card,
               borderRadius: BorderRadius.circular(12),
@@ -69,9 +74,9 @@ class _UploadScreenState extends State<UploadScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildRecentUploadsHeader(),
-                const SizedBox(height: 16),
-                _buildRecentUploadsList(),
+                _buildRecentUploadsHeader(context),
+                SizedBox(height: spacing * 0.75),
+                _buildRecentUploadsList(context),
               ],
             ),
           ),
@@ -80,35 +85,41 @@ class _UploadScreenState extends State<UploadScreen> {
     );
   }
 
-  Widget _buildMobileLayout() {
+  Widget _buildMobileLayout(BuildContext context) {
+    final spacing = ResponsiveGrid.spacing(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildUploadZone(),
-        const SizedBox(height: 24),
+        _buildUploadZone(context),
+        SizedBox(height: spacing),
         _buildOrDivider(),
-        const SizedBox(height: 24),
-        _buildManualEntryButton(),
-        const SizedBox(height: 32),
-        _buildRecentUploadsHeader(),
-        const SizedBox(height: 16),
-        _buildRecentUploadsList(),
+        SizedBox(height: spacing),
+        _buildManualEntryButton(context),
+        SizedBox(height: spacing * 1.5),
+        _buildRecentUploadsHeader(context),
+        SizedBox(height: spacing * 0.75),
+        _buildRecentUploadsList(context),
       ],
     );
   }
 
-  Widget _buildHeader() {
-    return const Column(
+  Widget _buildHeader(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Upload Session', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
-        SizedBox(height: 4),
-        Text('Add your poker session results', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
+        Text('Upload Session', style: TextStyle(fontSize: ResponsiveText.headlineSize(context), fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+        const SizedBox(height: 4),
+        Text('Add your poker session results', style: TextStyle(fontSize: ResponsiveText.bodySize(context), color: AppColors.textSecondary)),
       ],
     );
   }
 
-  Widget _buildUploadZone() {
+  Widget _buildUploadZone(BuildContext context) {
+    // PC에서 업로드 존 패딩 증가
+    final zonePadding = ResponsiveValue.of<double>(context, mobile: 40, tablet: 50, desktop: 60, largeDesktop: 80);
+    final iconSize = ResponsiveValue.of<double>(context, mobile: 48, tablet: 56, desktop: 64, largeDesktop: 72);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isDragging = true),
       onExit: (_) => setState(() => _isDragging = false),
@@ -116,7 +127,7 @@ class _UploadScreenState extends State<UploadScreen> {
         onTap: () {},
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.all(40),
+          padding: EdgeInsets.all(zonePadding),
           decoration: BoxDecoration(
             color: _isDragging ? AppColors.profit.withValues(alpha: 0.1) : AppColors.card,
             borderRadius: BorderRadius.circular(16),
@@ -125,19 +136,19 @@ class _UploadScreenState extends State<UploadScreen> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(iconSize * 0.4),
                 decoration: BoxDecoration(color: AppColors.profit.withValues(alpha: 0.15), shape: BoxShape.circle),
-                child: const Icon(Icons.cloud_upload_outlined, size: 48, color: AppColors.profit),
+                child: Icon(Icons.cloud_upload_outlined, size: iconSize, color: AppColors.profit),
               ),
-              const SizedBox(height: 20),
-              const Text('Upload Screenshot', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+              SizedBox(height: ResponsiveGrid.spacing(context)),
+              Text('Upload Screenshot', style: TextStyle(fontSize: ResponsiveText.titleSize(context), fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
               const SizedBox(height: 8),
-              const Text('Drag & drop or click to browse', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
-              const SizedBox(height: 16),
+              Text('Drag & drop or click to browse', style: TextStyle(fontSize: ResponsiveText.bodySize(context), color: AppColors.textSecondary)),
+              SizedBox(height: ResponsiveGrid.spacing(context) * 0.75),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(color: AppColors.background, borderRadius: BorderRadius.circular(6)),
-                child: const Text('PNG, JPG up to 10MB', style: TextStyle(fontSize: 12, color: AppColors.textMuted)),
+                child: Text('PNG, JPG up to 10MB', style: TextStyle(fontSize: ResponsiveText.captionSize(context), color: AppColors.textMuted)),
               ),
             ],
           ),
@@ -159,12 +170,14 @@ class _UploadScreenState extends State<UploadScreen> {
     );
   }
 
-  Widget _buildManualEntryButton() {
+  Widget _buildManualEntryButton(BuildContext context) {
+    final cardPadding = ResponsiveGrid.cardPadding(context);
+
     return GestureDetector(
       onTap: () => context.push('/upload/manual'),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(20),
+        padding: cardPadding,
         decoration: BoxDecoration(color: AppColors.card, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.border)),
         child: Row(
           children: [
@@ -174,13 +187,13 @@ class _UploadScreenState extends State<UploadScreen> {
               child: const Icon(Icons.edit_note, color: AppColors.promotion, size: 24),
             ),
             const SizedBox(width: 16),
-            const Expanded(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Manual Entry', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
-                  SizedBox(height: 4),
-                  Text('Enter session details manually', style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+                  Text('Manual Entry', style: TextStyle(fontSize: ResponsiveText.titleSize(context), fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                  const SizedBox(height: 4),
+                  Text('Enter session details manually', style: TextStyle(fontSize: ResponsiveText.bodySize(context), color: AppColors.textSecondary)),
                 ],
               ),
             ),
@@ -191,23 +204,25 @@ class _UploadScreenState extends State<UploadScreen> {
     );
   }
 
-  Widget _buildRecentUploadsHeader() {
-    return const Text('Recent Uploads', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.textPrimary));
+  Widget _buildRecentUploadsHeader(BuildContext context) {
+    return Text('Recent Uploads', style: TextStyle(fontSize: ResponsiveText.titleSize(context), fontWeight: FontWeight.w600, color: AppColors.textPrimary));
   }
 
-  Widget _buildRecentUploadsList() {
+  Widget _buildRecentUploadsList(BuildContext context) {
     final uploads = [
       _UploadData(fileName: 'pokerstars_session_01.png', date: 'Jan 7, 2026 • 2:34 PM', status: UploadStatus.processed, extractedAmount: 850),
       _UploadData(fileName: 'ggpoker_results.jpg', date: 'Jan 6, 2026 • 11:20 PM', status: UploadStatus.processed, extractedAmount: -320),
       _UploadData(fileName: 'session_screenshot.png', date: 'Jan 5, 2026 • 8:45 PM', status: UploadStatus.processing),
     ];
-    return Column(children: uploads.map((upload) => _buildUploadCard(upload)).toList());
+    return Column(children: uploads.map((upload) => _buildUploadCard(upload, context)).toList());
   }
 
-  Widget _buildUploadCard(_UploadData upload) {
+  Widget _buildUploadCard(_UploadData upload, BuildContext context) {
+    final cardPadding = ResponsiveGrid.cardPadding(context);
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: ResponsiveGrid.spacing(context) * 0.5),
+      padding: cardPadding,
       decoration: BoxDecoration(color: AppColors.card, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.border)),
       child: Row(
         children: [
@@ -221,29 +236,29 @@ class _UploadScreenState extends State<UploadScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(upload.fileName, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textPrimary), overflow: TextOverflow.ellipsis),
+                Text(upload.fileName, style: TextStyle(fontSize: ResponsiveText.bodySize(context), fontWeight: FontWeight.w500, color: AppColors.textPrimary), overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 4),
-                Text(upload.date, style: const TextStyle(fontSize: 12, color: AppColors.textMuted)),
+                Text(upload.date, style: TextStyle(fontSize: ResponsiveText.captionSize(context), color: AppColors.textMuted)),
               ],
             ),
           ),
-          _buildStatusBadge(upload),
+          _buildStatusBadge(upload, context),
         ],
       ),
     );
   }
 
-  Widget _buildStatusBadge(_UploadData upload) {
+  Widget _buildStatusBadge(_UploadData upload, BuildContext context) {
     if (upload.status == UploadStatus.processing) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(color: AppColors.promotion.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(6)),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.promotion)),
-            SizedBox(width: 6),
-            Text('Processing', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.promotion)),
+            const SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.promotion)),
+            const SizedBox(width: 6),
+            Text('Processing', style: TextStyle(fontSize: ResponsiveText.captionSize(context), fontWeight: FontWeight.w500, color: AppColors.promotion)),
           ],
         ),
       );
@@ -251,8 +266,8 @@ class _UploadScreenState extends State<UploadScreen> {
     final amount = upload.extractedAmount ?? 0;
     final isProfit = amount >= 0;
     final color = isProfit ? AppColors.profit : AppColors.loss;
-    final text = isProfit ? '+\$${amount}' : '-\$${amount.abs()}';
-    return Text(text, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: color));
+    final text = isProfit ? '+\$$amount' : '-\$${amount.abs()}';
+    return Text(text, style: TextStyle(fontSize: ResponsiveText.bodySize(context) + 1, fontWeight: FontWeight.bold, color: color));
   }
 }
 

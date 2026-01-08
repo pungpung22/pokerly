@@ -49,6 +49,16 @@ class SessionRepository {
     }
   }
 
+  Future<Session?> createSessionFromData(Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.post('/sessions', data: data);
+      return Session.fromJson(response.data);
+    } catch (e) {
+      print('Error creating session: $e');
+      return null;
+    }
+  }
+
   Future<bool> deleteSession(String id) async {
     try {
       await _dio.delete('/sessions/$id');

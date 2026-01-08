@@ -49,6 +49,17 @@ class SessionNotifier extends StateNotifier<AsyncValue<SessionStats>> {
     return false;
   }
 
+  Future<bool> addSessionData(Map<String, dynamic> data) async {
+    final result = await _repository.createSessionFromData(data);
+    if (result != null) {
+      await loadStats();
+      _ref.invalidate(weeklyDataProvider);
+      _ref.invalidate(allSessionsProvider);
+      return true;
+    }
+    return false;
+  }
+
   Future<bool> deleteSession(String id) async {
     final result = await _repository.deleteSession(id);
     if (result) {

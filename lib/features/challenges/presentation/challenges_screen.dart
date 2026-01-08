@@ -12,7 +12,8 @@ class ChallengesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final padding = ResponsiveGrid.padding(context);
-    final isDesktop = Breakpoints.isDesktop(context);
+    // 태블릿 이상에서 2열 레이아웃 사용
+    final useDesktopLayout = Breakpoints.isDesktopOrTablet(context);
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -21,12 +22,12 @@ class ChallengesScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(),
-              const SizedBox(height: 24),
-              if (isDesktop)
-                _buildDesktopLayout()
+              _buildHeader(context),
+              SizedBox(height: ResponsiveGrid.spacing(context)),
+              if (useDesktopLayout)
+                _buildDesktopLayout(context)
               else
-                _buildMobileLayout(),
+                _buildMobileLayout(context),
             ],
           ),
         ),
@@ -34,23 +35,23 @@ class ChallengesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
-    return const Column(
+  Widget _buildHeader(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Challenges',
           style: TextStyle(
-            fontSize: 28,
+            fontSize: ResponsiveText.headlineSize(context),
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
           ),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           'Complete challenges to earn rewards',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: ResponsiveText.bodySize(context),
             color: AppColors.textSecondary,
           ),
         ),
@@ -58,7 +59,9 @@ class ChallengesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDesktopLayout() {
+  Widget _buildDesktopLayout(BuildContext context) {
+    final spacing = ResponsiveGrid.spacing(context);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -67,21 +70,21 @@ class ChallengesScreen extends StatelessWidget {
           child: Column(
             children: [
               const ChallengeHeader(),
-              const SizedBox(height: 24),
+              SizedBox(height: spacing),
               const TogetherStatsBar(),
-              const SizedBox(height: 24),
+              SizedBox(height: spacing),
               const ActiveChallenges(),
             ],
           ),
         ),
-        const SizedBox(width: 24),
+        SizedBox(width: spacing),
         Expanded(
           flex: 2,
           child: Column(
             children: [
               const TrophyRoom(),
-              const SizedBox(height: 24),
-              _buildUpcomingChallenges(),
+              SizedBox(height: spacing),
+              _buildUpcomingChallenges(context),
             ],
           ),
         ),
@@ -89,38 +92,42 @@ class ChallengesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMobileLayout() {
+  Widget _buildMobileLayout(BuildContext context) {
+    final spacing = ResponsiveGrid.spacing(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const ChallengeHeader(),
-        const SizedBox(height: 24),
+        SizedBox(height: spacing),
         const TogetherStatsBar(),
-        const SizedBox(height: 24),
+        SizedBox(height: spacing),
         const ActiveChallenges(),
-        const SizedBox(height: 24),
+        SizedBox(height: spacing),
         const TrophyRoom(),
-        const SizedBox(height: 24),
-        _buildUpcomingChallenges(),
+        SizedBox(height: spacing),
+        _buildUpcomingChallenges(context),
       ],
     );
   }
 
-  Widget _buildUpcomingChallenges() {
+  Widget _buildUpcomingChallenges(BuildContext context) {
+    final cardPadding = ResponsiveGrid.cardPadding(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Coming Soon',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: ResponsiveText.titleSize(context),
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: ResponsiveGrid.spacing(context) * 0.75),
         Container(
-          padding: const EdgeInsets.all(20),
+          padding: cardPadding,
           decoration: BoxDecoration(
             color: AppColors.card,
             borderRadius: BorderRadius.circular(12),
@@ -134,7 +141,7 @@ class ChallengesScreen extends StatelessWidget {
                 Icons.calendar_today,
                 'Starts in 2 days',
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveGrid.spacing(context) * 0.75),
               _buildUpcomingItem(
                 'Weekend Warrior',
                 'Play 20 games this weekend',
