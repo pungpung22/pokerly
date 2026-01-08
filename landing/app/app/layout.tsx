@@ -15,7 +15,8 @@ import {
   Loader2,
   Menu,
   X,
-  Trophy
+  Trophy,
+  Star
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -23,6 +24,7 @@ const navItems = [
   { href: '/app', icon: LayoutDashboard, label: '대시보드' },
   { href: '/app/sessions', icon: History, label: '세션 기록' },
   { href: '/app/challenges', icon: Trophy, label: '챌린지' },
+  { href: '/app/level', icon: Star, label: '레벨' },
   { href: '/app/analytics', icon: TrendingUp, label: '분석' },
   { href: '/app/upload', icon: Upload, label: '업로드' },
   { href: '/app/settings', icon: Settings, label: '설정' },
@@ -115,18 +117,41 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         {/* User section */}
         <div style={{ padding: '16px', borderTop: '1px solid #27272A' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-            {user.photoURL ? (
-              <img
-                src={user.photoURL}
-                alt="Profile"
-                style={{ width: '40px', height: '40px', borderRadius: '50%' }}
-              />
-            ) : (
-              <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#6366F1', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
-                {user.displayName?.charAt(0) || user.email?.charAt(0) || '?'}
+          <Link href="/app/level" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px', textDecoration: 'none' }}>
+            <div style={{ position: 'relative' }}>
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  alt="Profile"
+                  style={{ width: '40px', height: '40px', borderRadius: '50%' }}
+                />
+              ) : (
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#6366F1', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
+                  {user.displayName?.charAt(0) || user.email?.charAt(0) || '?'}
+                </div>
+              )}
+              {/* Level Badge */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '-4px',
+                  right: '-4px',
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '10px',
+                  fontWeight: 'bold',
+                  color: 'white',
+                  border: '2px solid #141416',
+                }}
+              >
+                <Star style={{ width: '10px', height: '10px' }} />
               </div>
-            )}
+            </div>
             <div style={{ flex: 1, overflow: 'hidden' }}>
               <p style={{ color: 'white', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {user.displayName || '사용자'}
@@ -135,7 +160,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 {user.email}
               </p>
             </div>
-          </div>
+          </Link>
           <button
             onClick={handleSignOut}
             style={{
