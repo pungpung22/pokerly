@@ -1,21 +1,24 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
+import { VisionService, PokerSessionData } from './vision.service';
 
 export interface ScreenshotResult {
   filename: string;
   originalName: string;
   path: string;
   size: number;
-  status: 'success' | 'pending_ocr';
+  status: 'success' | 'pending_ocr' | 'ocr_complete' | 'ocr_failed';
   message: string;
+  extractedData?: PokerSessionData;
 }
 
 @Injectable()
 export class UploadsService {
+  private readonly logger = new Logger(UploadsService.name);
   private readonly uploadsDir = './uploads';
 
-  constructor() {
+  constructor(private readonly visionService: VisionService) {
     // Ensure uploads directory exists
     if (!fs.existsSync(this.uploadsDir)) {
       fs.mkdirSync(this.uploadsDir, { recursive: true });
@@ -26,18 +29,34 @@ export class UploadsService {
     userId: string,
     file: Express.Multer.File,
   ): Promise<ScreenshotResult> {
-    // TODO: Implement OCR processing here
-    // For now, just store the file and return success
+    this.logger.log(`Processing screenshot for user ${userId}: ${file.originalname}`);
 
-    return {
-      filename: file.filename,
-      originalName: file.originalname,
-      path: file.path,
-      size: file.size,
-      status: 'pending_ocr',
-      message:
-        '스크린샷이 업로드되었습니다. OCR 기능은 추후 업데이트될 예정입니다.',
-    };
+    try {
+      // OCR 처리
+      const extractedData = await this.visionService.parsePokerScreenshot(file.path);
+
+      return {
+        filename: file.filename,
+        originalName: file.originalname,
+        path: file.path,
+        size: file.size,
+        status: 'ocr_complete',
+        message: 'OCR 처리가 완료되었습니다.',
+        extractedData,
+      };
+    } catch (error) {
+      this.logger.error(`OCR failed: ${error.message}`);
+
+      // OCR 실패해도 파일은 업로드됨
+      return {
+        filename: file.filename,
+        originalName: file.originalname,
+        path: file.path,
+        size: file.size,
+        status: 'ocr_failed',
+        message: `OCR 처리 실패: ${error.message}. 수동으로 입력해주세요.`,
+      };
+    }
   }
 
   async processScreenshots(

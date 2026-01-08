@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { UploadsController } from './uploads.controller';
 import { UploadsService } from './uploads.service';
+import { VisionService } from './vision.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
@@ -40,7 +41,7 @@ import { UsersModule } from '../users/users.module';
     }),
   ],
   controllers: [UploadsController],
-  providers: [UploadsService],
+  providers: [VisionService, UploadsService],
   exports: [UploadsService],
 })
 export class UploadsModule {}
