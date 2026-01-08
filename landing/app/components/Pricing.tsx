@@ -9,28 +9,26 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section style={{ padding: '96px 24px', background: 'rgba(20, 20, 22, 0.5)' }}>
-      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+    <section className="section" style={{ background: 'rgba(20, 20, 22, 0.5)' }}>
+      <div className="container" style={{ maxWidth: '1000px' }}>
         {/* Section header */}
         <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-          <h2 style={{ fontSize: '36px', fontWeight: 'bold', color: 'white', marginBottom: '16px' }}>
+          <h2 className="section-title" style={{ marginBottom: '16px' }}>
             심플한 요금제
           </h2>
-          <p style={{ fontSize: '18px', color: '#71717A' }}>필요한 만큼만 사용하세요</p>
+          <p className="section-subtitle">필요한 만큼만 사용하세요</p>
         </div>
 
-        {/* Plans grid - 2 columns */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+        {/* Plans grid - responsive */}
+        <div className="grid-2">
           {plans.map((plan) => (
             <div
               key={plan.name}
+              className="card"
               style={{
                 position: 'relative',
-                background: '#141416',
                 border: plan.popular ? '2px solid #6366F1' : '1px solid #27272A',
-                borderRadius: '16px',
-                padding: '32px',
-                transform: plan.popular ? 'scale(1.05)' : 'none'
+                transform: plan.popular ? 'scale(1.02)' : 'none'
               }}
             >
               {/* Popular badge */}
@@ -41,11 +39,11 @@ export default function Pricing() {
                     top: '-12px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    padding: '4px 16px',
+                    padding: '6px 20px',
                     borderRadius: '9999px',
                     background: '#6366F1',
                     color: 'white',
-                    fontSize: '14px',
+                    fontSize: 'var(--body-text)',
                     fontWeight: 500
                   }}
                 >
@@ -54,20 +52,20 @@ export default function Pricing() {
               )}
 
               {/* Plan name */}
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>{plan.name}</h3>
+              <h3 style={{ fontSize: 'var(--section-subtitle)', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>{plan.name}</h3>
 
               {/* Price */}
               <div style={{ marginBottom: '24px' }}>
-                <span style={{ fontSize: '36px', fontWeight: 'bold', color: 'white' }}>{plan.price}</span>
-                <span style={{ color: '#71717A' }}>{plan.period}</span>
+                <span style={{ fontSize: 'var(--section-title)', fontWeight: 'bold', color: 'white' }}>{plan.price}</span>
+                <span style={{ color: '#71717A', fontSize: 'var(--body-text)' }}>{plan.period}</span>
               </div>
 
               {/* Features */}
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '32px' }}>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '32px' }}>
                 {plan.features.map((feature) => (
                   <li key={feature} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <Check style={{ width: '20px', height: '20px', color: '#10B981' }} />
-                    <span style={{ color: '#FAFAFA' }}>{feature}</span>
+                    <Check style={{ width: '22px', height: '22px', color: '#10B981', flexShrink: 0 }} />
+                    <span style={{ color: '#FAFAFA', fontSize: 'var(--body-text)' }}>{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -75,19 +73,11 @@ export default function Pricing() {
               {/* CTA button */}
               <a
                 href="/login"
+                className={plan.popular ? 'btn-primary' : 'btn-secondary'}
                 style={{
-                  display: 'block',
-                  width: '100%',
-                  padding: '12px',
-                  borderRadius: '12px',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  border: plan.popular ? 'none' : '1px solid #27272A',
-                  background: plan.popular ? '#6366F1' : 'transparent',
-                  color: 'white',
-                  textDecoration: 'none',
-                  textAlign: 'center',
-                  boxSizing: 'border-box'
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '100%'
                 }}
               >
                 {plan.cta}

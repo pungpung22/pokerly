@@ -10,44 +10,35 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section style={{ padding: '96px 24px', background: '#0A0A0B' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+    <section className="section" style={{ background: '#0A0A0B' }}>
+      <div className="container">
         {/* Section header */}
         <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-          <h2 style={{ fontSize: '36px', fontWeight: 'bold', color: 'white', marginBottom: '16px' }}>
+          <h2 className="section-title" style={{ marginBottom: '16px' }}>
             어떻게 작동하나요?
           </h2>
-          <p style={{ fontSize: '18px', color: '#71717A' }}>
+          <p className="section-subtitle">
             단 3단계로 완벽한 포커 분석
           </p>
         </div>
 
-        {/* Steps - 3 column grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
+        {/* Steps - responsive grid */}
+        <div className="grid-3">
           {steps.map((step) => (
-            <div
-              key={step.number}
-              style={{
-                background: '#141416',
-                border: '1px solid #27272A',
-                borderRadius: '16px',
-                padding: '32px',
-                textAlign: 'center'
-              }}
-            >
+            <div key={step.number} className="card" style={{ textAlign: 'center' }}>
               {/* Number badge */}
               <div
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '48px',
-                  height: '48px',
+                  width: '56px',
+                  height: '56px',
                   borderRadius: '50%',
                   background: '#6366F1',
                   color: 'white',
                   fontWeight: 'bold',
-                  fontSize: '18px',
+                  fontSize: '20px',
                   marginBottom: '24px'
                 }}
               >
@@ -56,16 +47,16 @@ export default function HowItWorks() {
 
               {/* Icon */}
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-                <step.icon style={{ width: '48px', height: '48px', color: '#22D3EE' }} />
+                <step.icon style={{ width: '56px', height: '56px', color: '#22D3EE' }} />
               </div>
 
               {/* Title */}
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: 'white', marginBottom: '12px' }}>
+              <h3 style={{ fontSize: 'var(--section-subtitle)', fontWeight: 'bold', color: 'white', marginBottom: '12px' }}>
                 {step.title}
               </h3>
 
               {/* Description */}
-              <p style={{ color: '#71717A', fontSize: '14px' }}>{step.description}</p>
+              <p style={{ color: '#71717A', fontSize: 'var(--body-text)' }}>{step.description}</p>
             </div>
           ))}
         </div>

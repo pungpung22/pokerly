@@ -10,47 +10,38 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section style={{ padding: '96px 24px', background: '#0A0A0B' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+    <section className="section" style={{ background: '#0A0A0B' }}>
+      <div className="container">
         {/* Section header */}
         <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-          <h2 style={{ fontSize: '36px', fontWeight: 'bold', color: 'white' }}>
+          <h2 className="section-title">
             플레이어들의 후기
           </h2>
         </div>
 
-        {/* Testimonials grid - 3 columns */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+        {/* Testimonials grid - responsive 3 columns */}
+        <div className="grid-3">
           {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              style={{
-                position: 'relative',
-                background: '#141416',
-                border: '1px solid #27272A',
-                borderRadius: '16px',
-                padding: '24px'
-              }}
-            >
+            <div key={index} className="card" style={{ position: 'relative' }}>
               {/* Quote decoration */}
-              <Quote style={{ position: 'absolute', top: '16px', right: '16px', width: '32px', height: '32px', color: '#27272A' }} />
+              <Quote style={{ position: 'absolute', top: '20px', right: '20px', width: '36px', height: '36px', color: '#27272A' }} />
 
               {/* Stars */}
               <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
                 {Array.from({ length: testimonial.stars }).map((_, i) => (
-                  <Star key={i} style={{ width: '16px', height: '16px', fill: '#FBBF24', color: '#FBBF24' }} />
+                  <Star key={i} style={{ width: '18px', height: '18px', fill: '#FBBF24', color: '#FBBF24' }} />
                 ))}
               </div>
 
               {/* Content */}
-              <p style={{ color: '#FAFAFA', marginBottom: '24px', lineHeight: 1.6 }}>
+              <p style={{ color: '#FAFAFA', marginBottom: '24px', lineHeight: 1.7 }}>
                 &ldquo;{testimonial.content}&rdquo;
               </p>
 
               {/* Author */}
               <div>
                 <p style={{ color: 'white', fontWeight: 'bold' }}>{testimonial.name}</p>
-                <p style={{ fontSize: '14px', color: '#71717A' }}>{testimonial.info}</p>
+                <p style={{ color: '#71717A' }}>{testimonial.info}</p>
               </div>
             </div>
           ))}

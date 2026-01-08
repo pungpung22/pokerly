@@ -1,39 +1,57 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BarChart3, ArrowLeft, Loader2 } from 'lucide-react';
-import { signInWithGoogle } from '@/lib/firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { user, loading: authLoading, signIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push('/app');
+    }
+  }, [user, authLoading, router]);
 
   const handleGoogleLogin = async () => {
     setLoading(true);
     setError(null);
 
-    const user = await signInWithGoogle();
-
-    if (user) {
-      // 로그인 성공 - 대시보드로 이동 (또는 앱으로)
-      router.push('/dashboard');
-    } else {
-      setError('로그인에 실패했습니다. 다시 시도해주세요.');
+    try {
+      const user = await signIn();
+      if (user) {
+        router.push('/app');
+      } else {
+        setError('로그인에 실패했습니다. 다시 시도해주세요.');
+      }
+    } catch (err) {
+      setError('로그인 중 오류가 발생했습니다.');
+    } finally {
       setLoading(false);
     }
   };
+
+  if (authLoading) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0A0A0B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Loader2 style={{ width: '32px', height: '32px', color: '#6366F1', animation: 'spin 1s linear infinite' }} />
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#0A0A0B', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
       <header style={{ padding: '16px 24px', borderBottom: '1px solid #27272A' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-            <BarChart3 style={{ width: '32px', height: '32px', color: '#6366F1' }} />
-            <span style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>Pokerly</span>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+            <BarChart3 style={{ width: '36px', height: '36px', color: '#6366F1' }} />
+            <span style={{ fontSize: '22px', fontWeight: 'bold', color: 'white' }}>Pokerly</span>
           </Link>
           <Link
             href="/"
@@ -42,31 +60,30 @@ export default function LoginPage() {
               alignItems: 'center',
               gap: '8px',
               color: '#71717A',
-              textDecoration: 'none',
-              fontSize: '14px'
+              textDecoration: 'none'
             }}
           >
-            <ArrowLeft style={{ width: '16px', height: '16px' }} />
+            <ArrowLeft style={{ width: '18px', height: '18px' }} />
             돌아가기
           </Link>
         </div>
       </header>
 
       {/* Main content */}
-      <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '48px 24px' }}>
-        <div style={{ width: '100%', maxWidth: '400px' }}>
+      <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+        <div style={{ width: '100%', maxWidth: '440px' }}>
           {/* Title */}
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>
+            <h1 className="section-title" style={{ marginBottom: '12px' }}>
               로그인
             </h1>
-            <p style={{ color: '#71717A' }}>
+            <p className="section-subtitle">
               Google 계정으로 시작하세요
             </p>
           </div>
 
           {/* Form card */}
-          <div style={{ background: '#141416', border: '1px solid #27272A', borderRadius: '16px', padding: '32px' }}>
+          <div className="card">
             <button
               onClick={handleGoogleLogin}
               disabled={loading}
@@ -76,20 +93,20 @@ export default function LoginPage() {
                 justifyContent: 'center',
                 gap: '12px',
                 width: '100%',
-                padding: '14px',
+                padding: '16px',
                 background: loading ? '#e5e5e5' : 'white',
                 color: '#1f1f1f',
                 border: 'none',
-                borderRadius: '8px',
+                borderRadius: '10px',
                 fontWeight: 500,
                 cursor: loading ? 'not-allowed' : 'pointer',
-                fontSize: '15px'
+                fontSize: 'var(--button-text)'
               }}
             >
               {loading ? (
-                <Loader2 style={{ width: '20px', height: '20px', animation: 'spin 1s linear infinite' }} />
+                <Loader2 style={{ width: '22px', height: '22px', animation: 'spin 1s linear infinite' }} />
               ) : (
-                <svg width="20" height="20" viewBox="0 0 24 24">
+                <svg width="22" height="22" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                   <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                   <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -100,12 +117,12 @@ export default function LoginPage() {
             </button>
 
             {error && (
-              <p style={{ marginTop: '16px', fontSize: '14px', color: '#EF4444', textAlign: 'center' }}>
+              <p style={{ marginTop: '16px', color: '#EF4444', textAlign: 'center' }}>
                 {error}
               </p>
             )}
 
-            <p style={{ marginTop: '24px', fontSize: '12px', color: '#71717A', textAlign: 'center', lineHeight: 1.5 }}>
+            <p style={{ marginTop: '24px', fontSize: '13px', color: '#71717A', textAlign: 'center', lineHeight: 1.6 }}>
               계속 진행하면 <a href="#" style={{ color: '#6366F1', textDecoration: 'none' }}>이용약관</a> 및{' '}
               <a href="#" style={{ color: '#6366F1', textDecoration: 'none' }}>개인정보처리방침</a>에 동의하는 것으로 간주됩니다.
             </p>

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Responsive CSS Variables - Outside @layer for proper cascade */
 :root {
   --background: #0A0A0B;
   --background-card: #141416;
@@ -11,8 +12,65 @@
   --secondary: #22D3EE;
   --profit: #10B981;
   --loss: #EF4444;
+
+  /* Mobile first - base sizes */
+  --hero-title: 32px;
+  --hero-subtitle: 16px;
+  --section-title: 28px;
+  --section-subtitle: 14px;
+  --body-text: 14px;
+  --button-text: 14px;
+  --section-padding-y: 64px;
+  --section-padding-x: 16px;
+  --container-padding: 16px;
 }
 
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  :root {
+    --hero-title: 48px;
+    --hero-subtitle: 18px;
+    --section-title: 36px;
+    --section-subtitle: 16px;
+    --body-text: 16px;
+    --button-text: 16px;
+    --section-padding-y: 80px;
+    --section-padding-x: 24px;
+    --container-padding: 24px;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  :root {
+    --hero-title: 60px;
+    --hero-subtitle: 20px;
+    --section-title: 44px;
+    --section-subtitle: 18px;
+    --body-text: 18px;
+    --button-text: 16px;
+    --section-padding-y: 100px;
+    --section-padding-x: 32px;
+    --container-padding: 32px;
+  }
+}
+
+/* Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+  :root {
+    --hero-title: 72px;
+    --hero-subtitle: 22px;
+    --section-title: 52px;
+    --section-subtitle: 20px;
+    --body-text: 20px;
+    --button-text: 18px;
+    --section-padding-y: 120px;
+    --section-padding-x: 40px;
+    --container-padding: 40px;
+  }
+}
+
+/* Base styles */
 * {
   box-sizing: border-box;
   padding: 0;
@@ -24,28 +82,197 @@ html {
 }
 
 body {
-  background: #0A0A0B;
-  color: #FAFAFA;
+  background: var(--background);
+  color: var(--foreground);
   font-family: system-ui, -apple-system, sans-serif;
   min-height: 100vh;
+  font-size: var(--body-text);
 }
 
-/* Gradient text */
+/* Component styles */
 .gradient-text {
-  background: linear-gradient(to right, #6366F1, #22D3EE);
+  background: linear-gradient(to right, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Glass effect */
 .glass {
   background: rgba(20, 20, 22, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-/* Animation */
+/* Header - centered with max-width */
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 24px;
+}
+
+@media (min-width: 768px) {
+  .header-inner {
+    padding: 16px 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header-inner {
+    padding: 16px 48px;
+  }
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.section {
+  padding: var(--section-padding-y) var(--section-padding-x);
+}
+
+.hero-title {
+  font-size: var(--hero-title);
+  font-weight: bold;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.hero-subtitle {
+  font-size: var(--hero-subtitle);
+  color: var(--foreground-muted);
+  line-height: 1.6;
+}
+
+.section-title {
+  font-size: var(--section-title);
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  font-size: var(--section-subtitle);
+  color: var(--foreground-muted);
+  line-height: 1.5;
+}
+
+/* Buttons */
+.btn-primary {
+  padding: 14px 28px;
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--button-text);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-secondary {
+  padding: 14px 28px;
+  background: transparent;
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--button-text);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+}
+
+@media (min-width: 768px) {
+  .btn-primary, .btn-secondary {
+    padding: 16px 32px;
+  }
+}
+
+/* Card styles */
+.card {
+  background: var(--background-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    padding: 40px;
+  }
+}
+
+/* Grid layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+
+/* Animation utilities */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -66,7 +293,6 @@ body {
 .animate-delay-300 { animation-delay: 300ms; }
 .animate-delay-400 { animation-delay: 400ms; }
 
-/* Spin animation */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
