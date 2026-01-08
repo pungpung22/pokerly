@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Calendar, Clock, MapPin, DollarSign, FileText, Loader2 } from 'lucide-react';
-import type { GameType, CreateSessionDto } from '@/lib/types';
+import { Calendar, Clock, MapPin, DollarSign, FileText, Loader2, Hash, Users, ChevronDown, ChevronUp } from 'lucide-react';
+import type { GameType, CreateSessionDto, PlayerLevel } from '@/lib/types';
+import { playerLevelLabels } from '@/lib/types';
 
 export default function UploadPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [formData, setFormData] = useState<CreateSessionDto>({
     date: new Date().toISOString().split('T')[0],
     venue: '',
@@ -17,6 +19,11 @@ export default function UploadPage() {
     buyIn: 0,
     cashOut: 0,
     notes: '',
+    startTime: '',
+    tableId: '',
+    hands: 0,
+    level: undefined,
+    blinds: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -237,7 +244,7 @@ export default function UploadPage() {
           )}
 
           {/* Notes */}
-          <div>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#71717A', fontSize: '14px', marginBottom: '8px' }}>
               <FileText style={{ width: '16px', height: '16px' }} />
               메모 (선택)
@@ -259,6 +266,157 @@ export default function UploadPage() {
               }}
             />
           </div>
+
+          {/* Advanced Options Toggle */}
+          <button
+            type="button"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              color: '#6366F1',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px',
+              padding: '8px 0',
+            }}
+          >
+            {showAdvanced ? <ChevronUp style={{ width: '16px', height: '16px' }} /> : <ChevronDown style={{ width: '16px', height: '16px' }} />}
+            상세 정보 {showAdvanced ? '접기' : '펼치기'}
+          </button>
+
+          {/* Advanced Options */}
+          {showAdvanced && (
+            <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #27272A' }}>
+              {/* Start Time */}
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#71717A', fontSize: '14px', marginBottom: '8px' }}>
+                  <Clock style={{ width: '16px', height: '16px' }} />
+                  시작 시간 (선택)
+                </label>
+                <input
+                  type="time"
+                  value={formData.startTime?.split('T')[1]?.slice(0, 5) || ''}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      const dateTimeStr = `${formData.date}T${e.target.value}:00`;
+                      setFormData({ ...formData, startTime: dateTimeStr });
+                    } else {
+                      setFormData({ ...formData, startTime: '' });
+                    }
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    background: '#0A0A0B',
+                    border: '1px solid #27272A',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontSize: '16px',
+                  }}
+                />
+              </div>
+
+              {/* Table ID & Hands */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+                <div>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#71717A', fontSize: '14px', marginBottom: '8px' }}>
+                    <Hash style={{ width: '16px', height: '16px' }} />
+                    테이블 ID (선택)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.tableId || ''}
+                    onChange={(e) => setFormData({ ...formData, tableId: e.target.value })}
+                    placeholder="T14"
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      background: '#0A0A0B',
+                      border: '1px solid #27272A',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '16px',
+                    }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#71717A', fontSize: '14px', marginBottom: '8px' }}>
+                    <Hash style={{ width: '16px', height: '16px' }} />
+                    핸드 수 (선택)
+                  </label>
+                  <input
+                    type="number"
+                    value={formData.hands || ''}
+                    onChange={(e) => setFormData({ ...formData, hands: parseInt(e.target.value) || 0 })}
+                    placeholder="0"
+                    min="0"
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      background: '#0A0A0B',
+                      border: '1px solid #27272A',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '16px',
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Level */}
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#71717A', fontSize: '14px', marginBottom: '8px' }}>
+                  <Users style={{ width: '16px', height: '16px' }} />
+                  테이블 레벨 (선택)
+                </label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {(Object.keys(playerLevelLabels) as PlayerLevel[]).map((level) => (
+                    <button
+                      key={level}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, level: formData.level === level ? undefined : level })}
+                      style={{
+                        padding: '8px 14px',
+                        background: formData.level === level ? 'rgba(99, 102, 241, 0.2)' : '#0A0A0B',
+                        border: `1px solid ${formData.level === level ? '#6366F1' : '#27272A'}`,
+                        borderRadius: '6px',
+                        color: formData.level === level ? '#6366F1' : '#71717A',
+                        cursor: 'pointer',
+                        fontSize: '13px',
+                      }}
+                    >
+                      {playerLevelLabels[level]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Blinds */}
+              <div>
+                <label style={{ display: 'block', color: '#71717A', fontSize: '14px', marginBottom: '8px' }}>
+                  블라인드 (선택)
+                </label>
+                <input
+                  type="text"
+                  value={formData.blinds || ''}
+                  onChange={(e) => setFormData({ ...formData, blinds: e.target.value })}
+                  placeholder="1000/2000"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    background: '#0A0A0B',
+                    border: '1px solid #27272A',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontSize: '16px',
+                  }}
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Submit */}

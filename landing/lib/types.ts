@@ -19,6 +19,16 @@ export interface User {
 
 // Session types
 export type GameType = 'cash' | 'tournament';
+export type PlayerLevel = 'fish' | 'beginner' | 'intermediate' | 'advanced' | 'pro' | 'master';
+
+export const playerLevelLabels: Record<PlayerLevel, string> = {
+  fish: '피쉬',
+  beginner: '초보',
+  intermediate: '중수',
+  advanced: '고수',
+  pro: '프로',
+  master: '마스터',
+};
 
 export interface Session {
   id: string;
@@ -32,6 +42,11 @@ export interface Session {
   cashOut: number;
   notes: string | null;
   screenshotUrl: string | null;
+  startTime: string | null;
+  tableId: string | null;
+  hands: number;
+  level: PlayerLevel | null;
+  blinds: string | null;
   createdAt: string;
   updatedAt: string;
   profit?: number;
@@ -47,6 +62,11 @@ export interface CreateSessionDto {
   cashOut: number;
   notes?: string;
   screenshotUrl?: string;
+  startTime?: string;
+  tableId?: string;
+  hands?: number;
+  level?: PlayerLevel;
+  blinds?: string;
 }
 
 // Challenge types
@@ -100,6 +120,7 @@ export interface DashboardStats {
   totalProfit: number;
   totalSessions: number;
   totalHours: number;
+  totalHands: number;
   todayProfit: number;
   weekProfit: number;
   monthProfit: number;
