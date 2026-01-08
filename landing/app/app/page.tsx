@@ -16,7 +16,8 @@ import {
   Calendar,
   Sparkles,
   Sun,
-  CalendarDays
+  CalendarDays,
+  Hash
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { sessionsApi } from '@/lib/api';
@@ -26,6 +27,7 @@ const emptyStats: DashboardStats = {
   totalProfit: 0,
   totalSessions: 0,
   totalHours: 0,
+  totalHands: 0,
   todayProfit: 0,
   weekProfit: 0,
   monthProfit: 0,
@@ -283,6 +285,17 @@ export default function DashboardPage() {
             </div>
           </div>
           <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{stats.totalHours}시간</p>
+        </div>
+
+        {/* Total Hands */}
+        <div className="card" style={{ padding: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+            <span style={{ color: '#71717A', fontSize: '13px' }}>총 핸드</span>
+            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(251, 191, 36, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Hash style={{ width: '18px', height: '18px', color: '#FBBF24' }} />
+            </div>
+          </div>
+          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{(stats.totalHands || 0).toLocaleString()}</p>
         </div>
       </div>
 

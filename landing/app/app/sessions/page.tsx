@@ -14,7 +14,8 @@ import {
 } from 'lucide-react';
 import { sessionsApi } from '@/lib/api';
 import { useAuth } from '../../contexts/AuthContext';
-import type { Session, GameType } from '@/lib/types';
+import type { Session, GameType, PlayerLevel } from '@/lib/types';
+import { playerLevelLabels } from '@/lib/types';
 
 type PeriodType = 'today' | 'week' | 'month' | 'last30' | 'all' | 'custom';
 
@@ -435,6 +436,26 @@ export default function SessionsPage() {
                         <span style={{ color: '#71717A', fontSize: '13px' }}>{session.stakes}</span>
                         <span style={{ color: '#71717A', fontSize: '13px' }}>·</span>
                         <span style={{ color: '#71717A', fontSize: '13px' }}>{formatDuration(session.durationMinutes)}</span>
+                        {session.hands > 0 && (
+                          <>
+                            <span style={{ color: '#71717A', fontSize: '13px' }}>·</span>
+                            <span style={{ color: '#71717A', fontSize: '13px' }}>{session.hands}핸드</span>
+                          </>
+                        )}
+                        {session.level && (
+                          <>
+                            <span style={{ color: '#71717A', fontSize: '13px' }}>·</span>
+                            <span style={{
+                              padding: '2px 6px',
+                              borderRadius: '4px',
+                              background: 'rgba(139, 92, 246, 0.2)',
+                              color: '#8B5CF6',
+                              fontSize: '11px',
+                            }}>
+                              {playerLevelLabels[session.level]}
+                            </span>
+                          </>
+                        )}
                         <span style={{ color: '#71717A', fontSize: '13px' }}>·</span>
                         <span style={{ color: '#71717A', fontSize: '13px' }}>{session.date}</span>
                       </div>
