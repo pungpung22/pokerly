@@ -17,6 +17,8 @@ export class SessionsService {
       ...createSessionDto,
       userId,
       date: new Date(createSessionDto.date),
+      startTime: createSessionDto.startTime ? new Date(createSessionDto.startTime) : undefined,
+      hands: createSessionDto.hands || 0,
     });
     return this.sessionRepository.save(session);
   }
@@ -46,6 +48,9 @@ export class SessionsService {
     if (updateSessionDto.date) {
       session.date = new Date(updateSessionDto.date);
     }
+    if (updateSessionDto.startTime) {
+      session.startTime = new Date(updateSessionDto.startTime);
+    }
     return this.sessionRepository.save(session);
   }
 
@@ -60,6 +65,7 @@ export class SessionsService {
     const totalProfit = sessions.reduce((sum, s) => sum + (Number(s.cashOut) - Number(s.buyIn)), 0);
     const totalSessions = sessions.length;
     const totalMinutes = sessions.reduce((sum, s) => sum + s.durationMinutes, 0);
+    const totalHands = sessions.reduce((sum, s) => sum + (s.hands || 0), 0);
     const winningSessions = sessions.filter(s => Number(s.cashOut) > Number(s.buyIn)).length;
     const winRate = totalSessions > 0 ? (winningSessions / totalSessions) * 100 : 0;
 
@@ -97,6 +103,7 @@ export class SessionsService {
       totalProfit,
       totalSessions,
       totalHours: Math.floor(totalMinutes / 60),
+      totalHands,
       todayProfit,
       weekProfit,
       monthProfit,

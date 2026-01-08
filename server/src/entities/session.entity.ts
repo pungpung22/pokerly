@@ -14,6 +14,15 @@ export enum GameType {
   TOURNAMENT = 'tournament',
 }
 
+export enum PlayerLevel {
+  FISH = 'fish',
+  BEGINNER = 'beginner',
+  INTERMEDIATE = 'intermediate',
+  ADVANCED = 'advanced',
+  PRO = 'pro',
+  MASTER = 'master',
+}
+
 @Entity('sessions')
 export class Session {
   @PrimaryGeneratedColumn('uuid')
@@ -52,6 +61,21 @@ export class Session {
 
   @Column({ name: 'screenshot_url', nullable: true })
   screenshotUrl: string;
+
+  @Column({ name: 'start_time', type: 'timestamp', nullable: true })
+  startTime: Date;
+
+  @Column({ name: 'table_id', nullable: true })
+  tableId: string;
+
+  @Column({ default: 0 })
+  hands: number;
+
+  @Column({ type: 'enum', enum: PlayerLevel, nullable: true })
+  level: PlayerLevel;
+
+  @Column({ nullable: true })
+  blinds: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
