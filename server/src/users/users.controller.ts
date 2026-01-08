@@ -34,4 +34,17 @@ export class UsersController {
   async claimPoints(@CurrentUser() user: User) {
     return this.usersService.claimPendingPoints(user.id);
   }
+
+  @Get('me/level')
+  async getLevelInfo(@CurrentUser() user: User) {
+    return this.usersService.getLevelInfo(user.id);
+  }
+
+  @Post('me/xp')
+  async addXp(
+    @CurrentUser() user: User,
+    @Body('type') type: 'dailyLogin' | 'uploadScreenshot' | 'manualRecord' | 'viewAnalytics',
+  ) {
+    return this.usersService.addXp(user.id, type);
+  }
 }

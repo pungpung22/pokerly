@@ -49,6 +49,24 @@ export class User {
   @Column({ name: 'monthly_points', default: 0 })
   monthlyPoints: number;
 
+  @Column({ name: 'current_xp', default: 0 })
+  currentXp: number;
+
+  @Column({ name: 'today_xp', default: 0 })
+  todayXp: number;
+
+  @Column({ name: 'today_manual_xp', default: 0 })
+  todayManualXp: number;
+
+  @Column({ name: 'last_xp_date', type: 'date', nullable: true })
+  lastXpDate: Date;
+
+  @Column({ name: 'last_login_date', type: 'date', nullable: true })
+  lastLoginDate: Date;
+
+  @Column({ name: 'last_analytics_date', type: 'date', nullable: true })
+  lastAnalyticsDate: Date;
+
   @Column({ name: 'locale', default: 'ko' })
   locale: string;
 
