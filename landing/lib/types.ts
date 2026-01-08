@@ -10,11 +10,57 @@ export interface User {
   totalPoints: number;
   pendingPoints: number;
   monthlyPoints: number;
+  currentXp: number;
+  todayXp: number;
+  todayManualXp: number;
   locale: string;
   theme: string;
   notificationsEnabled: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+// Level types
+export type XpType = 'dailyLogin' | 'uploadScreenshot' | 'manualRecord' | 'viewAnalytics';
+
+export const levelNames: Record<number, string> = {
+  1: '관찰자',
+  2: '입문자',
+  3: '플레이어',
+  4: '레귤러',
+  5: '샤크',
+  6: '마스터',
+  7: '그랜드마스터',
+  8: '레전드',
+};
+
+export interface XpRules {
+  dailyLogin: number;
+  uploadScreenshot: number;
+  manualRecord: number;
+  viewAnalytics: number;
+  manualRecordDailyLimit: number;
+}
+
+export interface LevelInfo {
+  level: number;
+  levelName: string;
+  currentXp: number;
+  requiredXp: number;
+  progress: number;
+  todayXp: number;
+  totalXp: number;
+  xpRules: XpRules;
+  todayManualXp: number;
+  canEarnLoginXp: boolean;
+  canEarnAnalyticsXp: boolean;
+}
+
+export interface AddXpResult {
+  user: User;
+  xpAwarded: number;
+  leveledUp: boolean;
+  message?: string;
 }
 
 // Session types

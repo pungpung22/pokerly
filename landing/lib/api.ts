@@ -9,7 +9,10 @@ import type {
   Trophy,
   Notice,
   Feedback,
-  DashboardStats
+  DashboardStats,
+  LevelInfo,
+  AddXpResult,
+  XpType
 } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
@@ -49,15 +52,25 @@ async function fetchWithAuth<T>(
 
 // User API
 export const userApi = {
-  getMe: () => fetchWithAuth<User>('/users/me'),
+  getMe: () => fetchWithAuth<{ user: User; stats: object }>('/users/me'),
+
   updateMe: (data: Partial<User>) =>
     fetchWithAuth<User>('/users/me', {
       method: 'PATCH',
       body: JSON.stringify(data),
     }),
+
   claimPoints: () =>
     fetchWithAuth<User>('/users/me/claim-points', {
       method: 'POST',
+    }),
+
+  getLevelInfo: () => fetchWithAuth<LevelInfo>('/users/me/level'),
+
+  addXp: (type: XpType) =>
+    fetchWithAuth<AddXpResult>('/users/me/xp', {
+      method: 'POST',
+      body: JSON.stringify({ type }),
     }),
 };
 
