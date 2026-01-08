@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/layout/responsive_layout.dart';
+import '../../../shared/models/session.dart';
+import '../providers/dashboard_provider.dart';
 import 'widgets/welcome_banner.dart';
 import 'widgets/challenge_status.dart';
 import 'widgets/action_buttons.dart';
 import 'widgets/reward_summary.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final padding = ResponsiveGrid.padding(context);
     final isDesktop = Breakpoints.isDesktop(context);
     final isTablet = Breakpoints.isTablet(context);
+    final statsAsync = ref.watch(sessionNotifierProvider);
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -28,10 +32,13 @@ class DashboardScreen extends StatelessWidget {
                 _buildHeader(),
                 const SizedBox(height: 24),
               ],
-              if (isDesktop)
-                _buildDesktopLayout(context)
-              else
-                _buildMobileLayout(context),
+              statsAsync.when(
+                data: (stats) => isDesktop
+                    ? _buildDesktopLayout(context, ref, stats)
+                    : _buildMobileLayout(context, ref, stats),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (e, _) => Center(child: Text('Error: $e')),
+              ),
             ],
           ),
         ),
@@ -39,22 +46,21 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDesktopLayout(BuildContext context) {
+  Widget _buildDesktopLayout(BuildContext context, WidgetRef ref, SessionStats stats) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 왼쪽 메인 컬럼
         Expanded(
           flex: 3,
           child: Column(
             children: [
-              const WelcomeBanner(userName: 'Player', level: 5),
+              WelcomeBanner(userName: 'Player', level: _calculateLevel(stats.totalSessions)),
               const SizedBox(height: 20),
               ChallengeStatusWidget(onViewAll: () => context.go('/challenges')),
               const SizedBox(height: 20),
-              _buildDesktopTopSection(),
+              _buildDesktopTopSection(stats),
               const SizedBox(height: 20),
-              _buildMiniChart(),
+              _buildMiniChart(ref),
               const SizedBox(height: 20),
               ActionButtons(
                 onUpload: () => context.go('/upload'),
@@ -64,14 +70,13 @@ class DashboardScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 24),
-        // 오른쪽 사이드 컬럼
         Expanded(
           flex: 2,
           child: Column(
             children: [
               const RewardSummary(),
               const SizedBox(height: 20),
-              _buildRecentSessionsCard(),
+              _buildRecentSessionsCard(stats.recentSessions),
             ],
           ),
         ),
@@ -79,17 +84,17 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMobileLayout(BuildContext context) {
+  Widget _buildMobileLayout(BuildContext context, WidgetRef ref, SessionStats stats) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const WelcomeBanner(userName: 'Player', level: 5),
+        WelcomeBanner(userName: 'Player', level: _calculateLevel(stats.totalSessions)),
         const SizedBox(height: 20),
         ChallengeStatusWidget(onViewAll: () => context.go('/challenges')),
         const SizedBox(height: 20),
-        _buildTotalProfitCard(),
+        _buildTotalProfitCard(stats.totalProfit),
         const SizedBox(height: 16),
-        _buildStatsRow(),
+        _buildStatsRow(stats),
         const SizedBox(height: 20),
         const RewardSummary(),
         const SizedBox(height: 20),
@@ -98,35 +103,63 @@ class DashboardScreen extends StatelessWidget {
           onAnalytics: () => context.go('/analytics'),
         ),
         const SizedBox(height: 24),
-        _buildMiniChart(),
+        _buildMiniChart(ref),
         const SizedBox(height: 24),
         _buildRecentSessionsHeader(),
         const SizedBox(height: 12),
-        _buildRecentSessionsList(6),
+        _buildRecentSessionsList(stats.recentSessions),
       ],
     );
   }
 
-  Widget _buildDesktopTopSection() {
+  int _calculateLevel(int totalSessions) {
+    if (totalSessions >= 100) return 10;
+    if (totalSessions >= 50) return 7;
+    if (totalSessions >= 25) return 5;
+    if (totalSessions >= 10) return 3;
+    return 1;
+  }
+
+  Widget _buildDesktopTopSection(SessionStats stats) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(flex: 2, child: _buildTotalProfitCard()),
+        Expanded(flex: 2, child: _buildTotalProfitCard(stats.totalProfit)),
         const SizedBox(width: 16),
         Expanded(
           flex: 3,
           child: Row(
             children: [
-              Expanded(child: _buildStatCard(title: 'Today', value: '+\$850', isProfit: true, icon: Icons.today)),
+              Expanded(child: _buildStatCard(
+                title: 'Today',
+                value: _formatProfit(stats.todayProfit),
+                isProfit: stats.todayProfit >= 0,
+                icon: Icons.today,
+              )),
               const SizedBox(width: 12),
-              Expanded(child: _buildStatCard(title: 'This Week', value: '+\$2,340', isProfit: true, icon: Icons.date_range)),
+              Expanded(child: _buildStatCard(
+                title: 'This Week',
+                value: _formatProfit(stats.weekProfit),
+                isProfit: stats.weekProfit >= 0,
+                icon: Icons.date_range,
+              )),
               const SizedBox(width: 12),
-              Expanded(child: _buildStatCard(title: 'Sessions', value: '47', isProfit: true, icon: Icons.casino)),
+              Expanded(child: _buildStatCard(
+                title: 'Sessions',
+                value: stats.totalSessions.toString(),
+                isProfit: true,
+                icon: Icons.casino,
+              )),
             ],
           ),
         ),
       ],
     );
+  }
+
+  String _formatProfit(double profit) {
+    final sign = profit >= 0 ? '+' : '';
+    return '$sign\$${profit.toStringAsFixed(0)}';
   }
 
   Widget _buildHeader() {
@@ -174,17 +207,20 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTotalProfitCard() {
+  Widget _buildTotalProfitCard(double totalProfit) {
+    final isProfit = totalProfit >= 0;
+    final color = isProfit ? AppColors.profit : AppColors.loss;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.profit.withValues(alpha: 0.2), AppColors.profit.withValues(alpha: 0.05)],
+          colors: [color.withValues(alpha: 0.2), color.withValues(alpha: 0.05)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.profit.withValues(alpha: 0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,47 +229,36 @@ class DashboardScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(color: AppColors.profit.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(8)),
-                child: const Icon(Icons.trending_up, color: AppColors.profit, size: 20),
+                decoration: BoxDecoration(color: color.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(8)),
+                child: Icon(isProfit ? Icons.trending_up : Icons.trending_down, color: color, size: 20),
               ),
               const SizedBox(width: 12),
               const Text('Total Profit', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
             ],
           ),
           const SizedBox(height: 16),
-          const Text('+\$12,450', style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: AppColors.profit)),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 4,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(color: AppColors.profit.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(6)),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.arrow_upward, color: AppColors.profit, size: 14),
-                    SizedBox(width: 4),
-                    Text('+23.5%', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.profit)),
-                  ],
-                ),
-              ),
-              const Text('vs last month', style: TextStyle(fontSize: 12, color: AppColors.textMuted)),
-            ],
-          ),
+          Text(_formatProfit(totalProfit), style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: color)),
         ],
       ),
     );
   }
 
-  Widget _buildStatsRow() {
+  Widget _buildStatsRow(SessionStats stats) {
     return Row(
       children: [
-        Expanded(child: _buildStatCard(title: 'Today', value: '+\$850', isProfit: true, icon: Icons.today)),
+        Expanded(child: _buildStatCard(
+          title: 'Today',
+          value: _formatProfit(stats.todayProfit),
+          isProfit: stats.todayProfit >= 0,
+          icon: Icons.today,
+        )),
         const SizedBox(width: 12),
-        Expanded(child: _buildStatCard(title: 'This Week', value: '+\$2,340', isProfit: true, icon: Icons.date_range)),
+        Expanded(child: _buildStatCard(
+          title: 'This Week',
+          value: _formatProfit(stats.weekProfit),
+          isProfit: stats.weekProfit >= 0,
+          icon: Icons.date_range,
+        )),
       ],
     );
   }
@@ -264,7 +289,9 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMiniChart() {
+  Widget _buildMiniChart(WidgetRef ref) {
+    final weeklyAsync = ref.watch(weeklyDataProvider);
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(color: AppColors.card, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.border)),
@@ -285,39 +312,10 @@ class DashboardScreen extends StatelessWidget {
           const SizedBox(height: 20),
           SizedBox(
             height: 180,
-            child: LineChart(
-              LineChartData(
-                gridData: FlGridData(show: true, drawVerticalLine: false, horizontalInterval: 500, getDrawingHorizontalLine: (value) => FlLine(color: AppColors.chartGrid, strokeWidth: 1)),
-                titlesData: FlTitlesData(
-                  show: true,
-                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 22,
-                      getTitlesWidget: (value, meta) {
-                        const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-                        if (value.toInt() < days.length) {
-                          return Text(days[value.toInt()], style: const TextStyle(color: AppColors.textMuted, fontSize: 12));
-                        }
-                        return const Text('');
-                      },
-                    ),
-                  ),
-                ),
-                borderData: FlBorderData(show: false),
-                minX: 0, maxX: 6, minY: 0, maxY: 1500,
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: const [FlSpot(0, 450), FlSpot(1, 320), FlSpot(2, 780), FlSpot(3, 520), FlSpot(4, 980), FlSpot(5, 850), FlSpot(6, 1200)],
-                    isCurved: true, color: AppColors.profit, barWidth: 3, isStrokeCapRound: true,
-                    dotData: const FlDotData(show: false),
-                    belowBarData: BarAreaData(show: true, color: AppColors.chartFill),
-                  ),
-                ],
-              ),
+            child: weeklyAsync.when(
+              data: (dailyProfits) => _buildChart(dailyProfits),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (_, __) => const Center(child: Text('Failed to load chart')),
             ),
           ),
         ],
@@ -325,7 +323,47 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecentSessionsCard() {
+  Widget _buildChart(List<double> dailyProfits) {
+    final maxY = dailyProfits.isEmpty ? 100.0 : (dailyProfits.reduce((a, b) => a > b ? a : b).abs() * 1.2).clamp(100.0, double.infinity);
+    final spots = dailyProfits.asMap().entries.map((e) => FlSpot(e.key.toDouble(), e.value)).toList();
+
+    return LineChart(
+      LineChartData(
+        gridData: FlGridData(show: true, drawVerticalLine: false, horizontalInterval: maxY / 3, getDrawingHorizontalLine: (value) => FlLine(color: AppColors.chartGrid, strokeWidth: 1)),
+        titlesData: FlTitlesData(
+          show: true,
+          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 22,
+              getTitlesWidget: (value, meta) {
+                const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+                if (value.toInt() < days.length) {
+                  return Text(days[value.toInt()], style: const TextStyle(color: AppColors.textMuted, fontSize: 12));
+                }
+                return const Text('');
+              },
+            ),
+          ),
+        ),
+        borderData: FlBorderData(show: false),
+        minX: 0, maxX: 6, minY: 0, maxY: maxY,
+        lineBarsData: [
+          LineChartBarData(
+            spots: spots.isEmpty ? [const FlSpot(0, 0), const FlSpot(6, 0)] : spots,
+            isCurved: true, color: AppColors.profit, barWidth: 3, isStrokeCapRound: true,
+            dotData: const FlDotData(show: false),
+            belowBarData: BarAreaData(show: true, color: AppColors.chartFill),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecentSessionsCard(List<Session> sessions) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -338,7 +376,7 @@ class DashboardScreen extends StatelessWidget {
         children: [
           _buildRecentSessionsHeader(),
           const SizedBox(height: 16),
-          _buildRecentSessionsList(6),
+          _buildRecentSessionsList(sessions),
         ],
       ),
     );
@@ -357,26 +395,22 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecentSessionsList(int count) {
-    final sessions = _getSessions().take(count).toList();
+  Widget _buildRecentSessionsList(List<Session> sessions) {
+    if (sessions.isEmpty) {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 32),
+        child: const Center(
+          child: Text('No sessions yet.\nRecord your first session!', textAlign: TextAlign.center, style: TextStyle(color: AppColors.textMuted)),
+        ),
+      );
+    }
     return Column(
-      children: sessions.map((s) => _buildSessionCardCompact(s)).toList(),
+      children: sessions.take(6).map((s) => _buildSessionCardCompact(s)).toList(),
     );
   }
 
-  List<_SessionData> _getSessions() => [
-    _SessionData(date: 'Jan 7, 2026', venue: 'PokerStars', game: 'NL Hold\'em \$1/\$2', duration: '4h 32m', profit: 850),
-    _SessionData(date: 'Jan 6, 2026', venue: 'GGPoker', game: 'NL Hold\'em \$0.5/\$1', duration: '2h 15m', profit: -320),
-    _SessionData(date: 'Jan 5, 2026', venue: 'PokerStars', game: 'PLO \$0.5/\$1', duration: '3h 45m', profit: 1240),
-    _SessionData(date: 'Jan 4, 2026', venue: 'Local Casino', game: 'NL Hold\'em \$2/\$5', duration: '6h 20m', profit: 570),
-    _SessionData(date: 'Jan 3, 2026', venue: 'WPT', game: 'Tournament', duration: '5h 10m', profit: 2500),
-    _SessionData(date: 'Jan 2, 2026', venue: 'Home Game', game: 'NL Hold\'em \$0.5/\$1', duration: '3h 00m', profit: -150),
-  ];
-
-  Widget _buildSessionCardCompact(_SessionData session) {
-    final isProfit = session.profit >= 0;
-    final profitColor = isProfit ? AppColors.profit : AppColors.loss;
-    final profitText = isProfit ? '+\$${session.profit}' : '-\$${session.profit.abs()}';
+  Widget _buildSessionCardCompact(Session session) {
+    final profitColor = session.isProfit ? AppColors.profit : AppColors.loss;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -384,7 +418,7 @@ class DashboardScreen extends StatelessWidget {
           Container(
             width: 36, height: 36,
             decoration: BoxDecoration(color: profitColor.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(8)),
-            child: Icon(isProfit ? Icons.arrow_upward : Icons.arrow_downward, color: profitColor, size: 18),
+            child: Icon(session.isProfit ? Icons.arrow_upward : Icons.arrow_downward, color: profitColor, size: 18),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -392,25 +426,24 @@ class DashboardScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(session.venue, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
-                Text('${session.game} • ${session.duration}', style: const TextStyle(fontSize: 11, color: AppColors.textMuted)),
+                Text('${session.gameType} ${session.stakes} • ${session.durationFormatted}', style: const TextStyle(fontSize: 11, color: AppColors.textMuted)),
               ],
             ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(profitText, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: profitColor)),
-              Text(session.date, style: const TextStyle(fontSize: 10, color: AppColors.textMuted)),
+              Text(session.profitFormatted, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: profitColor)),
+              Text(_formatDate(session.date), style: const TextStyle(fontSize: 10, color: AppColors.textMuted)),
             ],
           ),
         ],
       ),
     );
   }
-}
 
-class _SessionData {
-  final String date, venue, game, duration;
-  final int profit;
-  _SessionData({required this.date, required this.venue, required this.game, required this.duration, required this.profit});
+  String _formatDate(DateTime date) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return '${months[date.month - 1]} ${date.day}, ${date.year}';
+  }
 }
