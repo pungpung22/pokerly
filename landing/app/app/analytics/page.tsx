@@ -98,10 +98,10 @@ export default function AnalyticsPage() {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
-        <div style={{ textAlign: 'center' }}>
-          <Loader2 style={{ width: '40px', height: '40px', color: '#6366F1', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }} />
-          <p style={{ color: '#71717A' }}>분석 데이터를 불러오는 중...</p>
+      <div className="analytics-loading-state">
+        <div className="analytics-loading-content">
+          <Loader2 className="analytics-loading-spinner" />
+          <p className="analytics-loading-text">분석 데이터를 불러오는 중...</p>
         </div>
       </div>
     );
@@ -109,9 +109,9 @@ export default function AnalyticsPage() {
 
   if (error) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
-        <div style={{ textAlign: 'center' }}>
-          <p style={{ color: '#EF4444', marginBottom: '16px' }}>{error}</p>
+      <div className="analytics-error-state">
+        <div className="analytics-error-content">
+          <p className="analytics-error-text">{error}</p>
           <button
             onClick={() => window.location.reload()}
             className="btn-primary"
@@ -124,33 +124,21 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div style={{ padding: '24px', maxWidth: '1400px', margin: '0 auto' }}>
+    <div className="app-page">
       {/* Header */}
-      <div style={{ marginBottom: '24px' }}>
-        <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>분석</h1>
-        <p style={{ color: '#71717A' }}>포커 성과를 다양한 관점에서 분석합니다</p>
+      <div className="app-page-header">
+        <h1 className="page-title">분석</h1>
+        <p className="page-subtitle">포커 성과를 다양한 관점에서 분석합니다</p>
       </div>
 
       {/* Period Filter */}
-      <div style={{ marginBottom: '24px' }}>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
+      <div className="analytics-filter-section">
+        <div className="analytics-period-filters">
           {(Object.keys(periodLabels) as PeriodType[]).map((p) => (
             <button
               key={p}
               onClick={() => handlePeriodChange(p)}
-              style={{
-                padding: '10px 16px',
-                background: period === p ? 'rgba(99, 102, 241, 0.2)' : '#141416',
-                border: `1px solid ${period === p ? '#6366F1' : '#27272A'}`,
-                borderRadius: '8px',
-                color: period === p ? '#6366F1' : '#71717A',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: period === p ? 500 : 400,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-              }}
+              className={`filter-btn ${period === p ? 'active' : ''}`}
             >
               {p === 'custom' && <Calendar style={{ width: '14px', height: '14px' }} />}
               {periodLabels[p]}
@@ -160,53 +148,30 @@ export default function AnalyticsPage() {
 
         {/* Custom Date Picker */}
         {showDatePicker && (
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', padding: '16px', background: '#141416', borderRadius: '8px', border: '1px solid #27272A' }}>
-            <div>
-              <label style={{ display: 'block', color: '#71717A', fontSize: '12px', marginBottom: '4px' }}>시작일</label>
+          <div className="analytics-date-picker">
+            <div className="analytics-date-input-group">
+              <label className="analytics-date-label">시작일</label>
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                style={{
-                  padding: '8px 12px',
-                  background: '#0A0A0B',
-                  border: '1px solid #27272A',
-                  borderRadius: '6px',
-                  color: 'white',
-                  fontSize: '14px',
-                }}
+                className="analytics-date-input"
               />
             </div>
-            <span style={{ color: '#71717A', marginTop: '20px' }}>~</span>
-            <div>
-              <label style={{ display: 'block', color: '#71717A', fontSize: '12px', marginBottom: '4px' }}>종료일</label>
+            <span className="analytics-date-separator">~</span>
+            <div className="analytics-date-input-group">
+              <label className="analytics-date-label">종료일</label>
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                style={{
-                  padding: '8px 12px',
-                  background: '#0A0A0B',
-                  border: '1px solid #27272A',
-                  borderRadius: '6px',
-                  color: 'white',
-                  fontSize: '14px',
-                }}
+                className="analytics-date-input"
               />
             </div>
             <button
               onClick={handleCustomDateApply}
               disabled={!startDate || !endDate}
-              style={{
-                marginTop: '20px',
-                padding: '8px 16px',
-                background: startDate && endDate ? '#6366F1' : '#27272A',
-                border: 'none',
-                borderRadius: '6px',
-                color: startDate && endDate ? 'white' : '#71717A',
-                cursor: startDate && endDate ? 'pointer' : 'not-allowed',
-                fontSize: '14px',
-              }}
+              className={`analytics-date-apply-btn ${startDate && endDate ? 'enabled' : 'disabled'}`}
             >
               적용
             </button>
@@ -215,62 +180,46 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Summary Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginBottom: '24px' }}>
-        <div className="card" style={{ padding: '16px' }}>
-          <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '8px' }}>총 수익</p>
-          <p style={{ fontSize: '22px', fontWeight: 'bold', color: totals.profit >= 0 ? '#10B981' : '#EF4444' }}>
+      <div className="stats-grid analytics-stats-section">
+        <div className="stats-card">
+          <p className="stats-card-label">총 수익</p>
+          <p className="stats-card-value" style={{ color: totals.profit >= 0 ? '#10B981' : '#EF4444' }}>
             {totals.profit >= 0 ? '+' : ''}{formatCurrency(totals.profit)}원
           </p>
         </div>
-        <div className="card" style={{ padding: '16px' }}>
-          <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '8px' }}>세션 수</p>
-          <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'white' }}>{totals.sessions}회</p>
+        <div className="stats-card">
+          <p className="stats-card-label">세션 수</p>
+          <p className="stats-card-value">{totals.sessions}회</p>
         </div>
-        <div className="card" style={{ padding: '16px' }}>
-          <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '8px' }}>플레이 시간</p>
-          <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'white' }}>{totals.hours}시간</p>
+        <div className="stats-card">
+          <p className="stats-card-label">플레이 시간</p>
+          <p className="stats-card-value">{totals.hours}시간</p>
         </div>
-        <div className="card" style={{ padding: '16px' }}>
-          <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '8px' }}>시간당 수익</p>
-          <p style={{ fontSize: '22px', fontWeight: 'bold', color: totals.hours > 0 ? (totals.profit / totals.hours >= 0 ? '#10B981' : '#EF4444') : '#71717A' }}>
+        <div className="stats-card">
+          <p className="stats-card-label">시간당 수익</p>
+          <p className="stats-card-value" style={{ color: totals.hours > 0 ? (totals.profit / totals.hours >= 0 ? '#10B981' : '#EF4444') : '#71717A' }}>
             {totals.hours > 0 ? `${Math.round(totals.profit / totals.hours).toLocaleString()}원` : '-'}
           </p>
         </div>
       </div>
 
       {/* Profit Chart */}
-      <div className="card" style={{ marginBottom: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <TrendingUp style={{ width: '24px', height: '24px', color: '#6366F1' }} />
-            <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>수익 추이</h2>
+      <div className="card analytics-chart-card">
+        <div className="analytics-chart-header">
+          <div className="analytics-title-group">
+            <TrendingUp className="analytics-section-icon" />
+            <h2 className="analytics-section-title">수익 추이</h2>
           </div>
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div className="analytics-chart-type-buttons">
             <button
               onClick={() => setChartType('daily')}
-              style={{
-                padding: '6px 12px',
-                background: chartType === 'daily' ? 'rgba(99, 102, 241, 0.2)' : 'transparent',
-                border: `1px solid ${chartType === 'daily' ? '#6366F1' : '#27272A'}`,
-                borderRadius: '6px',
-                color: chartType === 'daily' ? '#6366F1' : '#71717A',
-                cursor: 'pointer',
-                fontSize: '13px',
-              }}
+              className={`filter-btn ${chartType === 'daily' ? 'active' : ''}`}
             >
               일별
             </button>
             <button
               onClick={() => setChartType('monthly')}
-              style={{
-                padding: '6px 12px',
-                background: chartType === 'monthly' ? 'rgba(99, 102, 241, 0.2)' : 'transparent',
-                border: `1px solid ${chartType === 'monthly' ? '#6366F1' : '#27272A'}`,
-                borderRadius: '6px',
-                color: chartType === 'monthly' ? '#6366F1' : '#71717A',
-                cursor: 'pointer',
-                fontSize: '13px',
-              }}
+              className={`filter-btn ${chartType === 'monthly' ? 'active' : ''}`}
             >
               월별
             </button>
@@ -278,11 +227,11 @@ export default function AnalyticsPage() {
         </div>
 
         {chartData.length === 0 ? (
-          <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <p style={{ color: '#71717A' }}>해당 기간에 데이터가 없습니다</p>
+          <div className="analytics-chart-empty">
+            <p className="analytics-empty-text">해당 기간에 데이터가 없습니다</p>
           </div>
         ) : (
-          <div style={{ height: '250px', display: 'flex', alignItems: 'flex-end', gap: '8px', paddingBottom: '32px', overflowX: 'auto' }}>
+          <div className="analytics-chart-container">
             {chartData.slice(-15).map((data) => {
               const height = maxProfit > 0 ? (Math.abs(data.profit) / maxProfit) * 100 : 0;
               const isPositive = data.profit >= 0;
@@ -290,17 +239,15 @@ export default function AnalyticsPage() {
                 ? (data as { date: string }).date.slice(5).replace('-', '/')
                 : (data as { month: string }).month.slice(5) + '월';
               return (
-                <div key={chartType === 'daily' ? (data as { date: string }).date : (data as { month: string }).month} style={{ flex: '0 0 auto', minWidth: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <div style={{ width: '100%', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: isPositive ? 'flex-end' : 'flex-start', alignItems: 'center' }}>
-                    <p style={{ color: isPositive ? '#10B981' : '#EF4444', fontWeight: 'bold', marginBottom: '4px', fontSize: '11px' }}>
+                <div key={chartType === 'daily' ? (data as { date: string }).date : (data as { month: string }).month} className="analytics-chart-bar-wrapper">
+                  <div className="analytics-chart-bar-area">
+                    <p className="analytics-chart-bar-value" style={{ color: isPositive ? '#10B981' : '#EF4444' }}>
                       {isPositive ? '+' : ''}{formatCurrency(data.profit)}
                     </p>
                     <div
+                      className="analytics-chart-bar"
                       style={{
-                        width: '100%',
-                        maxWidth: '40px',
                         height: `${Math.max(height, 4)}%`,
-                        minHeight: '4px',
                         background: isPositive
                           ? 'linear-gradient(to top, #10B981, #34D399)'
                           : 'linear-gradient(to bottom, #EF4444, #F87171)',
@@ -308,7 +255,7 @@ export default function AnalyticsPage() {
                       }}
                     />
                   </div>
-                  <p style={{ color: '#71717A', marginTop: '8px', fontSize: '11px' }}>{label}</p>
+                  <p className="analytics-chart-bar-label">{label}</p>
                 </div>
               );
             })}
@@ -317,27 +264,27 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Game Type & Stakes Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px' }}>
+      <div className="content-grid analytics-stats-grid">
         {/* By Game Type */}
         <div className="card">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-            <Target style={{ width: '24px', height: '24px', color: '#6366F1' }} />
-            <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>게임 유형별</h2>
+          <div className="analytics-title-group analytics-section-header">
+            <Target className="analytics-section-icon" />
+            <h2 className="analytics-section-title">게임 유형별</h2>
           </div>
 
           {gameTypeStats.length === 0 ? (
-            <p style={{ color: '#71717A', textAlign: 'center', padding: '20px 0' }}>데이터 없음</p>
+            <p className="analytics-empty-text analytics-empty-centered">데이터 없음</p>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="analytics-stat-list">
               {gameTypeStats.map((stat) => (
-                <div key={stat.type} style={{ padding: '16px', background: '#0A0A0B', borderRadius: '8px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <span style={{ color: 'white', fontWeight: 500 }}>{stat.type}</span>
-                    <span style={{ color: stat.profit >= 0 ? '#10B981' : '#EF4444', fontWeight: 'bold' }}>
+                <div key={stat.type} className="analytics-stat-item-card">
+                  <div className="analytics-stat-row">
+                    <span className="analytics-stat-name">{stat.type}</span>
+                    <span className="analytics-stat-profit" style={{ color: stat.profit >= 0 ? '#10B981' : '#EF4444' }}>
                       {stat.profit >= 0 ? '+' : ''}{stat.profit.toLocaleString()}원
                     </span>
                   </div>
-                  <div style={{ display: 'flex', gap: '16px', color: '#71717A', fontSize: '13px' }}>
+                  <div className="analytics-stat-meta">
                     <span>{stat.sessions} 세션</span>
                     <span>승률 {stat.winRate}%</span>
                   </div>
@@ -349,24 +296,24 @@ export default function AnalyticsPage() {
 
         {/* By Stakes */}
         <div className="card">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-            <Zap style={{ width: '24px', height: '24px', color: '#6366F1' }} />
-            <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>스테이크별</h2>
+          <div className="analytics-title-group analytics-section-header">
+            <Zap className="analytics-section-icon" />
+            <h2 className="analytics-section-title">스테이크별</h2>
           </div>
 
           {stakesStats.length === 0 ? (
-            <p style={{ color: '#71717A', textAlign: 'center', padding: '20px 0' }}>데이터 없음</p>
+            <p className="analytics-empty-text analytics-empty-centered">데이터 없음</p>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="analytics-stat-list">
               {stakesStats.map((stat) => (
-                <div key={stat.stakes} style={{ padding: '16px', background: '#0A0A0B', borderRadius: '8px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <span style={{ color: 'white', fontWeight: 500 }}>{stat.stakes}</span>
-                    <span style={{ color: stat.profit >= 0 ? '#10B981' : '#EF4444', fontWeight: 'bold' }}>
+                <div key={stat.stakes} className="analytics-stat-item-card">
+                  <div className="analytics-stat-row">
+                    <span className="analytics-stat-name">{stat.stakes}</span>
+                    <span className="analytics-stat-profit" style={{ color: stat.profit >= 0 ? '#10B981' : '#EF4444' }}>
                       {stat.profit >= 0 ? '+' : ''}{stat.profit.toLocaleString()}원
                     </span>
                   </div>
-                  <div style={{ display: 'flex', gap: '16px', color: '#71717A', fontSize: '13px' }}>
+                  <div className="analytics-stat-meta">
                     <span>{stat.sessions} 세션</span>
                   </div>
                 </div>
@@ -378,24 +325,24 @@ export default function AnalyticsPage() {
 
       {/* Venue Performance */}
       <div className="card">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-          <Award style={{ width: '24px', height: '24px', color: '#6366F1' }} />
-          <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>장소별 성적</h2>
+        <div className="analytics-title-group analytics-section-header">
+          <Award className="analytics-section-icon" />
+          <h2 className="analytics-section-title">장소별 성적</h2>
         </div>
 
         {venueStats.length === 0 ? (
-          <p style={{ color: '#71717A', textAlign: 'center', padding: '20px 0' }}>데이터 없음</p>
+          <p className="analytics-empty-text analytics-empty-centered">데이터 없음</p>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+          <div className="analytics-venue-grid">
             {venueStats.map((stat) => (
-              <div key={stat.venue} style={{ padding: '16px', background: '#0A0A0B', borderRadius: '8px' }}>
-                <p style={{ color: 'white', fontWeight: 500, marginBottom: '8px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div key={stat.venue} className="analytics-venue-card">
+                <p className="analytics-venue-name">
                   {stat.venue}
                 </p>
-                <p style={{ color: stat.profit >= 0 ? '#10B981' : '#EF4444', fontWeight: 'bold', fontSize: '18px', marginBottom: '4px' }}>
+                <p className="analytics-venue-profit" style={{ color: stat.profit >= 0 ? '#10B981' : '#EF4444' }}>
                   {stat.profit >= 0 ? '+' : ''}{stat.profit.toLocaleString()}원
                 </p>
-                <p style={{ color: '#71717A', fontSize: '13px' }}>{stat.sessions} 세션</p>
+                <p className="analytics-venue-sessions">{stat.sessions} 세션</p>
               </div>
             ))}
           </div>

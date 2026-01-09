@@ -7,7 +7,6 @@ import {
   TrendingDown,
   Target,
   Clock,
-  Flame,
   ArrowUpRight,
   Plus,
   History,
@@ -19,11 +18,10 @@ import {
   CalendarDays,
   Hash,
   Trophy,
-  Check
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { sessionsApi, challengesApi } from '@/lib/api';
-import type { Session, DashboardStats, Challenge, ChallengeType } from '@/lib/types';
+import type { Session, DashboardStats, Challenge } from '@/lib/types';
 import { challengeTypeLabels } from '@/lib/types';
 
 const emptyStats: DashboardStats = {
@@ -36,18 +34,6 @@ const emptyStats: DashboardStats = {
   monthProfit: 0,
   winRate: 0,
 };
-
-function formatCurrency(value: number | undefined | null): string {
-  const safeValue = value ?? 0;
-  const absValue = Math.abs(safeValue);
-  if (absValue >= 1000000) {
-    return `${(safeValue / 1000000).toFixed(1)}M`;
-  }
-  if (absValue >= 10000) {
-    return `${(safeValue / 10000).toFixed(0)}만`;
-  }
-  return safeValue.toLocaleString();
-}
 
 function formatFullCurrency(value: number | undefined | null): string {
   const safeValue = value ?? 0;
@@ -64,7 +50,6 @@ export default function DashboardPage() {
   const [showWelcomeBanner, setShowWelcomeBanner] = useState(true);
 
   useEffect(() => {
-    // 환영 배너 상태 복원
     const bannerDismissed = localStorage.getItem('pokerly_welcome_banner_dismissed');
     if (bannerDismissed === 'true') {
       setShowWelcomeBanner(false);
@@ -117,10 +102,7 @@ export default function DashboardPage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
         <div style={{ textAlign: 'center' }}>
           <p style={{ color: '#EF4444', marginBottom: '16px' }}>{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="btn-primary"
-          >
+          <button onClick={() => window.location.reload()} className="btn-primary">
             다시 시도
           </button>
         </div>
@@ -129,188 +111,152 @@ export default function DashboardPage() {
   }
 
   return (
-    <div style={{ padding: '24px', maxWidth: '1400px', margin: '0 auto' }}>
+    <div className="app-page">
       {/* Welcome Banner */}
       {showWelcomeBanner && (
-        <div
-          style={{
-            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%)',
-            border: '1px solid rgba(99, 102, 241, 0.3)',
-            borderRadius: '12px',
-            padding: '20px 24px',
-            marginBottom: '24px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '16px',
-          }}
-        >
+        <div className="welcome-banner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(99, 102, 241, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Sparkles style={{ width: '24px', height: '24px', color: '#6366F1' }} />
+            <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(99, 102, 241, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Sparkles style={{ width: '28px', height: '28px', color: '#6366F1' }} />
             </div>
             <div>
-              <h3 style={{ color: 'white', fontWeight: 600, marginBottom: '4px' }}>Pokerly에 오신 것을 환영합니다!</h3>
-              <p style={{ color: '#A1A1AA', fontSize: '14px' }}>
+              <h3 style={{ color: 'white', fontWeight: 600, marginBottom: '6px', fontSize: '18px' }}>Pokerly에 오신 것을 환영합니다!</h3>
+              <p style={{ color: '#A1A1AA', fontSize: '15px' }}>
                 세션을 기록하고 분석하여 포커 실력을 향상시켜 보세요.
               </p>
             </div>
           </div>
-          <button
-            onClick={dismissWelcomeBanner}
-            style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '8px' }}
-          >
-            <X style={{ width: '20px', height: '20px', color: '#71717A' }} />
+          <button onClick={dismissWelcomeBanner} style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '8px', flexShrink: 0 }}>
+            <X style={{ width: '24px', height: '24px', color: '#71717A' }} />
           </button>
         </div>
       )}
 
       {/* Header */}
-      <div style={{ marginBottom: '24px' }}>
-        <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>
+      <div className="app-page-header">
+        <h1 className="app-page-title">
           안녕하세요, {user?.displayName?.split(' ')[0] || '플레이어'}님
         </h1>
-        <p style={{ color: '#71717A' }}>오늘의 포커 현황을 확인하세요</p>
+        <p className="app-page-subtitle">오늘의 포커 현황을 확인하세요</p>
       </div>
 
       {/* Quick Actions */}
-      <div style={{ display: 'flex', gap: '12px', marginBottom: '24px', flexWrap: 'wrap' }}>
-        <Link
-          href="/app/upload"
-          className="btn-primary"
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-        >
+      <div style={{ display: 'flex', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
+        <Link href="/app/upload" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
           <Plus style={{ width: '18px', height: '18px' }} />
           세션 기록하기
         </Link>
-        <Link
-          href="/app/sessions"
-          className="btn-secondary"
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-        >
+        <Link href="/app/sessions" className="btn-secondary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
           <History style={{ width: '18px', height: '18px' }} />
           전체 기록 보기
         </Link>
       </div>
 
-      {/* Today & This Week Stats - Highlighted */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+      {/* Today & This Week Stats - Full Width Highlighted */}
+      <div className="stats-grid stats-grid-highlight">
         {/* Today */}
-        <div
-          className="card"
-          style={{
-            padding: '24px',
-            background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%)',
-            border: '1px solid rgba(251, 191, 36, 0.2)',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'rgba(251, 191, 36, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Sun style={{ width: '24px', height: '24px', color: '#FBBF24' }} />
+        <div className="stats-card" style={{ background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%)', border: '1px solid rgba(251, 191, 36, 0.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '12px', background: 'rgba(251, 191, 36, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Sun style={{ width: '28px', height: '28px', color: '#FBBF24' }} />
             </div>
             <div>
-              <p style={{ color: '#FBBF24', fontSize: '13px', fontWeight: 500 }}>오늘</p>
-              <p style={{ color: '#71717A', fontSize: '12px' }}>{new Date().toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })}</p>
+              <p style={{ color: '#FBBF24', fontSize: '15px', fontWeight: 600 }}>오늘</p>
+              <p style={{ color: '#71717A', fontSize: '13px' }}>{new Date().toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })}</p>
             </div>
           </div>
-          <p style={{ fontSize: '32px', fontWeight: 'bold', color: stats.todayProfit >= 0 ? '#10B981' : '#EF4444' }}>
+          <p className="stats-card-value" style={{ color: stats.todayProfit >= 0 ? '#10B981' : '#EF4444', fontSize: '32px' }}>
             {formatFullCurrency(stats.todayProfit)}
           </p>
         </div>
 
         {/* This Week */}
-        <div
-          className="card"
-          style={{
-            padding: '24px',
-            background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%)',
-            border: '1px solid rgba(34, 211, 238, 0.2)',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'rgba(34, 211, 238, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <CalendarDays style={{ width: '24px', height: '24px', color: '#22D3EE' }} />
+        <div className="stats-card" style={{ background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(6, 182, 212, 0.05) 100%)', border: '1px solid rgba(34, 211, 238, 0.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+            <div style={{ width: '52px', height: '52px', borderRadius: '12px', background: 'rgba(34, 211, 238, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <CalendarDays style={{ width: '28px', height: '28px', color: '#22D3EE' }} />
             </div>
             <div>
-              <p style={{ color: '#22D3EE', fontSize: '13px', fontWeight: 500 }}>이번 주</p>
-              <p style={{ color: '#71717A', fontSize: '12px' }}>일요일부터 오늘까지</p>
+              <p style={{ color: '#22D3EE', fontSize: '15px', fontWeight: 600 }}>이번 주</p>
+              <p style={{ color: '#71717A', fontSize: '13px' }}>일요일부터 오늘까지</p>
             </div>
           </div>
-          <p style={{ fontSize: '32px', fontWeight: 'bold', color: stats.weekProfit >= 0 ? '#10B981' : '#EF4444' }}>
+          <p className="stats-card-value" style={{ color: stats.weekProfit >= 0 ? '#10B981' : '#EF4444', fontSize: '32px' }}>
             {formatFullCurrency(stats.weekProfit)}
           </p>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+      {/* Stats Grid - 5 columns on PC */}
+      <div className="stats-grid stats-grid-5-cols">
         {/* Total Profit */}
-        <div className="card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ color: '#71717A', fontSize: '13px' }}>총 수익</span>
-            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TrendingUp style={{ width: '18px', height: '18px', color: '#10B981' }} />
+        <div className="stats-card">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+            <span className="stats-card-label">총 수익</span>
+            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <TrendingUp style={{ width: '22px', height: '22px', color: '#10B981' }} />
             </div>
           </div>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: stats.totalProfit >= 0 ? '#10B981' : '#EF4444' }}>
+          <p className="stats-card-value" style={{ color: stats.totalProfit >= 0 ? '#10B981' : '#EF4444' }}>
             {formatFullCurrency(stats.totalProfit)}
           </p>
-          <p style={{ color: '#71717A', fontSize: '12px', marginTop: '4px' }}>{stats.totalSessions} 세션</p>
+          <p style={{ color: '#71717A', fontSize: '13px', marginTop: '6px' }}>{stats.totalSessions} 세션</p>
         </div>
 
         {/* This Month */}
-        <div className="card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ color: '#71717A', fontSize: '13px' }}>이번 달</span>
-            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(99, 102, 241, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Calendar style={{ width: '18px', height: '18px', color: '#6366F1' }} />
+        <div className="stats-card">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+            <span className="stats-card-label">이번 달</span>
+            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(99, 102, 241, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Calendar style={{ width: '22px', height: '22px', color: '#6366F1' }} />
             </div>
           </div>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: stats.monthProfit >= 0 ? '#10B981' : '#EF4444' }}>
+          <p className="stats-card-value" style={{ color: stats.monthProfit >= 0 ? '#10B981' : '#EF4444' }}>
             {formatFullCurrency(stats.monthProfit)}
           </p>
         </div>
 
         {/* Win Rate */}
-        <div className="card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ color: '#71717A', fontSize: '13px' }}>승률</span>
-            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(139, 92, 246, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Target style={{ width: '18px', height: '18px', color: '#8B5CF6' }} />
+        <div className="stats-card">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+            <span className="stats-card-label">승률</span>
+            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(139, 92, 246, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Target style={{ width: '22px', height: '22px', color: '#8B5CF6' }} />
             </div>
           </div>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{stats.winRate}%</p>
+          <p className="stats-card-value" style={{ color: 'white' }}>{stats.winRate}%</p>
         </div>
 
         {/* Play Time */}
-        <div className="card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ color: '#71717A', fontSize: '13px' }}>플레이 시간</span>
-            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(236, 72, 153, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Clock style={{ width: '18px', height: '18px', color: '#EC4899' }} />
+        <div className="stats-card">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+            <span className="stats-card-label">플레이 시간</span>
+            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(236, 72, 153, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Clock style={{ width: '22px', height: '22px', color: '#EC4899' }} />
             </div>
           </div>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{stats.totalHours}시간</p>
+          <p className="stats-card-value" style={{ color: 'white' }}>{stats.totalHours}시간</p>
         </div>
 
         {/* Total Hands */}
-        <div className="card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ color: '#71717A', fontSize: '13px' }}>총 핸드</span>
-            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(251, 191, 36, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Hash style={{ width: '18px', height: '18px', color: '#FBBF24' }} />
+        <div className="stats-card">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+            <span className="stats-card-label">총 핸드</span>
+            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(251, 191, 36, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Hash style={{ width: '22px', height: '22px', color: '#FBBF24' }} />
             </div>
           </div>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{(stats.totalHands || 0).toLocaleString()}</p>
+          <p className="stats-card-value" style={{ color: 'white' }}>{(stats.totalHands || 0).toLocaleString()}</p>
         </div>
       </div>
 
-      {/* Active Challenges Widget */}
-      {activeChallenges.length > 0 && (
-        <div className="card" style={{ padding: '0', overflow: 'hidden', marginBottom: '24px' }}>
+      {/* Two Column Layout for PC */}
+      <div className="content-grid">
+        {/* Active Challenges Widget */}
+        <div className="full-width-card" style={{ padding: 0, overflow: 'hidden' }}>
           <div style={{ padding: '20px 24px', borderBottom: '1px solid #27272A', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Trophy style={{ width: '20px', height: '20px', color: '#6366F1' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Trophy style={{ width: '24px', height: '24px', color: '#6366F1' }} />
               <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>진행 중인 챌린지</h2>
             </div>
             <Link href="/app/challenges" style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#6366F1', textDecoration: 'none', fontSize: '14px' }}>
@@ -319,127 +265,117 @@ export default function DashboardPage() {
             </Link>
           </div>
           <div style={{ padding: '16px 24px' }}>
-            {activeChallenges.slice(0, 3).map((challenge, index) => {
-              const progress = Math.min((challenge.currentValue / challenge.targetValue) * 100, 100);
-              const progressColor = progress >= 100 ? '#10B981' : progress >= 50 ? '#6366F1' : '#F59E0B';
-              const daysRemaining = Math.max(0, Math.ceil((new Date(challenge.endDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
+            {activeChallenges.length === 0 ? (
+              <div style={{ padding: '24px 0', textAlign: 'center' }}>
+                <p style={{ color: '#71717A', marginBottom: '16px' }}>진행 중인 챌린지가 없습니다</p>
+                <Link href="/app/challenges" className="btn-secondary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px' }}>
+                  챌린지 참여하기
+                </Link>
+              </div>
+            ) : (
+              activeChallenges.slice(0, 3).map((challenge, index) => {
+                const progress = Math.min((challenge.currentValue / challenge.targetValue) * 100, 100);
+                const progressColor = progress >= 100 ? '#10B981' : progress >= 50 ? '#6366F1' : '#F59E0B';
+                const daysRemaining = Math.max(0, Math.ceil((new Date(challenge.endDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
 
-              return (
-                <div
-                  key={challenge.id}
-                  style={{
-                    padding: '16px 0',
-                    borderBottom: index < Math.min(activeChallenges.length, 3) - 1 ? '1px solid #27272A' : 'none',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontWeight: 500, color: 'white' }}>{challenge.title}</span>
-                      <span
-                        style={{
-                          padding: '2px 6px',
-                          background: 'rgba(99, 102, 241, 0.2)',
-                          borderRadius: '4px',
-                          fontSize: '11px',
-                          color: '#6366F1',
-                        }}
-                      >
-                        {challengeTypeLabels[challenge.type]}
+                return (
+                  <div key={challenge.id} style={{ padding: '16px 0', borderBottom: index < Math.min(activeChallenges.length, 3) - 1 ? '1px solid #27272A' : 'none' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ fontWeight: 500, color: 'white', fontSize: '15px' }}>{challenge.title}</span>
+                        <span style={{ padding: '3px 8px', background: 'rgba(99, 102, 241, 0.2)', borderRadius: '4px', fontSize: '12px', color: '#6366F1' }}>
+                          {challengeTypeLabels[challenge.type]}
+                        </span>
+                      </div>
+                      <span style={{ fontSize: '13px', color: daysRemaining <= 3 ? '#EF4444' : '#71717A' }}>
+                        {daysRemaining}일 남음
                       </span>
                     </div>
-                    <span style={{ fontSize: '13px', color: daysRemaining <= 3 ? '#EF4444' : '#71717A' }}>
-                      {daysRemaining}일 남음
-                    </span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <div style={{ flex: 1, height: '6px', background: '#27272A', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div
-                        style={{
-                          height: '100%',
-                          width: `${progress}%`,
-                          background: progressColor,
-                          borderRadius: '3px',
-                          transition: 'width 0.3s ease',
-                        }}
-                      />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div className="progress-bar-container" style={{ flex: 1 }}>
+                        <div className="progress-bar-fill" style={{ width: `${progress}%`, background: progressColor }} />
+                      </div>
+                      <span style={{ fontSize: '14px', color: progressColor, fontWeight: 600, minWidth: '45px', textAlign: 'right' }}>
+                        {progress.toFixed(0)}%
+                      </span>
                     </div>
-                    <span style={{ fontSize: '13px', color: progressColor, fontWeight: 500, minWidth: '40px', textAlign: 'right' }}>
-                      {progress.toFixed(0)}%
-                    </span>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
-      )}
 
-      {/* Recent Sessions */}
-      <div className="card" style={{ padding: '0', overflow: 'hidden' }}>
-        <div style={{ padding: '20px 24px', borderBottom: '1px solid #27272A', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>최근 세션</h2>
-          <Link href="/app/sessions" style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#6366F1', textDecoration: 'none', fontSize: '14px' }}>
-            전체 보기
-            <ArrowUpRight style={{ width: '16px', height: '16px' }} />
-          </Link>
-        </div>
-
-        {recentSessions.length === 0 ? (
-          <div style={{ padding: '40px 24px', textAlign: 'center' }}>
-            <p style={{ color: '#71717A', marginBottom: '16px' }}>아직 기록된 세션이 없습니다</p>
-            <Link href="/app/upload" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-              <Plus style={{ width: '18px', height: '18px' }} />
-              첫 세션 기록하기
+        {/* Recent Sessions */}
+        <div className="full-width-card" style={{ padding: 0, overflow: 'hidden' }}>
+          <div style={{ padding: '20px 24px', borderBottom: '1px solid #27272A', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <History style={{ width: '24px', height: '24px', color: '#6366F1' }} />
+              <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>최근 세션</h2>
+            </div>
+            <Link href="/app/sessions" style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#6366F1', textDecoration: 'none', fontSize: '14px' }}>
+              전체 보기
+              <ArrowUpRight style={{ width: '16px', height: '16px' }} />
             </Link>
           </div>
-        ) : (
-          <div>
-            {recentSessions.map((session, index) => {
-              const profit = session.cashOut - session.buyIn;
-              return (
-                <div
-                  key={session.id}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '16px 24px',
-                    borderBottom: index < recentSessions.length - 1 ? '1px solid #27272A' : 'none',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div
-                      style={{
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '8px',
-                        background: profit >= 0 ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      {profit >= 0 ? (
-                        <TrendingUp style={{ width: '20px', height: '20px', color: '#10B981' }} />
-                      ) : (
-                        <TrendingDown style={{ width: '20px', height: '20px', color: '#EF4444' }} />
-                      )}
+
+          {recentSessions.length === 0 ? (
+            <div style={{ padding: '48px 24px', textAlign: 'center' }}>
+              <p style={{ color: '#71717A', marginBottom: '16px' }}>아직 기록된 세션이 없습니다</p>
+              <Link href="/app/upload" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <Plus style={{ width: '18px', height: '18px' }} />
+                첫 세션 기록하기
+              </Link>
+            </div>
+          ) : (
+            <div>
+              {recentSessions.map((session, index) => {
+                const profit = session.cashOut - session.buyIn;
+                return (
+                  <div
+                    key={session.id}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '18px 24px',
+                      borderBottom: index < recentSessions.length - 1 ? '1px solid #27272A' : 'none',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <div
+                        style={{
+                          width: '48px',
+                          height: '48px',
+                          borderRadius: '12px',
+                          background: profit >= 0 ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {profit >= 0 ? (
+                          <TrendingUp style={{ width: '24px', height: '24px', color: '#10B981' }} />
+                        ) : (
+                          <TrendingDown style={{ width: '24px', height: '24px', color: '#EF4444' }} />
+                        )}
+                      </div>
+                      <div>
+                        <p style={{ color: 'white', fontWeight: 500, marginBottom: '4px', fontSize: '15px' }}>{session.venue}</p>
+                        <p style={{ color: '#71717A', fontSize: '13px' }}>
+                          {session.stakes} · {session.gameType === 'cash' ? '캐시게임' : '토너먼트'} · {session.date}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p style={{ color: 'white', fontWeight: 500, marginBottom: '2px' }}>{session.venue}</p>
-                      <p style={{ color: '#71717A', fontSize: '13px' }}>
-                        {session.stakes} · {session.gameType === 'cash' ? '캐시게임' : '토너먼트'} · {session.date}
-                      </p>
-                    </div>
+                    <p style={{ fontSize: '18px', fontWeight: 'bold', color: profit >= 0 ? '#10B981' : '#EF4444' }}>
+                      {formatFullCurrency(profit)}
+                    </p>
                   </div>
-                  <p style={{ fontSize: '16px', fontWeight: 'bold', color: profit >= 0 ? '#10B981' : '#EF4444' }}>
-                    {formatFullCurrency(profit)}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

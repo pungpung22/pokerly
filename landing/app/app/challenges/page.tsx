@@ -167,12 +167,12 @@ export default function ChallengesPage() {
   }
 
   return (
-    <div style={{ padding: '24px', maxWidth: '800px', margin: '0 auto' }}>
+    <div className="app-page">
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
+      <div className="challenges-header">
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>챌린지</h1>
-          <p style={{ color: '#71717A' }}>목표를 설정하고 달성해보세요</p>
+          <h1 className="page-title">챌린지</h1>
+          <p className="page-subtitle">목표를 설정하고 달성해보세요</p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
@@ -184,62 +184,45 @@ export default function ChallengesPage() {
         </button>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Banner - Full Width */}
       {stats && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
-          <div className="card" style={{ textAlign: 'center' }}>
+        <div className="challenges-stats-banner">
+          <div className="challenges-stat-item">
             <div style={{ color: '#6366F1', marginBottom: '8px' }}>
-              <Flame style={{ width: '24px', height: '24px', margin: '0 auto' }} />
+              <Flame className="challenges-stat-icon" />
             </div>
-            <p style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>{stats.active}</p>
-            <p style={{ fontSize: '13px', color: '#71717A' }}>진행 중</p>
+            <p className="challenges-stat-value">{stats.active}</p>
+            <p className="challenges-stat-label">진행 중</p>
           </div>
-          <div className="card" style={{ textAlign: 'center' }}>
+          <div className="challenges-stat-item">
             <div style={{ color: '#10B981', marginBottom: '8px' }}>
-              <Trophy style={{ width: '24px', height: '24px', margin: '0 auto' }} />
+              <Trophy className="challenges-stat-icon" />
             </div>
-            <p style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>{stats.completed}</p>
-            <p style={{ fontSize: '13px', color: '#71717A' }}>완료</p>
+            <p className="challenges-stat-value">{stats.completed}</p>
+            <p className="challenges-stat-label">완료</p>
           </div>
-          <div className="card" style={{ textAlign: 'center' }}>
+          <div className="challenges-stat-item">
             <div style={{ color: '#F59E0B', marginBottom: '8px' }}>
-              <Award style={{ width: '24px', height: '24px', margin: '0 auto' }} />
+              <Award className="challenges-stat-icon" />
             </div>
-            <p style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>{stats.totalRewardsEarned.toLocaleString()}</p>
-            <p style={{ fontSize: '13px', color: '#71717A' }}>획득 포인트</p>
+            <p className="challenges-stat-value">{stats.totalRewardsEarned.toLocaleString()}</p>
+            <p className="challenges-stat-label">획득 포인트</p>
           </div>
         </div>
       )}
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
+      <div className="challenges-tabs">
         <button
           onClick={() => setActiveTab('active')}
-          style={{
-            padding: '10px 20px',
-            background: activeTab === 'active' ? 'rgba(99, 102, 241, 0.2)' : 'transparent',
-            border: `1px solid ${activeTab === 'active' ? '#6366F1' : '#27272A'}`,
-            borderRadius: '8px',
-            color: activeTab === 'active' ? '#6366F1' : '#71717A',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: 500,
-          }}
+          className={`filter-btn ${activeTab === 'active' ? 'active' : ''}`}
         >
           진행 중 ({activeChallenges.length})
         </button>
         <button
           onClick={() => setActiveTab('completed')}
-          style={{
-            padding: '10px 20px',
-            background: activeTab === 'completed' ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
-            border: `1px solid ${activeTab === 'completed' ? '#10B981' : '#27272A'}`,
-            borderRadius: '8px',
-            color: activeTab === 'completed' ? '#10B981' : '#71717A',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: 500,
-          }}
+          className={`filter-btn ${activeTab === 'completed' ? 'active' : ''}`}
+          style={activeTab === 'completed' ? { background: 'rgba(16, 185, 129, 0.2)', borderColor: '#10B981', color: '#10B981' } : {}}
         >
           완료 ({completedChallenges.length})
         </button>
@@ -267,7 +250,7 @@ export default function ChallengesPage() {
           )}
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div className="challenges-grid">
           {displayedChallenges.map((challenge) => {
             const progress = Math.min((challenge.currentValue / challenge.targetValue) * 100, 100);
             const daysRemaining = getDaysRemaining(challenge.endDate);
@@ -558,43 +541,27 @@ export default function ChallengesPage() {
             </div>
 
             {/* Period */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+            <div className="upload-form-grid-2">
               <div>
-                <label style={{ display: 'block', color: '#71717A', fontSize: '14px', marginBottom: '8px' }}>
+                <label className="upload-form-label-block">
                   시작일
                 </label>
                 <input
                   type="date"
                   value={newChallenge.startDate}
                   onChange={(e) => setNewChallenge({ ...newChallenge, startDate: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    background: '#0A0A0B',
-                    border: '1px solid #27272A',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '16px',
-                  }}
+                  className="upload-form-input"
                 />
               </div>
               <div>
-                <label style={{ display: 'block', color: '#71717A', fontSize: '14px', marginBottom: '8px' }}>
+                <label className="upload-form-label-block">
                   종료일
                 </label>
                 <input
                   type="date"
                   value={newChallenge.endDate}
                   onChange={(e) => setNewChallenge({ ...newChallenge, endDate: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    background: '#0A0A0B',
-                    border: '1px solid #27272A',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '16px',
-                  }}
+                  className="upload-form-input"
                 />
               </div>
             </div>

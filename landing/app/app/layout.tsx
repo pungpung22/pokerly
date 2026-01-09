@@ -88,20 +88,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ minHeight: '100vh', background: '#0A0A0B', display: 'flex' }}>
       {/* Desktop Sidebar */}
-      <aside
-        style={{
-          width: '260px',
-          background: '#141416',
-          borderRight: '1px solid #27272A',
-          display: 'none',
-          flexDirection: 'column',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          bottom: 0,
-        }}
-        className="desktop-sidebar"
-      >
+      <aside className="desktop-sidebar">
         {/* Logo */}
         <div style={{ padding: '24px', borderBottom: '1px solid #27272A' }}>
           <Link href="/app" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
@@ -210,23 +197,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Mobile Header */}
-      <header
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '60px',
-          background: '#141416',
-          borderBottom: '1px solid #27272A',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 16px',
-          zIndex: 50,
-        }}
-        className="mobile-header"
-      >
+      <header className="mobile-header">
         <Link href="/app" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
           <BarChart3 style={{ width: '28px', height: '28px', color: '#6366F1' }} />
           <span style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>Pokerly</span>
@@ -479,29 +450,51 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       )}
 
       <style jsx global>{`
-        @media (min-width: 768px) {
+        /* PC First - 기본값이 PC (1024px 이상) */
+        .desktop-sidebar {
+          width: 260px;
+          background: #141416;
+          border-right: 1px solid #27272A;
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+        }
+        .mobile-header {
+          display: none;
+        }
+        .mobile-bottom-nav {
+          display: none;
+        }
+        .more-menu-popup {
+          display: none;
+        }
+        .app-main {
+          margin-left: 260px;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+
+        /* 태블릿/모바일 (1024px 미만) */
+        @media (max-width: 1023px) {
           .desktop-sidebar {
-            display: flex !important;
+            display: none;
           }
           .mobile-header {
-            display: none !important;
-          }
-          .mobile-bottom-nav {
-            display: none !important;
-          }
-          .more-menu-popup {
-            display: none !important;
-          }
-          .app-main {
-            margin-left: 260px;
-            padding-top: 0;
-            padding-bottom: 0;
-          }
-        }
-        @media (max-width: 767px) {
-          .app-main {
-            padding-top: 60px;
-            padding-bottom: 70px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: #141416;
+            border-bottom: 1px solid #27272A;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 50;
           }
           .mobile-bottom-nav {
             position: fixed;
@@ -515,6 +508,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             align-items: center;
             z-index: 50;
             padding-bottom: env(safe-area-inset-bottom, 0);
+          }
+          .more-menu-popup {
+            display: block;
+          }
+          .app-main {
+            margin-left: 0;
+            padding-top: 60px;
+            padding-bottom: 70px;
           }
         }
       `}</style>

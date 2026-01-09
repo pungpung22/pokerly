@@ -138,10 +138,10 @@ export default function SessionsPage() {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
-        <div style={{ textAlign: 'center' }}>
-          <Loader2 style={{ width: '40px', height: '40px', color: '#6366F1', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }} />
-          <p style={{ color: '#71717A' }}>세션 목록을 불러오는 중...</p>
+      <div className="sessions-loading">
+        <div className="sessions-loading-inner">
+          <Loader2 className="sessions-loading-spinner" />
+          <p className="sessions-loading-text">세션 목록을 불러오는 중...</p>
         </div>
       </div>
     );
@@ -149,9 +149,9 @@ export default function SessionsPage() {
 
   if (error) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
-        <div style={{ textAlign: 'center' }}>
-          <p style={{ color: '#EF4444', marginBottom: '16px' }}>{error}</p>
+      <div className="sessions-error">
+        <div className="sessions-error-inner">
+          <p className="sessions-error-text">{error}</p>
           <button
             onClick={() => window.location.reload()}
             className="btn-primary"
@@ -164,89 +164,64 @@ export default function SessionsPage() {
   }
 
   return (
-    <div style={{ padding: '24px', maxWidth: '1400px', margin: '0 auto' }}>
+    <div className="sessions-page">
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
+      <div className="sessions-header">
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>세션 기록</h1>
-          <p style={{ color: '#71717A' }}>모든 포커 세션을 확인하고 관리하세요</p>
+          <h1 className="sessions-header-title">세션 기록</h1>
+          <p className="sessions-header-subtitle">모든 포커 세션을 확인하고 관리하세요</p>
         </div>
-        <Link href="/app/upload" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+        <Link href="/app/upload" className="btn-primary">
           <Plus style={{ width: '18px', height: '18px' }} />
           새 세션 추가
         </Link>
       </div>
 
       {/* Summary Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '24px' }}>
-        <div className="card" style={{ padding: '16px', textAlign: 'center' }}>
-          <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '4px' }}>총 세션</p>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{filteredSessions.length}</p>
+      <div className="sessions-summary-grid">
+        <div className="card sessions-summary-card">
+          <p className="sessions-summary-label">총 세션</p>
+          <p className="sessions-summary-value">{filteredSessions.length}</p>
         </div>
-        <div className="card" style={{ padding: '16px', textAlign: 'center' }}>
-          <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '4px' }}>총 수익</p>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: totalProfit >= 0 ? '#10B981' : '#EF4444' }}>
+        <div className="card sessions-summary-card">
+          <p className="sessions-summary-label">총 수익</p>
+          <p className="sessions-summary-value" style={{ color: totalProfit >= 0 ? '#10B981' : '#EF4444' }}>
             {totalProfit >= 0 ? '+' : ''}{totalProfit.toLocaleString()}
           </p>
         </div>
-        <div className="card" style={{ padding: '16px', textAlign: 'center' }}>
-          <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '4px' }}>승률</p>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{winRate}%</p>
+        <div className="card sessions-summary-card">
+          <p className="sessions-summary-label">승률</p>
+          <p className="sessions-summary-value">{winRate}%</p>
         </div>
-        <div className="card" style={{ padding: '16px', textAlign: 'center' }}>
-          <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '4px' }}>플레이 시간</p>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{totalHours}시간</p>
+        <div className="card sessions-summary-card">
+          <p className="sessions-summary-label">플레이 시간</p>
+          <p className="sessions-summary-value">{totalHours}시간</p>
         </div>
       </div>
 
       {/* Search and Filter Toggle */}
-      <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
+      <div className="sessions-search-area">
         {/* Search */}
-        <div style={{ flex: 1, minWidth: '200px', position: 'relative' }}>
-          <Search style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', width: '18px', height: '18px', color: '#71717A' }} />
+        <div className="sessions-search-wrapper">
+          <Search className="sessions-search-icon" />
           <input
             type="text"
             placeholder="장소 검색..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '12px 12px 12px 42px',
-              background: '#141416',
-              border: '1px solid #27272A',
-              borderRadius: '8px',
-              color: 'white',
-              fontSize: '14px',
-            }}
+            className="sessions-search-input"
           />
         </div>
 
         {/* Filter Toggle Button */}
         <button
           onClick={() => setShowFilters(!showFilters)}
-          style={{
-            padding: '12px 20px',
-            background: showFilters || activeFiltersCount > 0 ? 'rgba(99, 102, 241, 0.2)' : '#141416',
-            border: `1px solid ${showFilters || activeFiltersCount > 0 ? '#6366F1' : '#27272A'}`,
-            borderRadius: '8px',
-            color: showFilters || activeFiltersCount > 0 ? '#6366F1' : '#71717A',
-            cursor: 'pointer',
-            fontSize: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}
+          className={`sessions-filter-toggle ${showFilters || activeFiltersCount > 0 ? 'active' : 'inactive'}`}
         >
           <Filter style={{ width: '16px', height: '16px' }} />
           필터
           {activeFiltersCount > 0 && (
-            <span style={{
-              background: '#6366F1',
-              color: 'white',
-              borderRadius: '10px',
-              padding: '2px 8px',
-              fontSize: '12px',
-            }}>
+            <span className="sessions-filter-badge">
               {activeFiltersCount}
             </span>
           )}
@@ -254,21 +229,7 @@ export default function SessionsPage() {
 
         {/* Clear Filters */}
         {activeFiltersCount > 0 && (
-          <button
-            onClick={clearFilters}
-            style={{
-              padding: '12px 16px',
-              background: 'transparent',
-              border: '1px solid #27272A',
-              borderRadius: '8px',
-              color: '#71717A',
-              cursor: 'pointer',
-              fontSize: '14px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-            }}
-          >
+          <button onClick={clearFilters} className="sessions-clear-btn">
             <X style={{ width: '14px', height: '14px' }} />
             초기화
           </button>
@@ -277,24 +238,16 @@ export default function SessionsPage() {
 
       {/* Filter Panel */}
       {showFilters && (
-        <div className="card" style={{ padding: '20px', marginBottom: '24px' }}>
+        <div className="card sessions-filter-panel">
           {/* Game Type Filter */}
-          <div style={{ marginBottom: '20px' }}>
-            <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '10px' }}>게임 타입</p>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <div className="sessions-filter-group">
+            <p className="sessions-filter-label">게임 타입</p>
+            <div className="sessions-filter-buttons">
               {(['all', 'cash', 'tournament'] as const).map((type) => (
                 <button
                   key={type}
                   onClick={() => setFilterType(type)}
-                  style={{
-                    padding: '8px 16px',
-                    background: filterType === type ? 'rgba(99, 102, 241, 0.2)' : '#0A0A0B',
-                    border: `1px solid ${filterType === type ? '#6366F1' : '#27272A'}`,
-                    borderRadius: '6px',
-                    color: filterType === type ? '#6366F1' : '#71717A',
-                    cursor: 'pointer',
-                    fontSize: '13px',
-                  }}
+                  className={`sessions-filter-btn ${filterType === type ? 'active' : 'inactive'}`}
                 >
                   {type === 'all' ? '전체' : type === 'cash' ? '캐시게임' : '토너먼트'}
                 </button>
@@ -303,25 +256,14 @@ export default function SessionsPage() {
           </div>
 
           {/* Period Filter */}
-          <div style={{ marginBottom: '20px' }}>
-            <p style={{ color: '#71717A', fontSize: '13px', marginBottom: '10px' }}>기간</p>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <div className="sessions-filter-group">
+            <p className="sessions-filter-label">기간</p>
+            <div className="sessions-filter-buttons">
               {(Object.keys(periodLabels) as PeriodType[]).map((p) => (
                 <button
                   key={p}
                   onClick={() => setPeriod(p)}
-                  style={{
-                    padding: '8px 16px',
-                    background: period === p ? 'rgba(99, 102, 241, 0.2)' : '#0A0A0B',
-                    border: `1px solid ${period === p ? '#6366F1' : '#27272A'}`,
-                    borderRadius: '6px',
-                    color: period === p ? '#6366F1' : '#71717A',
-                    cursor: 'pointer',
-                    fontSize: '13px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                  }}
+                  className={`sessions-filter-btn ${period === p ? 'active' : 'inactive'}`}
                 >
                   {p === 'custom' && <Calendar style={{ width: '12px', height: '12px' }} />}
                   {periodLabels[p]}
@@ -332,38 +274,24 @@ export default function SessionsPage() {
 
           {/* Custom Date Range */}
           {period === 'custom' && (
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <div>
-                <label style={{ display: 'block', color: '#71717A', fontSize: '12px', marginBottom: '4px' }}>시작일</label>
+            <div className="sessions-date-range">
+              <div className="sessions-date-input-wrapper">
+                <label className="sessions-date-label">시작일</label>
                 <input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  style={{
-                    padding: '8px 12px',
-                    background: '#0A0A0B',
-                    border: '1px solid #27272A',
-                    borderRadius: '6px',
-                    color: 'white',
-                    fontSize: '14px',
-                  }}
+                  className="sessions-date-input"
                 />
               </div>
-              <span style={{ color: '#71717A', marginTop: '20px' }}>~</span>
-              <div>
-                <label style={{ display: 'block', color: '#71717A', fontSize: '12px', marginBottom: '4px' }}>종료일</label>
+              <span className="sessions-date-separator">~</span>
+              <div className="sessions-date-input-wrapper">
+                <label className="sessions-date-label">종료일</label>
                 <input
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  style={{
-                    padding: '8px 12px',
-                    background: '#0A0A0B',
-                    border: '1px solid #27272A',
-                    borderRadius: '6px',
-                    color: 'white',
-                    fontSize: '14px',
-                  }}
+                  className="sessions-date-input"
                 />
               </div>
             </div>
@@ -372,10 +300,10 @@ export default function SessionsPage() {
       )}
 
       {/* Sessions List */}
-      <div className="card" style={{ padding: '0', overflow: 'hidden' }}>
+      <div className="card sessions-list-card">
         {filteredSessions.length === 0 ? (
-          <div style={{ padding: '48px', textAlign: 'center' }}>
-            <p style={{ color: '#71717A', marginBottom: '16px' }}>
+          <div className="sessions-empty">
+            <p className="sessions-empty-text">
               {activeFiltersCount > 0 ? '필터 조건에 맞는 세션이 없습니다' : '아직 기록된 세션이 없습니다'}
             </p>
             {activeFiltersCount > 0 ? (
@@ -391,30 +319,10 @@ export default function SessionsPage() {
               return (
                 <div
                   key={session.id}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '16px 24px',
-                    borderBottom: index < filteredSessions.length - 1 ? '1px solid #27272A' : 'none',
-                    cursor: 'pointer',
-                    transition: 'background 0.2s',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.02)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                  className={`session-item ${index < filteredSessions.length - 1 ? 'session-item-border' : ''}`}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div
-                      style={{
-                        width: '44px',
-                        height: '44px',
-                        borderRadius: '10px',
-                        background: profit >= 0 ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
+                  <div className="session-item-left">
+                    <div className={`session-item-icon ${profit >= 0 ? 'profit' : 'loss'}`}>
                       {profit >= 0 ? (
                         <TrendingUp style={{ width: '22px', height: '22px', color: '#10B981' }} />
                       ) : (
@@ -422,50 +330,38 @@ export default function SessionsPage() {
                       )}
                     </div>
                     <div>
-                      <p style={{ color: 'white', fontWeight: 500, marginBottom: '4px' }}>{session.venue}</p>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                        <span style={{
-                          padding: '2px 8px',
-                          borderRadius: '4px',
-                          background: session.gameType === 'cash' ? 'rgba(99, 102, 241, 0.2)' : 'rgba(34, 211, 238, 0.2)',
-                          color: session.gameType === 'cash' ? '#6366F1' : '#22D3EE',
-                          fontSize: '12px',
-                        }}>
+                      <p className="session-item-venue">{session.venue}</p>
+                      <div className="session-item-meta">
+                        <span className={`session-item-badge ${session.gameType === 'cash' ? 'cash' : 'tournament'}`}>
                           {session.gameType === 'cash' ? '캐시' : '토너먼트'}
                         </span>
-                        <span style={{ color: '#71717A', fontSize: '13px' }}>{session.stakes}</span>
-                        <span style={{ color: '#71717A', fontSize: '13px' }}>·</span>
-                        <span style={{ color: '#71717A', fontSize: '13px' }}>{formatDuration(session.durationMinutes)}</span>
+                        <span className="session-item-meta-text">{session.stakes}</span>
+                        <span className="session-item-separator">·</span>
+                        <span className="session-item-meta-text">{formatDuration(session.durationMinutes)}</span>
                         {session.hands > 0 && (
                           <>
-                            <span style={{ color: '#71717A', fontSize: '13px' }}>·</span>
-                            <span style={{ color: '#71717A', fontSize: '13px' }}>{session.hands}핸드</span>
+                            <span className="session-item-separator">·</span>
+                            <span className="session-item-meta-text">{session.hands}핸드</span>
                           </>
                         )}
                         {session.level && (
                           <>
-                            <span style={{ color: '#71717A', fontSize: '13px' }}>·</span>
-                            <span style={{
-                              padding: '2px 6px',
-                              borderRadius: '4px',
-                              background: 'rgba(139, 92, 246, 0.2)',
-                              color: '#8B5CF6',
-                              fontSize: '11px',
-                            }}>
+                            <span className="session-item-separator">·</span>
+                            <span className="session-item-badge level">
                               {playerLevelLabels[session.level]}
                             </span>
                           </>
                         )}
-                        <span style={{ color: '#71717A', fontSize: '13px' }}>·</span>
-                        <span style={{ color: '#71717A', fontSize: '13px' }}>{session.date}</span>
+                        <span className="session-item-separator">·</span>
+                        <span className="session-item-meta-text">{session.date}</span>
                       </div>
                     </div>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <p style={{ fontSize: '18px', fontWeight: 'bold', color: profit >= 0 ? '#10B981' : '#EF4444', marginBottom: '4px' }}>
+                  <div className="session-item-right">
+                    <p className={`session-item-profit ${profit >= 0 ? 'positive' : 'negative'}`}>
                       {profit >= 0 ? '+' : ''}{profit.toLocaleString()}원
                     </p>
-                    <p style={{ color: '#71717A', fontSize: '13px' }}>
+                    <p className="session-item-buyin">
                       {session.buyIn.toLocaleString()} → {session.cashOut.toLocaleString()}
                     </p>
                   </div>
