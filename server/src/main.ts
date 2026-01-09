@@ -5,10 +5,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable CORS for Flutter web
+  // Enable CORS for Flutter web and Next.js
   app.enableCors({
-    origin: ['http://localhost:9999', 'http://localhost:8080', 'http://localhost:3000'],
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    origin: ['http://localhost:9999', 'http://localhost:8080', 'http://localhost:3000', 'http://localhost:3002'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
     credentials: true,
   });
 
@@ -21,8 +21,8 @@ async function bootstrap() {
   // API prefix
   app.setGlobalPrefix('api');
 
-  const port = process.env.PORT ?? 3001;
+  const port = process.env.PORT ?? 9999;
   await app.listen(port);
-  console.log(`🚀 Server running on http://localhost:${port}`);
+  console.log(`?? Server running on http://localhost:${port}`);
 }
 bootstrap();
