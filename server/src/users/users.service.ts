@@ -144,13 +144,15 @@ export class UsersService {
   }
 
   // XP 관련 헬퍼 메서드
-  private isToday(date: Date | null): boolean {
+  private isToday(date: Date | string | null): boolean {
     if (!date) return false;
+    // DB에서 문자열로 반환될 수 있으므로 Date 객체로 변환
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
     const today = new Date();
     return (
-      date.getFullYear() === today.getFullYear() &&
-      date.getMonth() === today.getMonth() &&
-      date.getDate() === today.getDate()
+      dateObj.getFullYear() === today.getFullYear() &&
+      dateObj.getMonth() === today.getMonth() &&
+      dateObj.getDate() === today.getDate()
     );
   }
 
