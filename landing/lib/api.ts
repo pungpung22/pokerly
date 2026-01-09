@@ -199,6 +199,17 @@ interface ScreenshotResult {
   size: number;
   status: 'success' | 'pending_ocr';
   message: string;
+  extractedData?: {
+    date?: string;
+    venue?: string;
+    gameType?: 'cash' | 'tournament';
+    stakes?: string;
+    playTime?: number;
+    buyIn?: number;
+    cashOut?: number;
+    tableId?: string;
+    hands?: number;
+  };
 }
 
 export const uploadsApi = {
