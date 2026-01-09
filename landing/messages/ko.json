@@ -1,0 +1,630 @@
+{
+  "Common": {
+    "loading": "로딩 중...",
+    "error": "오류가 발생했습니다",
+    "retry": "다시 시도",
+    "save": "저장",
+    "cancel": "취소",
+    "delete": "삭제",
+    "confirm": "확인",
+    "logout": "로그아웃",
+    "back": "돌아가기",
+    "viewAll": "전체 보기",
+    "close": "닫기",
+    "submit": "전송",
+    "create": "생성",
+    "edit": "수정",
+    "search": "검색",
+    "filter": "필터",
+    "noData": "데이터 없음",
+    "yes": "예",
+    "no": "아니오"
+  },
+  "Metadata": {
+    "title": "Pokerly - 스크린샷으로 포커 수익 자동 기록",
+    "description": "게임 화면만 찍으면 AI가 자동으로 데이터를 추출합니다. 복잡한 입력 없이 당신의 수익률을 한눈에 확인하세요."
+  },
+  "Navigation": {
+    "dashboard": "대시보드",
+    "sessions": "세션 기록",
+    "challenges": "챌린지",
+    "level": "레벨",
+    "analytics": "분석",
+    "upload": "업로드",
+    "notices": "공지사항",
+    "feedback": "피드백",
+    "settings": "설정",
+    "home": "홈",
+    "more": "더보기"
+  },
+  "Landing": {
+    "hero": {
+      "badge": "200명 이상의 플레이어가 사용 중",
+      "title": {
+        "line1": "스크린샷 한 장으로",
+        "line2": "포커 실력을 분석하세요"
+      },
+      "subtitle": {
+        "line1": "게임 화면만 찍으면 AI가 자동으로 데이터를 추출합니다.",
+        "line2": "복잡한 입력 없이 당신의 수익률을 한눈에 확인하세요."
+      },
+      "cta": "무료로 시작하기",
+      "demo": "데모 보기",
+      "trust": {
+        "privacy": "개인정보 보호",
+        "fast": "3초만에 분석",
+        "noCard": "신용카드 불필요"
+      },
+      "preview": "대시보드 미리보기"
+    },
+    "howItWorks": {
+      "title": "어떻게 작동하나요?",
+      "subtitle": "단 3단계로 완벽한 포커 분석",
+      "step1": {
+        "title": "캡처",
+        "desc": "게임 결과 화면을 스크린샷으로 찍으세요"
+      },
+      "step2": {
+        "title": "업로드",
+        "desc": "드래그하거나 Ctrl+V로 붙여넣기"
+      },
+      "step3": {
+        "title": "분석",
+        "desc": "AI가 자동으로 데이터를 추출하고 통계 생성"
+      }
+    },
+    "cashGame": {
+      "badge": "캐시게임",
+      "title": "세션별 수익을 자동으로 기록",
+      "subtitle": "테이블 정보, 핸드 수, 수익금까지 스크린샷에서 자동 인식",
+      "currency": "원",
+      "features": {
+        "1": "블라인드 레벨 자동 인식",
+        "2": "핸드 수 자동 계산",
+        "3": "수익/손실 자동 분류",
+        "4": "날짜/시간 자동 추출"
+      },
+      "sessions": {
+        "1": { "date": "오늘 19:37" },
+        "2": { "date": "오늘 18:20" },
+        "3": { "date": "어제 22:15" },
+        "4": { "date": "어제 20:00" }
+      }
+    },
+    "tournament": {
+      "badge": "토너먼트",
+      "title": "대회 성적도 완벽하게 추적",
+      "subtitle": "참가비, 상금, 순위까지 한번에 기록하고 ROI를 계산하세요",
+      "currency": "원",
+      "buyIn": "바이인",
+      "prize": "상금",
+      "eliminated": "탈락",
+      "features": {
+        "1": "토너먼트명 자동 인식",
+        "2": "바이인/리바이 자동 합산",
+        "3": "상금 및 순위 추출",
+        "4": "ROI 자동 계산"
+      },
+      "tournaments": {
+        "1": { "date": "일요일" },
+        "2": { "date": "토요일" },
+        "3": { "date": "금요일" },
+        "4": { "date": "금요일" }
+      }
+    },
+    "stats": {
+      "title": "당신의 포커 실력을 숫자로 확인하세요",
+      "subtitle": "다양한 통계와 차트로 강점과 약점을 분석",
+      "chart": {
+        "title": "수익 추이",
+        "months": {
+          "1": "1월", "2": "2월", "3": "3월", "4": "4월",
+          "5": "5월", "6": "6월", "7": "7월", "8": "8월",
+          "9": "9월", "10": "10월", "11": "11월", "12": "12월"
+        }
+      },
+      "items": {
+        "profit": { "label": "총 수익", "value": "+₩12,450,000", "sub": "최근 30일" },
+        "winrate": { "label": "승률", "value": "62.4%", "sub": "156세션 기준" },
+        "bb100": { "label": "BB/100", "value": "+8.5", "sub": "캐시게임" },
+        "roi": { "label": "ROI", "value": "+24.3%", "sub": "토너먼트" }
+      }
+    },
+    "testimonials": {
+      "title": "플레이어들의 후기",
+      "items": {
+        "1": {
+          "content": "엑셀로 기록하던 시절이 있었는데, 이제는 스크린샷만 찍으면 끝이에요. 시간 절약이 엄청납니다.",
+          "name": "Player_K***",
+          "info": "NL200 레귤러"
+        },
+        "2": {
+          "content": "토너먼트 ROI 계산이 자동으로 되니까 내 실력이 어느 정도인지 객관적으로 알 수 있어요.",
+          "name": "MTT_Pro***",
+          "info": "토너먼트 그라인더"
+        },
+        "3": {
+          "content": "통계 보는 재미가 있어요. BB/100 그래프 보면서 어디서 리크가 있는지 찾게 됩니다.",
+          "name": "Shark_J***",
+          "info": "NL500 플레이어"
+        }
+      }
+    },
+    "pricing": {
+      "title": "심플한 요금제",
+      "subtitle": "필요한 만큼만 사용하세요",
+      "popular": "인기",
+      "free": {
+        "name": "무료",
+        "price": "₩0",
+        "features": {
+          "uploads": "월 10회 업로드",
+          "stats": "기본 통계",
+          "history": "최근 30일 기록"
+        },
+        "cta": "무료로 시작"
+      },
+      "pro": {
+        "name": "프로",
+        "price": "₩9,900",
+        "period": "/월",
+        "features": {
+          "uploads": "무제한 업로드",
+          "stats": "고급 통계 & 차트",
+          "history": "전체 기록 보관",
+          "support": "우선 지원"
+        },
+        "cta": "프로 시작하기"
+      }
+    },
+    "cta": {
+      "title": "지금 바로 시작하세요",
+      "subtitle": {
+        "line1": "스크린샷만 찍으면 포커 수익이 자동으로 기록됩니다.",
+        "line2": "번거로운 수동 기록은 이제 그만!"
+      },
+      "trust": "신용카드 필요 없음 · 언제든 취소 가능"
+    },
+    "footer": {
+      "description": "스크린샷 한 장으로 포커 수익을 자동 기록하고 분석하는 스마트 트래커",
+      "sections": {
+        "product": "제품",
+        "support": "지원",
+        "legal": "법적 고지"
+      },
+      "links": {
+        "product": {
+          "features": "기능",
+          "pricing": "요금제",
+          "testimonials": "사용 후기"
+        },
+        "support": {
+          "help": "도움말",
+          "contact": "문의하기",
+          "faq": "FAQ"
+        },
+        "legal": {
+          "terms": "이용약관",
+          "privacy": "개인정보처리방침"
+        }
+      },
+      "copyright": "© 2026 풍풍스튜디. All rights reserved.",
+      "madeWith": "Made with passion for poker players"
+    }
+  },
+  "Login": {
+    "title": "로그인",
+    "subtitle": "Google 계정으로 시작하세요",
+    "googleButton": "Google로 계속하기",
+    "loading": "로그인 중...",
+    "back": "돌아가기",
+    "error": {
+      "failed": "로그인에 실패했습니다. 다시 시도해주세요.",
+      "general": "로그인 중 오류가 발생했습니다."
+    },
+    "terms": {
+      "prefix": "계속 진행하면",
+      "tos": "이용약관",
+      "and": "및",
+      "privacy": "개인정보처리방침",
+      "suffix": "에 동의하는 것으로 간주됩니다."
+    }
+  },
+  "Dashboard": {
+    "welcome": "Pokerly에 오신 것을 환영합니다!",
+    "welcomeSubtitle": "세션을 기록하고 분석하여 포커 실력을 향상시켜 보세요.",
+    "greeting": "안녕하세요, {name}님",
+    "defaultName": "플레이어",
+    "subtitle": "오늘의 포커 현황을 확인하세요",
+    "recordSession": "세션 기록하기",
+    "viewAllRecords": "전체 기록 보기",
+    "today": "오늘",
+    "thisWeek": "이번 주",
+    "fromSunday": "일요일부터 오늘까지",
+    "totalProfit": "총 수익",
+    "thisMonth": "이번 달",
+    "winRate": "승률",
+    "playTime": "플레이 시간",
+    "totalHands": "총 핸드",
+    "sessions": "{count} 세션",
+    "hours": "{count}시간",
+    "activeChallenges": "진행 중인 챌린지",
+    "noChallenges": "진행 중인 챌린지가 없습니다",
+    "joinChallenge": "챌린지 참여하기",
+    "daysRemaining": "{count}일 남음",
+    "recentSessions": "최근 세션",
+    "noSessions": "아직 기록된 세션이 없습니다",
+    "firstSession": "첫 세션 기록하기",
+    "cashGame": "캐시게임",
+    "tournament": "토너먼트",
+    "loadError": "데이터를 불러오는데 실패했습니다",
+    "loadingData": "데이터를 불러오는 중..."
+  },
+  "Upload": {
+    "title": "세션 기록하기",
+    "subtitle": "스크린샷을 업로드하면 OCR로 자동 인식됩니다. 인식된 데이터를 확인하고 저장하세요.",
+    "screenshotUpload": "스크린샷 업로드",
+    "xpReward": "+100 XP",
+    "dropzone": {
+      "title": "이미지를 드래그하거나 클릭하여 선택",
+      "subtitle": "PNG, JPG, JPEG, WEBP / 최대 3MB / 한 번에 최대 5개"
+    },
+    "uploadedFiles": "업로드된 파일 ({current}/5)",
+    "clearAll": "전체 삭제",
+    "processBtn": {
+      "analyze": "스크린샷 분석하기",
+      "processing": "OCR 분석 중..."
+    },
+    "ocrStatus": {
+      "processing": "OCR 분석 중...",
+      "complete": "OCR 분석 완료! 오른쪽 폼에서 데이터를 확인하세요.",
+      "failed": "OCR 분석 실패. 수동으로 입력해주세요."
+    },
+    "guide": {
+      "title": "스크린샷 가이드",
+      "tip1": "게임 종료 후 결과 화면을 캡처하세요",
+      "tip2": "바이인, 캐시아웃 금액이 보이도록 촬영하세요",
+      "tip3": "테이블 ID, 플레이 시간이 포함되면 좋습니다"
+    },
+    "form": {
+      "title": "세션 정보",
+      "xpReward": "+10 XP",
+      "manualRecord": "수동 기록",
+      "date": "날짜",
+      "gameType": "게임 유형",
+      "venue": "장소 / 테이블",
+      "venuePlaceholder": {
+        "cash": "Table #14",
+        "tournament": "Sunday Million"
+      },
+      "stakes": "스테이크",
+      "stakesPlaceholder": "1000/2000",
+      "buyinLevel": "바이인 레벨",
+      "buyinLevelPlaceholder": "500K",
+      "duration": "플레이 시간 (분)",
+      "buyIn": "바이인 (원)",
+      "buyInPlaceholder": "500000",
+      "cashOut": "캐시아웃 (원)",
+      "cashOutPlaceholder": "892000",
+      "estimatedProfit": "예상 수익",
+      "notes": "메모 (선택)",
+      "notesPlaceholder": "특이사항이나 메모를 남겨보세요...",
+      "advanced": {
+        "expand": "상세 정보 펼치기",
+        "collapse": "상세 정보 접기",
+        "startTime": "시작 시간",
+        "tableId": "테이블 ID",
+        "hands": "핸드 수",
+        "blinds": "블라인드",
+        "tableLevel": "테이블 레벨"
+      },
+      "submit": "세션 저장하기",
+      "saving": "저장 중..."
+    },
+    "errors": {
+      "fileType": "PNG, JPG, JPEG, WEBP 파일만 업로드 가능합니다.",
+      "fileSize": "파일 크기는 3MB 이하여야 합니다.",
+      "maxFiles": "최대 5개까지 업로드 가능합니다.",
+      "uploadFailed": "스크린샷 업로드에 실패했습니다. 다시 시도해주세요.",
+      "saveFailed": "세션 저장에 실패했습니다. 다시 시도해주세요."
+    },
+    "success": "세션이 성공적으로 저장되었습니다!"
+  },
+  "Analytics": {
+    "title": "분석",
+    "subtitle": "포커 성과를 다양한 관점에서 분석합니다",
+    "periods": {
+      "today": "오늘",
+      "week": "이번 주",
+      "month": "이번 달",
+      "last30": "최근 30일",
+      "all": "전체",
+      "custom": "커스텀"
+    },
+    "dateRange": {
+      "startDate": "시작일",
+      "endDate": "종료일",
+      "apply": "적용"
+    },
+    "stats": {
+      "totalProfit": "총 수익",
+      "sessions": "세션 수",
+      "sessionsCount": "{count}회",
+      "playTime": "플레이 시간",
+      "hourlyRate": "시간당 수익"
+    },
+    "profitTrend": "수익 추이",
+    "daily": "일별",
+    "monthly": "월별",
+    "noData": "해당 기간에 데이터가 없습니다",
+    "byGameType": "게임 유형별",
+    "byStakes": "스테이크별",
+    "byVenue": "장소별 성적",
+    "winRate": "승률 {rate}%",
+    "sessionsCount": "{count} 세션",
+    "bb100": "BB/100: {value}",
+    "loading": "분석 데이터를 불러오는 중...",
+    "loadError": "분석 데이터를 불러오는데 실패했습니다"
+  },
+  "Challenges": {
+    "title": "챌린지",
+    "subtitle": "목표를 설정하고 달성해보세요",
+    "newChallenge": "새 챌린지",
+    "stats": {
+      "active": "진행 중",
+      "completed": "완료",
+      "earnedPoints": "획득 포인트"
+    },
+    "tabs": {
+      "active": "진행 중",
+      "completed": "완료"
+    },
+    "empty": {
+      "active": "진행 중인 챌린지가 없습니다",
+      "completed": "완료한 챌린지가 없습니다",
+      "startFirst": "첫 챌린지 시작하기"
+    },
+    "daysRemaining": "{count}일 남음",
+    "points": "{count} 포인트",
+    "progress": "{current} / {target}",
+    "giveUp": "포기",
+    "create": {
+      "title": "새 챌린지",
+      "quickPresets": "빠른 선택",
+      "profitChallenge": "수익 챌린지",
+      "profitDesc": "목표 수익 달성하기",
+      "sessionsChallenge": "세션 챌린지",
+      "sessionsDesc": "목표 세션 수 달성하기",
+      "hoursChallenge": "플레이 시간 챌린지",
+      "hoursDesc": "목표 시간 달성하기",
+      "name": "챌린지 이름",
+      "namePlaceholder": "나만의 챌린지",
+      "description": "설명",
+      "descPlaceholder": "목표를 달성해보세요",
+      "type": "유형",
+      "targetValue": "목표 값",
+      "startDate": "시작일",
+      "endDate": "종료일",
+      "rewardPoints": "보상 포인트",
+      "createButton": "챌린지 시작",
+      "creating": "생성 중..."
+    },
+    "deleteConfirm": "챌린지를 삭제하시겠습니까?",
+    "completed": "완료!",
+    "errors": {
+      "createFailed": "챌린지 생성에 실패했습니다.",
+      "deleteFailed": "챌린지 삭제에 실패했습니다.",
+      "loadFailed": "챌린지를 불러오는데 실패했습니다."
+    }
+  },
+  "Level": {
+    "title": "레벨 & XP",
+    "subtitle": "활동을 통해 XP를 획득하고 레벨을 올려보세요",
+    "currentLevel": "현재 레벨",
+    "totalXp": "총 {xp} XP 획득",
+    "nextLevel": "다음 레벨까지",
+    "progress": "{current} / {required} XP",
+    "nextLevelPreview": "다음 레벨: {name}",
+    "maxLevel": "최고 레벨 달성!",
+    "todayXp": {
+      "title": "오늘 획득한 XP",
+      "value": "+{xp} XP"
+    },
+    "claimable": {
+      "dailyLogin": "일일 로그인",
+      "analyticsView": "분석 화면 조회",
+      "oncePerDay": "+{xp} XP (일 1회)",
+      "claim": "받기",
+      "completed": "완료"
+    },
+    "xpGuide": {
+      "title": "XP 획득 방법",
+      "dailyLogin": "일일 로그인",
+      "screenshot": "OCR 스크린샷 업로드",
+      "manualRecord": "수동 세션 기록",
+      "analyticsView": "분석 화면 조회",
+      "dailyLimit": "일 최대 {limit} XP"
+    },
+    "manualProgress": {
+      "title": "오늘 수동 기록 XP",
+      "progress": "{current} / {limit}"
+    },
+    "roadmap": {
+      "title": "레벨 로드맵",
+      "current": "현재"
+    },
+    "loading": "레벨 정보를 불러오는 중...",
+    "loadError": "레벨 정보를 불러오는데 실패했습니다"
+  },
+  "Settings": {
+    "title": "설정",
+    "subtitle": "계정 및 앱 설정을 관리하세요",
+    "profile": "프로필",
+    "user": "사용자",
+    "appSettings": "앱 설정",
+    "notifications": {
+      "title": "알림",
+      "subtitle": "푸시 알림 받기"
+    },
+    "darkMode": {
+      "title": "다크 모드",
+      "subtitle": "어두운 테마 사용"
+    },
+    "language": {
+      "title": "언어",
+      "subtitle": "앱 표시 언어",
+      "ko": "한국어",
+      "en": "English",
+      "ja": "日本語"
+    },
+    "display": {
+      "title": "표시 설정",
+      "koreanUnit": {
+        "title": "한글 단위 표기",
+        "subtitle": "금액을 \"1억 1200만\" 형식으로 표시"
+      },
+      "roundToTenThousand": {
+        "title": "만 단위 반올림",
+        "subtitle": "금액을 만의 자리까지 표시"
+      },
+      "currency": {
+        "title": "통화",
+        "subtitle": "금액 표시 단위",
+        "krw": "원 (KRW)",
+        "usd": "달러 (USD)",
+        "jpy": "엔 (JPY)"
+      }
+    },
+    "support": {
+      "title": "지원",
+      "contact": "문의하기",
+      "privacy": "개인정보처리방침",
+      "terms": "서비스 이용약관"
+    },
+    "account": {
+      "title": "계정 관리",
+      "deleteAccount": {
+        "title": "회원 탈퇴",
+        "subtitle": "계정 및 모든 데이터를 삭제합니다",
+        "warning": "이 작업은 되돌릴 수 없습니다",
+        "dataDeleted": "회원 탈퇴 시 다음 데이터가 영구적으로 삭제됩니다:",
+        "sessionRecords": "모든 세션 기록",
+        "challengesAchievements": "챌린지 및 업적",
+        "accountInfo": "계정 정보",
+        "confirmPrompt": "확인을 위해 \"{text}\"를 입력하세요",
+        "confirmText": "회원탈퇴",
+        "confirmError": "\"{text}\"를 정확히 입력해주세요.",
+        "deleteButton": "탈퇴하기",
+        "deleting": "삭제 중...",
+        "success": "계정이 삭제되었습니다.",
+        "error": "계정 삭제에 실패했습니다. 다시 시도해주세요."
+      }
+    },
+    "logoutConfirm": "정말 로그아웃 하시겠습니까?",
+    "version": "Pokerly v1.0.0 · 풍풍스튜디"
+  },
+  "Feedback": {
+    "title": "피드백",
+    "subtitle": "의견을 보내주세요",
+    "categories": {
+      "bug": "버그 신고",
+      "feature": "기능 제안",
+      "question": "문의사항",
+      "other": "기타"
+    },
+    "status": {
+      "pending": "검토 중",
+      "inProgress": "처리 중",
+      "resolved": "완료",
+      "closed": "종료"
+    },
+    "form": {
+      "categoryLabel": "카테고리를 선택하세요",
+      "contentLabel": "내용을 입력하세요",
+      "contentPlaceholder": "버그 상황, 기능 제안, 문의사항 등을 자세히 적어주세요...",
+      "charCount": "{count} / 1000자",
+      "submit": "피드백 보내기",
+      "submitting": "전송 중..."
+    },
+    "success": "피드백이 전송되었습니다. 감사합니다!",
+    "myFeedbacks": "내가 보낸 피드백",
+    "noFeedbacks": "아직 보낸 피드백이 없습니다.",
+    "error": "피드백 전송에 실패했습니다. 다시 시도해주세요.",
+    "loading": "피드백을 불러오는 중..."
+  },
+  "Notices": {
+    "title": "공지사항",
+    "subtitle": "서비스 업데이트 및 중요 안내",
+    "empty": "등록된 공지사항이 없습니다.",
+    "important": "중요",
+    "new": "NEW",
+    "loading": "공지사항을 불러오는 중...",
+    "error": "공지사항을 불러오는데 실패했습니다."
+  },
+  "Sessions": {
+    "title": "세션 기록",
+    "subtitle": "모든 포커 세션을 확인하세요",
+    "summary": {
+      "totalSessions": "총 세션",
+      "totalProfit": "총 수익",
+      "avgProfit": "평균 수익",
+      "winRate": "승률"
+    },
+    "filters": {
+      "all": "전체",
+      "cash": "캐시게임",
+      "tournament": "토너먼트",
+      "profitable": "수익",
+      "losing": "손실"
+    },
+    "empty": "기록된 세션이 없습니다",
+    "recordFirst": "첫 세션 기록하기",
+    "loading": "세션을 불러오는 중...",
+    "loadError": "세션을 불러오는데 실패했습니다",
+    "deleteConfirm": "이 세션을 삭제하시겠습니까?",
+    "duration": "{hours}시간 {minutes}분",
+    "hands": "{count} 핸드"
+  },
+  "Types": {
+    "levelNames": {
+      "1": "관찰자",
+      "2": "입문자",
+      "3": "플레이어",
+      "4": "레귤러",
+      "5": "샤크",
+      "6": "마스터",
+      "7": "그랜드마스터",
+      "8": "레전드"
+    },
+    "challengeTypes": {
+      "sessions": "세션 수",
+      "profit": "수익",
+      "hours": "플레이 시간"
+    },
+    "challengeStatuses": {
+      "active": "진행 중",
+      "completed": "완료",
+      "failed": "실패",
+      "expired": "만료"
+    },
+    "gameTypes": {
+      "cash": "캐시게임",
+      "tournament": "토너먼트"
+    },
+    "playerLevels": {
+      "beginner": "입문자",
+      "intermediate": "중급자",
+      "advanced": "고급자",
+      "pro": "프로"
+    }
+  },
+  "Units": {
+    "won": "원",
+    "hours": "시간",
+    "minutes": "분",
+    "days": "일",
+    "sessions": "세션",
+    "hands": "핸드",
+    "points": "포인트"
+  }
+}

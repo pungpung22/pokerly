@@ -1,0 +1,630 @@
+{
+  "Common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "logout": "Logout",
+    "back": "Back",
+    "viewAll": "View All",
+    "close": "Close",
+    "submit": "Submit",
+    "create": "Create",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "noData": "No data",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "Metadata": {
+    "title": "Pokerly - Auto-track Poker Profits with Screenshots",
+    "description": "Just take a screenshot and AI automatically extracts the data. Check your win rate at a glance without complex inputs."
+  },
+  "Navigation": {
+    "dashboard": "Dashboard",
+    "sessions": "Sessions",
+    "challenges": "Challenges",
+    "level": "Level",
+    "analytics": "Analytics",
+    "upload": "Upload",
+    "notices": "Notices",
+    "feedback": "Feedback",
+    "settings": "Settings",
+    "home": "Home",
+    "more": "More"
+  },
+  "Landing": {
+    "hero": {
+      "badge": "Used by 200+ players",
+      "title": {
+        "line1": "With just one screenshot",
+        "line2": "Analyze your poker skills"
+      },
+      "subtitle": {
+        "line1": "Just take a screenshot and AI automatically extracts the data.",
+        "line2": "Check your win rate at a glance without complex inputs."
+      },
+      "cta": "Start for Free",
+      "demo": "Watch Demo",
+      "trust": {
+        "privacy": "Privacy Protected",
+        "fast": "3-second Analysis",
+        "noCard": "No Credit Card Required"
+      },
+      "preview": "Dashboard Preview"
+    },
+    "howItWorks": {
+      "title": "How does it work?",
+      "subtitle": "Perfect poker analysis in just 3 steps",
+      "step1": {
+        "title": "Capture",
+        "desc": "Take a screenshot of your game results"
+      },
+      "step2": {
+        "title": "Upload",
+        "desc": "Drag & drop or Ctrl+V to paste"
+      },
+      "step3": {
+        "title": "Analyze",
+        "desc": "AI automatically extracts data and generates statistics"
+      }
+    },
+    "cashGame": {
+      "badge": "Cash Game",
+      "title": "Automatically record session profits",
+      "subtitle": "Auto-detect table info, hand count, and profits from screenshots",
+      "currency": "$",
+      "features": {
+        "1": "Auto-detect blind levels",
+        "2": "Auto-calculate hand count",
+        "3": "Auto-classify profit/loss",
+        "4": "Auto-extract date/time"
+      },
+      "sessions": {
+        "1": { "date": "Today 19:37" },
+        "2": { "date": "Today 18:20" },
+        "3": { "date": "Yesterday 22:15" },
+        "4": { "date": "Yesterday 20:00" }
+      }
+    },
+    "tournament": {
+      "badge": "Tournament",
+      "title": "Track tournament results perfectly",
+      "subtitle": "Record buy-ins, prizes, rankings and calculate ROI",
+      "currency": "$",
+      "buyIn": "Buy-in",
+      "prize": "Prize",
+      "eliminated": "Eliminated",
+      "features": {
+        "1": "Auto-detect tournament name",
+        "2": "Auto-sum buy-ins/rebuys",
+        "3": "Extract prizes and rankings",
+        "4": "Auto-calculate ROI"
+      },
+      "tournaments": {
+        "1": { "date": "Sunday" },
+        "2": { "date": "Saturday" },
+        "3": { "date": "Friday" },
+        "4": { "date": "Friday" }
+      }
+    },
+    "stats": {
+      "title": "See your poker skills in numbers",
+      "subtitle": "Analyze strengths and weaknesses with various stats and charts",
+      "chart": {
+        "title": "Profit Trend",
+        "months": {
+          "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr",
+          "5": "May", "6": "Jun", "7": "Jul", "8": "Aug",
+          "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+        }
+      },
+      "items": {
+        "profit": { "label": "Total Profit", "value": "+$10,000", "sub": "Last 30 days" },
+        "winrate": { "label": "Win Rate", "value": "62.4%", "sub": "156 sessions" },
+        "bb100": { "label": "BB/100", "value": "+8.5", "sub": "Cash game" },
+        "roi": { "label": "ROI", "value": "+24.3%", "sub": "Tournament" }
+      }
+    },
+    "testimonials": {
+      "title": "Player Reviews",
+      "items": {
+        "1": {
+          "content": "I used to record in Excel, but now I just take a screenshot. The time savings are incredible.",
+          "name": "Player_K***",
+          "info": "NL200 Regular"
+        },
+        "2": {
+          "content": "Tournament ROI is calculated automatically, so I can objectively see my skill level.",
+          "name": "MTT_Pro***",
+          "info": "Tournament Grinder"
+        },
+        "3": {
+          "content": "It's fun to look at the stats. I use the BB/100 graph to find my leaks.",
+          "name": "Shark_J***",
+          "info": "NL500 Player"
+        }
+      }
+    },
+    "pricing": {
+      "title": "Simple Pricing",
+      "subtitle": "Pay only for what you need",
+      "popular": "Popular",
+      "free": {
+        "name": "Free",
+        "price": "$0",
+        "features": {
+          "uploads": "10 uploads/month",
+          "stats": "Basic statistics",
+          "history": "Last 30 days records"
+        },
+        "cta": "Start Free"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$9.99",
+        "period": "/month",
+        "features": {
+          "uploads": "Unlimited uploads",
+          "stats": "Advanced stats & charts",
+          "history": "Full history",
+          "support": "Priority support"
+        },
+        "cta": "Get Pro"
+      }
+    },
+    "cta": {
+      "title": "Get Started Now",
+      "subtitle": {
+        "line1": "Take a screenshot and your poker profits are recorded automatically.",
+        "line2": "No more tedious manual tracking!"
+      },
+      "trust": "No credit card required · Cancel anytime"
+    },
+    "footer": {
+      "description": "Smart tracker that auto-records and analyzes poker profits with just a screenshot",
+      "sections": {
+        "product": "Product",
+        "support": "Support",
+        "legal": "Legal"
+      },
+      "links": {
+        "product": {
+          "features": "Features",
+          "pricing": "Pricing",
+          "testimonials": "Testimonials"
+        },
+        "support": {
+          "help": "Help",
+          "contact": "Contact",
+          "faq": "FAQ"
+        },
+        "legal": {
+          "terms": "Terms of Service",
+          "privacy": "Privacy Policy"
+        }
+      },
+      "copyright": "© 2026 PungPung Studio. All rights reserved.",
+      "madeWith": "Made with passion for poker players"
+    }
+  },
+  "Login": {
+    "title": "Login",
+    "subtitle": "Get started with your Google account",
+    "googleButton": "Continue with Google",
+    "loading": "Logging in...",
+    "back": "Back",
+    "error": {
+      "failed": "Login failed. Please try again.",
+      "general": "An error occurred during login."
+    },
+    "terms": {
+      "prefix": "By continuing, you agree to our",
+      "tos": "Terms of Service",
+      "and": "and",
+      "privacy": "Privacy Policy",
+      "suffix": "."
+    }
+  },
+  "Dashboard": {
+    "welcome": "Welcome to Pokerly!",
+    "welcomeSubtitle": "Record and analyze your sessions to improve your poker skills.",
+    "greeting": "Hello, {name}",
+    "defaultName": "Player",
+    "subtitle": "Check your poker status today",
+    "recordSession": "Record Session",
+    "viewAllRecords": "View All Records",
+    "today": "Today",
+    "thisWeek": "This Week",
+    "fromSunday": "From Sunday to today",
+    "totalProfit": "Total Profit",
+    "thisMonth": "This Month",
+    "winRate": "Win Rate",
+    "playTime": "Play Time",
+    "totalHands": "Total Hands",
+    "sessions": "{count} sessions",
+    "hours": "{count}h",
+    "activeChallenges": "Active Challenges",
+    "noChallenges": "No active challenges",
+    "joinChallenge": "Join Challenge",
+    "daysRemaining": "{count} days left",
+    "recentSessions": "Recent Sessions",
+    "noSessions": "No sessions recorded yet",
+    "firstSession": "Record First Session",
+    "cashGame": "Cash Game",
+    "tournament": "Tournament",
+    "loadError": "Failed to load data",
+    "loadingData": "Loading data..."
+  },
+  "Upload": {
+    "title": "Record Session",
+    "subtitle": "Upload screenshots for automatic OCR recognition. Review and save the extracted data.",
+    "screenshotUpload": "Screenshot Upload",
+    "xpReward": "+100 XP",
+    "dropzone": {
+      "title": "Drag images or click to select",
+      "subtitle": "PNG, JPG, JPEG, WEBP / Max 3MB / Up to 5 at once"
+    },
+    "uploadedFiles": "Uploaded files ({current}/5)",
+    "clearAll": "Clear All",
+    "processBtn": {
+      "analyze": "Analyze Screenshot",
+      "processing": "Analyzing with OCR..."
+    },
+    "ocrStatus": {
+      "processing": "Analyzing with OCR...",
+      "complete": "OCR analysis complete! Check the data in the form.",
+      "failed": "OCR analysis failed. Please enter manually."
+    },
+    "guide": {
+      "title": "Screenshot Guide",
+      "tip1": "Capture the results screen after the game ends",
+      "tip2": "Make sure buy-in and cash-out amounts are visible",
+      "tip3": "Including table ID and play time is helpful"
+    },
+    "form": {
+      "title": "Session Info",
+      "xpReward": "+10 XP",
+      "manualRecord": "Manual Entry",
+      "date": "Date",
+      "gameType": "Game Type",
+      "venue": "Venue / Table",
+      "venuePlaceholder": {
+        "cash": "Table #14",
+        "tournament": "Sunday Million"
+      },
+      "stakes": "Stakes",
+      "stakesPlaceholder": "1/2",
+      "buyinLevel": "Buy-in Level",
+      "buyinLevelPlaceholder": "$500",
+      "duration": "Play Time (min)",
+      "buyIn": "Buy-in",
+      "buyInPlaceholder": "500",
+      "cashOut": "Cash Out",
+      "cashOutPlaceholder": "892",
+      "estimatedProfit": "Est. Profit",
+      "notes": "Notes (Optional)",
+      "notesPlaceholder": "Add any notes or special circumstances...",
+      "advanced": {
+        "expand": "Show Advanced",
+        "collapse": "Hide Advanced",
+        "startTime": "Start Time",
+        "tableId": "Table ID",
+        "hands": "Hands",
+        "blinds": "Blinds",
+        "tableLevel": "Table Level"
+      },
+      "submit": "Save Session",
+      "saving": "Saving..."
+    },
+    "errors": {
+      "fileType": "Only PNG, JPG, JPEG, WEBP files are allowed.",
+      "fileSize": "File size must be 3MB or less.",
+      "maxFiles": "Maximum 5 files allowed.",
+      "uploadFailed": "Screenshot upload failed. Please try again.",
+      "saveFailed": "Session save failed. Please try again."
+    },
+    "success": "Session saved successfully!"
+  },
+  "Analytics": {
+    "title": "Analytics",
+    "subtitle": "Analyze your poker performance from various perspectives",
+    "periods": {
+      "today": "Today",
+      "week": "This Week",
+      "month": "This Month",
+      "last30": "Last 30 Days",
+      "all": "All Time",
+      "custom": "Custom"
+    },
+    "dateRange": {
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "apply": "Apply"
+    },
+    "stats": {
+      "totalProfit": "Total Profit",
+      "sessions": "Sessions",
+      "sessionsCount": "{count}",
+      "playTime": "Play Time",
+      "hourlyRate": "Hourly Rate"
+    },
+    "profitTrend": "Profit Trend",
+    "daily": "Daily",
+    "monthly": "Monthly",
+    "noData": "No data for this period",
+    "byGameType": "By Game Type",
+    "byStakes": "By Stakes",
+    "byVenue": "By Venue",
+    "winRate": "{rate}% Win Rate",
+    "sessionsCount": "{count} sessions",
+    "bb100": "BB/100: {value}",
+    "loading": "Loading analytics...",
+    "loadError": "Failed to load analytics"
+  },
+  "Challenges": {
+    "title": "Challenges",
+    "subtitle": "Set goals and achieve them",
+    "newChallenge": "New Challenge",
+    "stats": {
+      "active": "Active",
+      "completed": "Completed",
+      "earnedPoints": "Earned Points"
+    },
+    "tabs": {
+      "active": "Active",
+      "completed": "Completed"
+    },
+    "empty": {
+      "active": "No active challenges",
+      "completed": "No completed challenges",
+      "startFirst": "Start First Challenge"
+    },
+    "daysRemaining": "{count} days left",
+    "points": "{count} points",
+    "progress": "{current} / {target}",
+    "giveUp": "Give Up",
+    "create": {
+      "title": "New Challenge",
+      "quickPresets": "Quick Presets",
+      "profitChallenge": "Profit Challenge",
+      "profitDesc": "Achieve target profit",
+      "sessionsChallenge": "Sessions Challenge",
+      "sessionsDesc": "Complete target sessions",
+      "hoursChallenge": "Play Time Challenge",
+      "hoursDesc": "Reach target hours",
+      "name": "Challenge Name",
+      "namePlaceholder": "My Challenge",
+      "description": "Description",
+      "descPlaceholder": "Achieve your goal",
+      "type": "Type",
+      "targetValue": "Target Value",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "rewardPoints": "Reward Points",
+      "createButton": "Start Challenge",
+      "creating": "Creating..."
+    },
+    "deleteConfirm": "Delete this challenge?",
+    "completed": "Completed!",
+    "errors": {
+      "createFailed": "Failed to create challenge.",
+      "deleteFailed": "Failed to delete challenge.",
+      "loadFailed": "Failed to load challenges."
+    }
+  },
+  "Level": {
+    "title": "Level & XP",
+    "subtitle": "Earn XP through activities and level up",
+    "currentLevel": "Current Level",
+    "totalXp": "Total {xp} XP earned",
+    "nextLevel": "Next Level",
+    "progress": "{current} / {required} XP",
+    "nextLevelPreview": "Next Level: {name}",
+    "maxLevel": "Max Level Achieved!",
+    "todayXp": {
+      "title": "XP Earned Today",
+      "value": "+{xp} XP"
+    },
+    "claimable": {
+      "dailyLogin": "Daily Login",
+      "analyticsView": "View Analytics",
+      "oncePerDay": "+{xp} XP (once/day)",
+      "claim": "Claim",
+      "completed": "Done"
+    },
+    "xpGuide": {
+      "title": "How to Earn XP",
+      "dailyLogin": "Daily Login",
+      "screenshot": "OCR Screenshot Upload",
+      "manualRecord": "Manual Session Record",
+      "analyticsView": "View Analytics",
+      "dailyLimit": "Max {limit} XP/day"
+    },
+    "manualProgress": {
+      "title": "Today's Manual XP",
+      "progress": "{current} / {limit}"
+    },
+    "roadmap": {
+      "title": "Level Roadmap",
+      "current": "Current"
+    },
+    "loading": "Loading level info...",
+    "loadError": "Failed to load level info"
+  },
+  "Settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account and app settings",
+    "profile": "Profile",
+    "user": "User",
+    "appSettings": "App Settings",
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Receive push notifications"
+    },
+    "darkMode": {
+      "title": "Dark Mode",
+      "subtitle": "Use dark theme"
+    },
+    "language": {
+      "title": "Language",
+      "subtitle": "App display language",
+      "ko": "한국어",
+      "en": "English",
+      "ja": "日本語"
+    },
+    "display": {
+      "title": "Display Settings",
+      "koreanUnit": {
+        "title": "Korean Unit Notation",
+        "subtitle": "Display amounts like \"1억 1200만\""
+      },
+      "roundToTenThousand": {
+        "title": "Round to 10,000",
+        "subtitle": "Round amounts to nearest 10,000"
+      },
+      "currency": {
+        "title": "Currency",
+        "subtitle": "Currency for amounts",
+        "krw": "KRW (₩)",
+        "usd": "USD ($)",
+        "jpy": "JPY (¥)"
+      }
+    },
+    "support": {
+      "title": "Support",
+      "contact": "Contact Us",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "account": {
+      "title": "Account Management",
+      "deleteAccount": {
+        "title": "Delete Account",
+        "subtitle": "Delete your account and all data",
+        "warning": "This action cannot be undone",
+        "dataDeleted": "The following data will be permanently deleted:",
+        "sessionRecords": "All session records",
+        "challengesAchievements": "Challenges and achievements",
+        "accountInfo": "Account information",
+        "confirmPrompt": "Type \"{text}\" to confirm",
+        "confirmText": "DELETE",
+        "confirmError": "Please type \"{text}\" exactly.",
+        "deleteButton": "Delete Account",
+        "deleting": "Deleting...",
+        "success": "Account deleted.",
+        "error": "Failed to delete account. Please try again."
+      }
+    },
+    "logoutConfirm": "Are you sure you want to logout?",
+    "version": "Pokerly v1.0.0 · PungPung Studio"
+  },
+  "Feedback": {
+    "title": "Feedback",
+    "subtitle": "Send us your feedback",
+    "categories": {
+      "bug": "Bug Report",
+      "feature": "Feature Request",
+      "question": "Question",
+      "other": "Other"
+    },
+    "status": {
+      "pending": "Under Review",
+      "inProgress": "In Progress",
+      "resolved": "Resolved",
+      "closed": "Closed"
+    },
+    "form": {
+      "categoryLabel": "Select a category",
+      "contentLabel": "Enter your feedback",
+      "contentPlaceholder": "Please describe the bug, feature request, or question in detail...",
+      "charCount": "{count} / 1000 characters",
+      "submit": "Send Feedback",
+      "submitting": "Sending..."
+    },
+    "success": "Feedback sent. Thank you!",
+    "myFeedbacks": "My Feedback",
+    "noFeedbacks": "No feedback sent yet.",
+    "error": "Failed to send feedback. Please try again.",
+    "loading": "Loading feedback..."
+  },
+  "Notices": {
+    "title": "Notices",
+    "subtitle": "Service updates and important announcements",
+    "empty": "No notices available.",
+    "important": "Important",
+    "new": "NEW",
+    "loading": "Loading notices...",
+    "error": "Failed to load notices."
+  },
+  "Sessions": {
+    "title": "Session Records",
+    "subtitle": "View all your poker sessions",
+    "summary": {
+      "totalSessions": "Total Sessions",
+      "totalProfit": "Total Profit",
+      "avgProfit": "Avg Profit",
+      "winRate": "Win Rate"
+    },
+    "filters": {
+      "all": "All",
+      "cash": "Cash Game",
+      "tournament": "Tournament",
+      "profitable": "Profitable",
+      "losing": "Losing"
+    },
+    "empty": "No sessions recorded",
+    "recordFirst": "Record First Session",
+    "loading": "Loading sessions...",
+    "loadError": "Failed to load sessions",
+    "deleteConfirm": "Delete this session?",
+    "duration": "{hours}h {minutes}m",
+    "hands": "{count} hands"
+  },
+  "Types": {
+    "levelNames": {
+      "1": "Observer",
+      "2": "Beginner",
+      "3": "Player",
+      "4": "Regular",
+      "5": "Shark",
+      "6": "Master",
+      "7": "Grandmaster",
+      "8": "Legend"
+    },
+    "challengeTypes": {
+      "sessions": "Sessions",
+      "profit": "Profit",
+      "hours": "Play Time"
+    },
+    "challengeStatuses": {
+      "active": "Active",
+      "completed": "Completed",
+      "failed": "Failed",
+      "expired": "Expired"
+    },
+    "gameTypes": {
+      "cash": "Cash Game",
+      "tournament": "Tournament"
+    },
+    "playerLevels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "pro": "Pro"
+    }
+  },
+  "Units": {
+    "won": "KRW",
+    "hours": "hours",
+    "minutes": "min",
+    "days": "days",
+    "sessions": "sessions",
+    "hands": "hands",
+    "points": "points"
+  }
+}

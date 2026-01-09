@@ -1,0 +1,630 @@
+{
+  "Common": {
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "retry": "再試行",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "confirm": "確認",
+    "logout": "ログアウト",
+    "back": "戻る",
+    "viewAll": "すべて見る",
+    "close": "閉じる",
+    "submit": "送信",
+    "create": "作成",
+    "edit": "編集",
+    "search": "検索",
+    "filter": "フィルター",
+    "noData": "データなし",
+    "yes": "はい",
+    "no": "いいえ"
+  },
+  "Metadata": {
+    "title": "Pokerly - スクリーンショットでポーカー収益を自動記録",
+    "description": "ゲーム画面を撮るだけでAIが自動的にデータを抽出します。複雑な入力なしで収益率を一目で確認できます。"
+  },
+  "Navigation": {
+    "dashboard": "ダッシュボード",
+    "sessions": "セッション記録",
+    "challenges": "チャレンジ",
+    "level": "レベル",
+    "analytics": "分析",
+    "upload": "アップロード",
+    "notices": "お知らせ",
+    "feedback": "フィードバック",
+    "settings": "設定",
+    "home": "ホーム",
+    "more": "もっと見る"
+  },
+  "Landing": {
+    "hero": {
+      "badge": "200人以上のプレイヤーが利用中",
+      "title": {
+        "line1": "スクリーンショット1枚で",
+        "line2": "ポーカースキルを分析"
+      },
+      "subtitle": {
+        "line1": "ゲーム画面を撮るだけでAIが自動的にデータを抽出します。",
+        "line2": "複雑な入力なしで収益率を一目で確認できます。"
+      },
+      "cta": "無料で始める",
+      "demo": "デモを見る",
+      "trust": {
+        "privacy": "プライバシー保護",
+        "fast": "3秒で分析",
+        "noCard": "クレジットカード不要"
+      },
+      "preview": "ダッシュボードプレビュー"
+    },
+    "howItWorks": {
+      "title": "どのように動作しますか？",
+      "subtitle": "3ステップで完璧なポーカー分析",
+      "step1": {
+        "title": "キャプチャ",
+        "desc": "ゲーム結果画面をスクリーンショットで撮影"
+      },
+      "step2": {
+        "title": "アップロード",
+        "desc": "ドラッグまたはCtrl+Vで貼り付け"
+      },
+      "step3": {
+        "title": "分析",
+        "desc": "AIが自動的にデータを抽出し統計を生成"
+      }
+    },
+    "cashGame": {
+      "badge": "キャッシュゲーム",
+      "title": "セッション別収益を自動記録",
+      "subtitle": "テーブル情報、ハンド数、収益をスクリーンショットから自動認識",
+      "currency": "¥",
+      "features": {
+        "1": "ブラインドレベル自動認識",
+        "2": "ハンド数自動計算",
+        "3": "収益/損失自動分類",
+        "4": "日時自動抽出"
+      },
+      "sessions": {
+        "1": { "date": "今日 19:37" },
+        "2": { "date": "今日 18:20" },
+        "3": { "date": "昨日 22:15" },
+        "4": { "date": "昨日 20:00" }
+      }
+    },
+    "tournament": {
+      "badge": "トーナメント",
+      "title": "大会成績も完璧に追跡",
+      "subtitle": "参加費、賞金、順位を一度に記録してROIを計算",
+      "currency": "¥",
+      "buyIn": "バイイン",
+      "prize": "賞金",
+      "eliminated": "敗退",
+      "features": {
+        "1": "トーナメント名自動認識",
+        "2": "バイイン/リバイ自動合算",
+        "3": "賞金と順位を抽出",
+        "4": "ROI自動計算"
+      },
+      "tournaments": {
+        "1": { "date": "日曜日" },
+        "2": { "date": "土曜日" },
+        "3": { "date": "金曜日" },
+        "4": { "date": "金曜日" }
+      }
+    },
+    "stats": {
+      "title": "ポーカースキルを数字で確認",
+      "subtitle": "様々な統計とチャートで強みと弱みを分析",
+      "chart": {
+        "title": "収益推移",
+        "months": {
+          "1": "1月", "2": "2月", "3": "3月", "4": "4月",
+          "5": "5月", "6": "6月", "7": "7月", "8": "8月",
+          "9": "9月", "10": "10月", "11": "11月", "12": "12月"
+        }
+      },
+      "items": {
+        "profit": { "label": "総収益", "value": "+¥1,500,000", "sub": "過去30日" },
+        "winrate": { "label": "勝率", "value": "62.4%", "sub": "156セッション" },
+        "bb100": { "label": "BB/100", "value": "+8.5", "sub": "キャッシュゲーム" },
+        "roi": { "label": "ROI", "value": "+24.3%", "sub": "トーナメント" }
+      }
+    },
+    "testimonials": {
+      "title": "プレイヤーレビュー",
+      "items": {
+        "1": {
+          "content": "以前はExcelで記録していましたが、今はスクリーンショットを撮るだけ。時間の節約が驚異的です。",
+          "name": "Player_K***",
+          "info": "NL200レギュラー"
+        },
+        "2": {
+          "content": "トーナメントROIが自動計算されるので、自分のスキルレベルを客観的に把握できます。",
+          "name": "MTT_Pro***",
+          "info": "トーナメントグラインダー"
+        },
+        "3": {
+          "content": "統計を見るのが楽しいです。BB/100グラフを見てリークを見つけています。",
+          "name": "Shark_J***",
+          "info": "NL500プレイヤー"
+        }
+      }
+    },
+    "pricing": {
+      "title": "シンプルな料金プラン",
+      "subtitle": "必要な分だけ利用",
+      "popular": "人気",
+      "free": {
+        "name": "無料",
+        "price": "¥0",
+        "features": {
+          "uploads": "月10回アップロード",
+          "stats": "基本統計",
+          "history": "直近30日の記録"
+        },
+        "cta": "無料で始める"
+      },
+      "pro": {
+        "name": "プロ",
+        "price": "¥1,500",
+        "period": "/月",
+        "features": {
+          "uploads": "無制限アップロード",
+          "stats": "高度な統計とチャート",
+          "history": "全履歴保存",
+          "support": "優先サポート"
+        },
+        "cta": "プロを始める"
+      }
+    },
+    "cta": {
+      "title": "今すぐ始めましょう",
+      "subtitle": {
+        "line1": "スクリーンショットを撮るだけでポーカー収益が自動記録されます。",
+        "line2": "面倒な手動記録はもう終わり！"
+      },
+      "trust": "クレジットカード不要 · いつでもキャンセル可能"
+    },
+    "footer": {
+      "description": "スクリーンショット1枚でポーカー収益を自動記録・分析するスマートトラッカー",
+      "sections": {
+        "product": "製品",
+        "support": "サポート",
+        "legal": "法的事項"
+      },
+      "links": {
+        "product": {
+          "features": "機能",
+          "pricing": "料金",
+          "testimonials": "レビュー"
+        },
+        "support": {
+          "help": "ヘルプ",
+          "contact": "お問い合わせ",
+          "faq": "FAQ"
+        },
+        "legal": {
+          "terms": "利用規約",
+          "privacy": "プライバシーポリシー"
+        }
+      },
+      "copyright": "© 2026 プンプンスタジオ. All rights reserved.",
+      "madeWith": "Made with passion for poker players"
+    }
+  },
+  "Login": {
+    "title": "ログイン",
+    "subtitle": "Googleアカウントで始める",
+    "googleButton": "Googleで続ける",
+    "loading": "ログイン中...",
+    "back": "戻る",
+    "error": {
+      "failed": "ログインに失敗しました。もう一度お試しください。",
+      "general": "ログイン中にエラーが発生しました。"
+    },
+    "terms": {
+      "prefix": "続行すると、",
+      "tos": "利用規約",
+      "and": "と",
+      "privacy": "プライバシーポリシー",
+      "suffix": "に同意したことになります。"
+    }
+  },
+  "Dashboard": {
+    "welcome": "Pokerlyへようこそ！",
+    "welcomeSubtitle": "セッションを記録・分析してポーカースキルを向上させましょう。",
+    "greeting": "こんにちは、{name}さん",
+    "defaultName": "プレイヤー",
+    "subtitle": "今日のポーカー状況を確認",
+    "recordSession": "セッションを記録",
+    "viewAllRecords": "全記録を見る",
+    "today": "今日",
+    "thisWeek": "今週",
+    "fromSunday": "日曜日から今日まで",
+    "totalProfit": "総収益",
+    "thisMonth": "今月",
+    "winRate": "勝率",
+    "playTime": "プレイ時間",
+    "totalHands": "総ハンド",
+    "sessions": "{count}セッション",
+    "hours": "{count}時間",
+    "activeChallenges": "進行中のチャレンジ",
+    "noChallenges": "進行中のチャレンジがありません",
+    "joinChallenge": "チャレンジに参加",
+    "daysRemaining": "残り{count}日",
+    "recentSessions": "最近のセッション",
+    "noSessions": "まだ記録されたセッションがありません",
+    "firstSession": "最初のセッションを記録",
+    "cashGame": "キャッシュゲーム",
+    "tournament": "トーナメント",
+    "loadError": "データの読み込みに失敗しました",
+    "loadingData": "データを読み込み中..."
+  },
+  "Upload": {
+    "title": "セッションを記録",
+    "subtitle": "スクリーンショットをアップロードするとOCRで自動認識されます。認識されたデータを確認して保存してください。",
+    "screenshotUpload": "スクリーンショットアップロード",
+    "xpReward": "+100 XP",
+    "dropzone": {
+      "title": "画像をドラッグまたはクリックして選択",
+      "subtitle": "PNG, JPG, JPEG, WEBP / 最大3MB / 一度に最大5枚"
+    },
+    "uploadedFiles": "アップロードしたファイル ({current}/5)",
+    "clearAll": "すべて削除",
+    "processBtn": {
+      "analyze": "スクリーンショットを分析",
+      "processing": "OCR分析中..."
+    },
+    "ocrStatus": {
+      "processing": "OCR分析中...",
+      "complete": "OCR分析完了！フォームでデータを確認してください。",
+      "failed": "OCR分析失敗。手動で入力してください。"
+    },
+    "guide": {
+      "title": "スクリーンショットガイド",
+      "tip1": "ゲーム終了後の結果画面をキャプチャ",
+      "tip2": "バイイン、キャッシュアウト金額が見えるように撮影",
+      "tip3": "テーブルID、プレイ時間が含まれると良い"
+    },
+    "form": {
+      "title": "セッション情報",
+      "xpReward": "+10 XP",
+      "manualRecord": "手動記録",
+      "date": "日付",
+      "gameType": "ゲームタイプ",
+      "venue": "会場 / テーブル",
+      "venuePlaceholder": {
+        "cash": "Table #14",
+        "tournament": "Sunday Million"
+      },
+      "stakes": "ステークス",
+      "stakesPlaceholder": "100/200",
+      "buyinLevel": "バイインレベル",
+      "buyinLevelPlaceholder": "¥50,000",
+      "duration": "プレイ時間（分）",
+      "buyIn": "バイイン",
+      "buyInPlaceholder": "50000",
+      "cashOut": "キャッシュアウト",
+      "cashOutPlaceholder": "89200",
+      "estimatedProfit": "予想収益",
+      "notes": "メモ（任意）",
+      "notesPlaceholder": "特記事項やメモを残してください...",
+      "advanced": {
+        "expand": "詳細情報を展開",
+        "collapse": "詳細情報を折りたたむ",
+        "startTime": "開始時間",
+        "tableId": "テーブルID",
+        "hands": "ハンド数",
+        "blinds": "ブラインド",
+        "tableLevel": "テーブルレベル"
+      },
+      "submit": "セッションを保存",
+      "saving": "保存中..."
+    },
+    "errors": {
+      "fileType": "PNG, JPG, JPEG, WEBPファイルのみアップロード可能です。",
+      "fileSize": "ファイルサイズは3MB以下にしてください。",
+      "maxFiles": "最大5ファイルまでです。",
+      "uploadFailed": "スクリーンショットのアップロードに失敗しました。",
+      "saveFailed": "セッションの保存に失敗しました。"
+    },
+    "success": "セッションが正常に保存されました！"
+  },
+  "Analytics": {
+    "title": "分析",
+    "subtitle": "様々な観点からポーカー成績を分析",
+    "periods": {
+      "today": "今日",
+      "week": "今週",
+      "month": "今月",
+      "last30": "過去30日",
+      "all": "全期間",
+      "custom": "カスタム"
+    },
+    "dateRange": {
+      "startDate": "開始日",
+      "endDate": "終了日",
+      "apply": "適用"
+    },
+    "stats": {
+      "totalProfit": "総収益",
+      "sessions": "セッション数",
+      "sessionsCount": "{count}回",
+      "playTime": "プレイ時間",
+      "hourlyRate": "時給"
+    },
+    "profitTrend": "収益推移",
+    "daily": "日別",
+    "monthly": "月別",
+    "noData": "この期間のデータがありません",
+    "byGameType": "ゲームタイプ別",
+    "byStakes": "ステークス別",
+    "byVenue": "会場別成績",
+    "winRate": "勝率 {rate}%",
+    "sessionsCount": "{count}セッション",
+    "bb100": "BB/100: {value}",
+    "loading": "分析データを読み込み中...",
+    "loadError": "分析データの読み込みに失敗しました"
+  },
+  "Challenges": {
+    "title": "チャレンジ",
+    "subtitle": "目標を設定して達成しましょう",
+    "newChallenge": "新しいチャレンジ",
+    "stats": {
+      "active": "進行中",
+      "completed": "完了",
+      "earnedPoints": "獲得ポイント"
+    },
+    "tabs": {
+      "active": "進行中",
+      "completed": "完了"
+    },
+    "empty": {
+      "active": "進行中のチャレンジがありません",
+      "completed": "完了したチャレンジがありません",
+      "startFirst": "最初のチャレンジを開始"
+    },
+    "daysRemaining": "残り{count}日",
+    "points": "{count}ポイント",
+    "progress": "{current} / {target}",
+    "giveUp": "諦める",
+    "create": {
+      "title": "新しいチャレンジ",
+      "quickPresets": "クイック選択",
+      "profitChallenge": "収益チャレンジ",
+      "profitDesc": "目標収益を達成",
+      "sessionsChallenge": "セッションチャレンジ",
+      "sessionsDesc": "目標セッション数を達成",
+      "hoursChallenge": "プレイ時間チャレンジ",
+      "hoursDesc": "目標時間を達成",
+      "name": "チャレンジ名",
+      "namePlaceholder": "マイチャレンジ",
+      "description": "説明",
+      "descPlaceholder": "目標を達成しましょう",
+      "type": "タイプ",
+      "targetValue": "目標値",
+      "startDate": "開始日",
+      "endDate": "終了日",
+      "rewardPoints": "報酬ポイント",
+      "createButton": "チャレンジを開始",
+      "creating": "作成中..."
+    },
+    "deleteConfirm": "このチャレンジを削除しますか？",
+    "completed": "完了！",
+    "errors": {
+      "createFailed": "チャレンジの作成に失敗しました。",
+      "deleteFailed": "チャレンジの削除に失敗しました。",
+      "loadFailed": "チャレンジの読み込みに失敗しました。"
+    }
+  },
+  "Level": {
+    "title": "レベル & XP",
+    "subtitle": "活動を通じてXPを獲得してレベルアップ",
+    "currentLevel": "現在のレベル",
+    "totalXp": "合計 {xp} XP獲得",
+    "nextLevel": "次のレベルまで",
+    "progress": "{current} / {required} XP",
+    "nextLevelPreview": "次のレベル: {name}",
+    "maxLevel": "最高レベル達成！",
+    "todayXp": {
+      "title": "今日獲得したXP",
+      "value": "+{xp} XP"
+    },
+    "claimable": {
+      "dailyLogin": "デイリーログイン",
+      "analyticsView": "分析画面表示",
+      "oncePerDay": "+{xp} XP（1日1回）",
+      "claim": "受け取る",
+      "completed": "完了"
+    },
+    "xpGuide": {
+      "title": "XP獲得方法",
+      "dailyLogin": "デイリーログイン",
+      "screenshot": "OCRスクリーンショットアップロード",
+      "manualRecord": "手動セッション記録",
+      "analyticsView": "分析画面表示",
+      "dailyLimit": "1日最大 {limit} XP"
+    },
+    "manualProgress": {
+      "title": "今日の手動記録XP",
+      "progress": "{current} / {limit}"
+    },
+    "roadmap": {
+      "title": "レベルロードマップ",
+      "current": "現在"
+    },
+    "loading": "レベル情報を読み込み中...",
+    "loadError": "レベル情報の読み込みに失敗しました"
+  },
+  "Settings": {
+    "title": "設定",
+    "subtitle": "アカウントとアプリ設定を管理",
+    "profile": "プロフィール",
+    "user": "ユーザー",
+    "appSettings": "アプリ設定",
+    "notifications": {
+      "title": "通知",
+      "subtitle": "プッシュ通知を受け取る"
+    },
+    "darkMode": {
+      "title": "ダークモード",
+      "subtitle": "ダークテーマを使用"
+    },
+    "language": {
+      "title": "言語",
+      "subtitle": "アプリの表示言語",
+      "ko": "한국어",
+      "en": "English",
+      "ja": "日本語"
+    },
+    "display": {
+      "title": "表示設定",
+      "koreanUnit": {
+        "title": "韓国語単位表記",
+        "subtitle": "金額を「1億1200万」形式で表示"
+      },
+      "roundToTenThousand": {
+        "title": "万単位四捨五入",
+        "subtitle": "金額を万の位まで表示"
+      },
+      "currency": {
+        "title": "通貨",
+        "subtitle": "金額表示単位",
+        "krw": "ウォン (KRW)",
+        "usd": "ドル (USD)",
+        "jpy": "円 (JPY)"
+      }
+    },
+    "support": {
+      "title": "サポート",
+      "contact": "お問い合わせ",
+      "privacy": "プライバシーポリシー",
+      "terms": "利用規約"
+    },
+    "account": {
+      "title": "アカウント管理",
+      "deleteAccount": {
+        "title": "退会",
+        "subtitle": "アカウントとすべてのデータを削除",
+        "warning": "この操作は取り消せません",
+        "dataDeleted": "退会すると以下のデータが完全に削除されます：",
+        "sessionRecords": "すべてのセッション記録",
+        "challengesAchievements": "チャレンジと実績",
+        "accountInfo": "アカウント情報",
+        "confirmPrompt": "確認のため「{text}」と入力してください",
+        "confirmText": "退会する",
+        "confirmError": "「{text}」を正確に入力してください。",
+        "deleteButton": "退会する",
+        "deleting": "削除中...",
+        "success": "アカウントが削除されました。",
+        "error": "アカウントの削除に失敗しました。もう一度お試しください。"
+      }
+    },
+    "logoutConfirm": "本当にログアウトしますか？",
+    "version": "Pokerly v1.0.0 · プンプンスタジオ"
+  },
+  "Feedback": {
+    "title": "フィードバック",
+    "subtitle": "ご意見をお聞かせください",
+    "categories": {
+      "bug": "バグ報告",
+      "feature": "機能リクエスト",
+      "question": "質問",
+      "other": "その他"
+    },
+    "status": {
+      "pending": "審査中",
+      "inProgress": "対応中",
+      "resolved": "完了",
+      "closed": "終了"
+    },
+    "form": {
+      "categoryLabel": "カテゴリを選択",
+      "contentLabel": "内容を入力",
+      "contentPlaceholder": "バグの状況、機能リクエスト、質問などを詳しくお書きください...",
+      "charCount": "{count} / 1000文字",
+      "submit": "フィードバックを送信",
+      "submitting": "送信中..."
+    },
+    "success": "フィードバックが送信されました。ありがとうございます！",
+    "myFeedbacks": "送信したフィードバック",
+    "noFeedbacks": "まだフィードバックを送信していません。",
+    "error": "フィードバックの送信に失敗しました。もう一度お試しください。",
+    "loading": "フィードバックを読み込み中..."
+  },
+  "Notices": {
+    "title": "お知らせ",
+    "subtitle": "サービスのアップデートと重要なお知らせ",
+    "empty": "お知らせはありません。",
+    "important": "重要",
+    "new": "NEW",
+    "loading": "お知らせを読み込み中...",
+    "error": "お知らせの読み込みに失敗しました。"
+  },
+  "Sessions": {
+    "title": "セッション記録",
+    "subtitle": "すべてのポーカーセッションを確認",
+    "summary": {
+      "totalSessions": "総セッション",
+      "totalProfit": "総収益",
+      "avgProfit": "平均収益",
+      "winRate": "勝率"
+    },
+    "filters": {
+      "all": "すべて",
+      "cash": "キャッシュゲーム",
+      "tournament": "トーナメント",
+      "profitable": "収益",
+      "losing": "損失"
+    },
+    "empty": "記録されたセッションがありません",
+    "recordFirst": "最初のセッションを記録",
+    "loading": "セッションを読み込み中...",
+    "loadError": "セッションの読み込みに失敗しました",
+    "deleteConfirm": "このセッションを削除しますか？",
+    "duration": "{hours}時間 {minutes}分",
+    "hands": "{count}ハンド"
+  },
+  "Types": {
+    "levelNames": {
+      "1": "観察者",
+      "2": "入門者",
+      "3": "プレイヤー",
+      "4": "レギュラー",
+      "5": "シャーク",
+      "6": "マスター",
+      "7": "グランドマスター",
+      "8": "レジェンド"
+    },
+    "challengeTypes": {
+      "sessions": "セッション数",
+      "profit": "収益",
+      "hours": "プレイ時間"
+    },
+    "challengeStatuses": {
+      "active": "進行中",
+      "completed": "完了",
+      "failed": "失敗",
+      "expired": "期限切れ"
+    },
+    "gameTypes": {
+      "cash": "キャッシュゲーム",
+      "tournament": "トーナメント"
+    },
+    "playerLevels": {
+      "beginner": "初心者",
+      "intermediate": "中級者",
+      "advanced": "上級者",
+      "pro": "プロ"
+    }
+  },
+  "Units": {
+    "won": "ウォン",
+    "hours": "時間",
+    "minutes": "分",
+    "days": "日",
+    "sessions": "セッション",
+    "hands": "ハンド",
+    "points": "ポイント"
+  }
+}
