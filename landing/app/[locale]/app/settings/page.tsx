@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
-import { User, Bell, Moon, Globe, Mail, Shield, LogOut, ChevronRight, ExternalLink, DollarSign, Hash, AlertTriangle, Trash2, Loader2, Trophy, Check } from 'lucide-react';
+import { User, Bell, Moon, Globe, Mail, Shield, LogOut, ChevronRight, ExternalLink, DollarSign, Hash, AlertTriangle, Trash2, Loader2, Trophy, Check, Heart, Coffee } from 'lucide-react';
 import { userApi } from '../../../../lib/api';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
@@ -501,6 +501,47 @@ export default function SettingsPage() {
           </div>
           <ChevronRight style={{ width: '18px', height: '18px', color: '#D4D4D8' }} />
         </a>
+      </div>
+
+      {/* Developer Support */}
+      <div className="card" style={{ marginBottom: '24px' }}>
+        <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: 'white', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Heart style={{ width: '18px', height: '18px', color: '#F72585' }} />
+          {t('donate.title')}
+        </h2>
+
+        <p style={{ color: '#D4D4D8', fontSize: '14px', marginBottom: '16px', lineHeight: 1.6 }}>
+          {t('donate.description')}
+        </p>
+
+        <a
+          href="https://qr.kakaopay.com/Ej70xCmbm"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            width: '100%',
+            padding: '14px',
+            background: 'linear-gradient(135deg, #FEE500, #FFCD00)',
+            border: 'none',
+            borderRadius: '12px',
+            color: '#000',
+            cursor: 'pointer',
+            fontSize: '15px',
+            fontWeight: 600,
+            textDecoration: 'none',
+          }}
+        >
+          <Coffee style={{ width: '18px', height: '18px' }} />
+          {t('donate.kakaopay')}
+        </a>
+
+        <p style={{ color: '#71717A', fontSize: '12px', marginTop: '12px', textAlign: 'center' }}>
+          {t('donate.mobileOnly')}
+        </p>
       </div>
 
       {/* Account Management */}

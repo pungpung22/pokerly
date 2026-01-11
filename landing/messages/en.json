@@ -698,6 +698,12 @@
       "privacy": "Privacy Policy",
       "terms": "Terms of Service"
     },
+    "donate": {
+      "title": "Support Developer",
+      "description": "Enjoying Pokerly? Your support helps us build a better service ☕",
+      "kakaopay": "Donate with KakaoPay",
+      "mobileOnly": "※ Payment only available on mobile"
+    },
     "account": {
       "title": "Account Management",
       "deleteAccount": {

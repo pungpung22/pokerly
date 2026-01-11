@@ -698,6 +698,12 @@
       "privacy": "プライバシーポリシー",
       "terms": "利用規約"
     },
+    "donate": {
+      "title": "開発者を応援",
+      "description": "Pokerlyをお楽しみいただけましたか？コーヒー1杯のご支援が、より良いサービス作りの力になります ☕",
+      "kakaopay": "KakaoPayで応援する",
+      "mobileOnly": "※ モバイルでのみ決済可能です"
+    },
     "account": {
       "title": "アカウント管理",
       "deleteAccount": {
