@@ -47,6 +47,7 @@ const navItemsConfig = [
   { href: '/app/upload', icon: Camera, labelKey: 'upload' },
   { href: '/app/notices', icon: Newspaper, labelKey: 'notices' },
   { href: '/app/feedback', icon: Send, labelKey: 'feedback' },
+  { href: '/app/donate', icon: Heart, labelKey: 'donate' },
   { href: '/app/settings', icon: SlidersHorizontal, labelKey: 'settings' },
 ];
 
