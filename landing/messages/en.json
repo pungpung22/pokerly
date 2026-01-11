@@ -27,7 +27,7 @@
   "Navigation": {
     "dashboard": "Dashboard",
     "sessions": "Sessions",
-    "challenges": "Challenges",
+    "missions": "Missions",
     "level": "Level",
     "analytics": "Analytics",
     "upload": "Upload",
@@ -35,7 +35,8 @@
     "feedback": "Feedback",
     "settings": "Settings",
     "home": "Home",
-    "more": "More"
+    "more": "More",
+    "todayProfit": "Today's Profit"
   },
   "Landing": {
     "header": {
@@ -427,10 +428,17 @@
     "subtitle": "Analyze your poker performance from various perspectives",
     "filters": {
       "gameType": "Game Type",
+      "platform": "Platform",
       "period": "Period",
       "all": "All",
       "cash": "Cash Game",
       "tournament": "Tournament"
+    },
+    "platforms": {
+      "all": "All",
+      "onjoy": "Onjoy",
+      "ggpoker": "GGPoker",
+      "other": "Other"
     },
     "selectedPeriod": "Selected Period",
     "periodAnalysis": {
@@ -497,56 +505,93 @@
     "tournamentWinRate": "Win Rate",
     "times": ""
   },
-  "Challenges": {
-    "title": "Challenges",
-    "subtitle": "Set goals and achieve them",
-    "newChallenge": "New Challenge",
+  "Missions": {
+    "title": "Missions",
+    "subtitle": "Complete missions and earn rewards",
     "stats": {
-      "active": "Active",
+      "active": "In Progress",
       "completed": "Completed",
-      "earnedPoints": "Earned Points"
+      "earnedPoints": "Points Earned"
     },
     "tabs": {
-      "active": "Active",
+      "available": "Available",
+      "inProgress": "In Progress",
       "completed": "Completed"
     },
     "empty": {
-      "active": "No active challenges",
-      "completed": "No completed challenges",
-      "startFirst": "Start First Challenge"
+      "available": "No available missions",
+      "inProgress": "No missions in progress",
+      "completed": "No completed missions"
     },
-    "daysRemaining": "{count} days left",
-    "points": "{count} points",
+    "templates": {
+      "winRate10": {
+        "title": "Achieve 10% Win Rate",
+        "description": "Reach 10% or higher overall win rate"
+      },
+      "winRate30": {
+        "title": "Achieve 30% Win Rate",
+        "description": "Reach 30% or higher overall win rate"
+      },
+      "winRate50": {
+        "title": "Achieve 50% Win Rate",
+        "description": "Reach 50% or higher overall win rate"
+      },
+      "profit1m": {
+        "title": "Earn $1,000 Profit",
+        "description": "Achieve $1,000 total profit"
+      },
+      "profit5m": {
+        "title": "Earn $5,000 Profit",
+        "description": "Achieve $5,000 total profit"
+      },
+      "profit10m": {
+        "title": "Earn $10,000 Profit",
+        "description": "Achieve $10,000 total profit"
+      },
+      "sessions10": {
+        "title": "Record 10 Sessions",
+        "description": "Play and record 10 sessions"
+      },
+      "sessions50": {
+        "title": "Record 50 Sessions",
+        "description": "Play and record 50 sessions"
+      },
+      "sessions100": {
+        "title": "Record 100 Sessions",
+        "description": "Play and record 100 sessions"
+      },
+      "streak3": {
+        "title": "3 Win Streak",
+        "description": "Win 3 consecutive sessions"
+      },
+      "streak5": {
+        "title": "5 Win Streak",
+        "description": "Win 5 consecutive sessions"
+      },
+      "streak7": {
+        "title": "7 Win Streak",
+        "description": "Win 7 consecutive sessions"
+      }
+    },
+    "categories": {
+      "winRate": "Win Rate",
+      "profit": "Profit",
+      "sessions": "Sessions",
+      "streak": "Win Streak"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
     "progress": "{current} / {target}",
-    "giveUp": "Give Up",
-    "create": {
-      "title": "New Challenge",
-      "quickPresets": "Quick Presets",
-      "profitChallenge": "Profit Challenge",
-      "profitDesc": "Achieve target profit",
-      "sessionsChallenge": "Sessions Challenge",
-      "sessionsDesc": "Complete target sessions",
-      "hoursChallenge": "Play Time Challenge",
-      "hoursDesc": "Reach target hours",
-      "name": "Challenge Name",
-      "namePlaceholder": "My Challenge",
-      "description": "Description",
-      "descPlaceholder": "Achieve your goal",
-      "type": "Type",
-      "targetValue": "Target Value",
-      "startDate": "Start Date",
-      "endDate": "End Date",
-      "rewardPoints": "Reward Points",
-      "createButton": "Start Challenge",
-      "creating": "Creating..."
-    },
-    "deleteConfirm": "Delete this challenge?",
-    "completed": "Completed!",
-    "errors": {
-      "createFailed": "Failed to create challenge.",
-      "deleteFailed": "Failed to delete challenge.",
-      "loadFailed": "Failed to load challenges."
-    }
+    "points": "{count} XP",
+    "startMission": "Start",
+    "inProgressLabel": "In Progress",
+    "completedLabel": "Completed!",
+    "reward": "Reward",
+    "loading": "Loading missions...",
+    "loadError": "Failed to load missions."
   },
   "Level": {
     "title": "Level & XP",
@@ -674,6 +719,10 @@
       "contentLabel": "Enter your feedback",
       "contentPlaceholder": "Please describe the bug, feature request, or question in detail...",
       "charCount": "{count} / 1000 characters",
+      "replyEmailLabel": "Reply Email",
+      "replyEmailPlaceholder": "example@email.com",
+      "replyEmailHint": "Enter your email if you'd like to receive a response",
+      "optional": "Optional",
       "submit": "Send Feedback",
       "submitting": "Sending..."
     },
@@ -745,7 +794,24 @@
       "hoursMinutes": "{hours}h {minutes}m"
     },
     "hands": "{count} hands",
-    "currency": ""
+    "currency": "",
+    "detail": {
+      "title": "Session Details",
+      "profit": "Profit/Loss",
+      "venue": "Venue",
+      "stakes": "Stakes",
+      "duration": "Duration",
+      "hands": "Hands",
+      "screenshot": "Screenshot",
+      "viewFull": "View Full",
+      "notes": "Notes",
+      "notesPlaceholder": "Write notes about this session...",
+      "noNotes": "No notes",
+      "tags": "Tags",
+      "noTags": "No tags",
+      "addTagPlaceholder": "Add tag...",
+      "saving": "Saving..."
+    }
   },
   "Types": {
     "levelNames": {

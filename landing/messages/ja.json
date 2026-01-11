@@ -27,7 +27,7 @@
   "Navigation": {
     "dashboard": "ダッシュボード",
     "sessions": "セッション記録",
-    "challenges": "チャレンジ",
+    "missions": "ミッション",
     "level": "レベル",
     "analytics": "分析",
     "upload": "アップロード",
@@ -35,7 +35,8 @@
     "feedback": "フィードバック",
     "settings": "設定",
     "home": "ホーム",
-    "more": "もっと見る"
+    "more": "もっと見る",
+    "todayProfit": "今日の収益"
   },
   "Landing": {
     "header": {
@@ -427,10 +428,17 @@
     "subtitle": "様々な観点からポーカー成績を分析",
     "filters": {
       "gameType": "ゲームタイプ",
+      "platform": "プラットフォーム",
       "period": "期間",
       "all": "すべて",
       "cash": "キャッシュゲーム",
       "tournament": "トーナメント"
+    },
+    "platforms": {
+      "all": "すべて",
+      "onjoy": "オンジョイ",
+      "ggpoker": "GGPoker",
+      "other": "その他"
     },
     "selectedPeriod": "選択期間",
     "periodAnalysis": {
@@ -497,56 +505,93 @@
     "tournamentWinRate": "勝率",
     "times": "回"
   },
-  "Challenges": {
-    "title": "チャレンジ",
-    "subtitle": "目標を設定して達成しましょう",
-    "newChallenge": "新しいチャレンジ",
+  "Missions": {
+    "title": "ミッション",
+    "subtitle": "ミッションを達成して報酬を獲得",
     "stats": {
       "active": "進行中",
       "completed": "完了",
       "earnedPoints": "獲得ポイント"
     },
     "tabs": {
-      "active": "進行中",
+      "available": "チャレンジ可能",
+      "inProgress": "進行中",
       "completed": "完了"
     },
     "empty": {
-      "active": "進行中のチャレンジがありません",
-      "completed": "完了したチャレンジがありません",
-      "startFirst": "最初のチャレンジを開始"
+      "available": "チャレンジ可能なミッションがありません",
+      "inProgress": "進行中のミッションがありません",
+      "completed": "完了したミッションがありません"
     },
-    "daysRemaining": "残り{count}日",
-    "points": "{count}ポイント",
+    "templates": {
+      "winRate10": {
+        "title": "勝率10%達成",
+        "description": "全体勝率10%以上を達成"
+      },
+      "winRate30": {
+        "title": "勝率30%達成",
+        "description": "全体勝率30%以上を達成"
+      },
+      "winRate50": {
+        "title": "勝率50%達成",
+        "description": "全体勝率50%以上を達成"
+      },
+      "profit1m": {
+        "title": "¥100万の収益達成",
+        "description": "総収益¥100万を達成"
+      },
+      "profit5m": {
+        "title": "¥500万の収益達成",
+        "description": "総収益¥500万を達成"
+      },
+      "profit10m": {
+        "title": "¥1000万の収益達成",
+        "description": "総収益¥1000万を達成"
+      },
+      "sessions10": {
+        "title": "10セッション記録",
+        "description": "合計10セッションをプレイ記録"
+      },
+      "sessions50": {
+        "title": "50セッション記録",
+        "description": "合計50セッションをプレイ記録"
+      },
+      "sessions100": {
+        "title": "100セッション記録",
+        "description": "合計100セッションをプレイ記録"
+      },
+      "streak3": {
+        "title": "3連勝達成",
+        "description": "連続3セッション収益を達成"
+      },
+      "streak5": {
+        "title": "5連勝達成",
+        "description": "連続5セッション収益を達成"
+      },
+      "streak7": {
+        "title": "7連勝達成",
+        "description": "連続7セッション収益を達成"
+      }
+    },
+    "categories": {
+      "winRate": "勝率",
+      "profit": "収益",
+      "sessions": "セッション数",
+      "streak": "連勝"
+    },
+    "difficulty": {
+      "easy": "簡単",
+      "medium": "普通",
+      "hard": "難しい"
+    },
     "progress": "{current} / {target}",
-    "giveUp": "諦める",
-    "create": {
-      "title": "新しいチャレンジ",
-      "quickPresets": "クイック選択",
-      "profitChallenge": "収益チャレンジ",
-      "profitDesc": "目標収益を達成",
-      "sessionsChallenge": "セッションチャレンジ",
-      "sessionsDesc": "目標セッション数を達成",
-      "hoursChallenge": "プレイ時間チャレンジ",
-      "hoursDesc": "目標時間を達成",
-      "name": "チャレンジ名",
-      "namePlaceholder": "マイチャレンジ",
-      "description": "説明",
-      "descPlaceholder": "目標を達成しましょう",
-      "type": "タイプ",
-      "targetValue": "目標値",
-      "startDate": "開始日",
-      "endDate": "終了日",
-      "rewardPoints": "報酬ポイント",
-      "createButton": "チャレンジを開始",
-      "creating": "作成中..."
-    },
-    "deleteConfirm": "このチャレンジを削除しますか？",
-    "completed": "完了！",
-    "errors": {
-      "createFailed": "チャレンジの作成に失敗しました。",
-      "deleteFailed": "チャレンジの削除に失敗しました。",
-      "loadFailed": "チャレンジの読み込みに失敗しました。"
-    }
+    "points": "{count} XP",
+    "startMission": "チャレンジ",
+    "inProgressLabel": "進行中",
+    "completedLabel": "完了！",
+    "reward": "報酬",
+    "loading": "ミッションを読み込み中...",
+    "loadError": "ミッションの読み込みに失敗しました。"
   },
   "Level": {
     "title": "レベル & XP",
@@ -674,6 +719,10 @@
       "contentLabel": "内容を入力",
       "contentPlaceholder": "バグの状況、機能リクエスト、質問などを詳しくお書きください...",
       "charCount": "{count} / 1000文字",
+      "replyEmailLabel": "返信先メールアドレス",
+      "replyEmailPlaceholder": "example@email.com",
+      "replyEmailHint": "返信をご希望の場合はメールアドレスを入力してください",
+      "optional": "任意",
       "submit": "フィードバックを送信",
       "submitting": "送信中..."
     },
@@ -745,7 +794,24 @@
       "hoursMinutes": "{hours}時間{minutes}分"
     },
     "hands": "{count}ハンド",
-    "currency": "円"
+    "currency": "円",
+    "detail": {
+      "title": "セッション詳細",
+      "profit": "損益",
+      "venue": "場所",
+      "stakes": "ステークス",
+      "duration": "プレイ時間",
+      "hands": "ハンド数",
+      "screenshot": "スクリーンショット",
+      "viewFull": "拡大表示",
+      "notes": "メモ",
+      "notesPlaceholder": "このセッションについてメモを書いてください...",
+      "noNotes": "メモがありません",
+      "tags": "タグ",
+      "noTags": "タグがありません",
+      "addTagPlaceholder": "タグを追加...",
+      "saving": "保存中..."
+    }
   },
   "Types": {
     "levelNames": {

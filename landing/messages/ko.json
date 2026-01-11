@@ -27,7 +27,7 @@
   "Navigation": {
     "dashboard": "대시보드",
     "sessions": "세션 기록",
-    "challenges": "챌린지",
+    "missions": "미션",
     "level": "레벨",
     "analytics": "분석",
     "upload": "업로드",
@@ -35,7 +35,8 @@
     "feedback": "피드백",
     "settings": "설정",
     "home": "홈",
-    "more": "더보기"
+    "more": "더보기",
+    "todayProfit": "오늘 수익"
   },
   "Landing": {
     "header": {
@@ -427,10 +428,17 @@
     "subtitle": "포커 성과를 다양한 관점에서 분석합니다",
     "filters": {
       "gameType": "게임 유형",
+      "platform": "플랫폼",
       "period": "기간",
       "all": "전체",
       "cash": "캐시게임",
       "tournament": "토너먼트"
+    },
+    "platforms": {
+      "all": "전체",
+      "onjoy": "원조이",
+      "ggpoker": "GGPoker",
+      "other": "기타"
     },
     "selectedPeriod": "선택 기간",
     "periodAnalysis": {
@@ -497,56 +505,93 @@
     "tournamentWinRate": "승률",
     "times": "회"
   },
-  "Challenges": {
-    "title": "챌린지",
-    "subtitle": "목표를 설정하고 달성해보세요",
-    "newChallenge": "새 챌린지",
+  "Missions": {
+    "title": "미션",
+    "subtitle": "미션을 달성하고 보상을 받으세요",
     "stats": {
       "active": "진행 중",
       "completed": "완료",
       "earnedPoints": "획득 포인트"
     },
     "tabs": {
-      "active": "진행 중",
+      "available": "도전 가능",
+      "inProgress": "진행 중",
       "completed": "완료"
     },
     "empty": {
-      "active": "진행 중인 챌린지가 없습니다",
-      "completed": "완료한 챌린지가 없습니다",
-      "startFirst": "첫 챌린지 시작하기"
+      "available": "도전 가능한 미션이 없습니다",
+      "inProgress": "진행 중인 미션이 없습니다",
+      "completed": "완료한 미션이 없습니다"
     },
-    "daysRemaining": "{count}일 남음",
-    "points": "{count} 포인트",
+    "templates": {
+      "winRate10": {
+        "title": "승률 10% 달성",
+        "description": "전체 승률 10% 이상 달성하기"
+      },
+      "winRate30": {
+        "title": "승률 30% 달성",
+        "description": "전체 승률 30% 이상 달성하기"
+      },
+      "winRate50": {
+        "title": "승률 50% 달성",
+        "description": "전체 승률 50% 이상 달성하기"
+      },
+      "profit1m": {
+        "title": "100만원 수익 달성",
+        "description": "총 수익 100만원 달성하기"
+      },
+      "profit5m": {
+        "title": "500만원 수익 달성",
+        "description": "총 수익 500만원 달성하기"
+      },
+      "profit10m": {
+        "title": "1000만원 수익 달성",
+        "description": "총 수익 1000만원 달성하기"
+      },
+      "sessions10": {
+        "title": "10세션 기록",
+        "description": "총 10세션 플레이 기록하기"
+      },
+      "sessions50": {
+        "title": "50세션 기록",
+        "description": "총 50세션 플레이 기록하기"
+      },
+      "sessions100": {
+        "title": "100세션 기록",
+        "description": "총 100세션 플레이 기록하기"
+      },
+      "streak3": {
+        "title": "3연승 달성",
+        "description": "연속 3세션 수익 달성하기"
+      },
+      "streak5": {
+        "title": "5연승 달성",
+        "description": "연속 5세션 수익 달성하기"
+      },
+      "streak7": {
+        "title": "7연승 달성",
+        "description": "연속 7세션 수익 달성하기"
+      }
+    },
+    "categories": {
+      "winRate": "승률",
+      "profit": "수익",
+      "sessions": "세션 수",
+      "streak": "연승"
+    },
+    "difficulty": {
+      "easy": "쉬움",
+      "medium": "보통",
+      "hard": "어려움"
+    },
     "progress": "{current} / {target}",
-    "giveUp": "포기",
-    "create": {
-      "title": "새 챌린지",
-      "quickPresets": "빠른 선택",
-      "profitChallenge": "수익 챌린지",
-      "profitDesc": "목표 수익 달성하기",
-      "sessionsChallenge": "세션 챌린지",
-      "sessionsDesc": "목표 세션 수 달성하기",
-      "hoursChallenge": "플레이 시간 챌린지",
-      "hoursDesc": "목표 시간 달성하기",
-      "name": "챌린지 이름",
-      "namePlaceholder": "나만의 챌린지",
-      "description": "설명",
-      "descPlaceholder": "목표를 달성해보세요",
-      "type": "유형",
-      "targetValue": "목표 값",
-      "startDate": "시작일",
-      "endDate": "종료일",
-      "rewardPoints": "보상 포인트",
-      "createButton": "챌린지 시작",
-      "creating": "생성 중..."
-    },
-    "deleteConfirm": "챌린지를 삭제하시겠습니까?",
-    "completed": "완료!",
-    "errors": {
-      "createFailed": "챌린지 생성에 실패했습니다.",
-      "deleteFailed": "챌린지 삭제에 실패했습니다.",
-      "loadFailed": "챌린지를 불러오는데 실패했습니다."
-    }
+    "points": "{count} XP",
+    "startMission": "도전하기",
+    "inProgressLabel": "진행 중",
+    "completedLabel": "완료!",
+    "reward": "보상",
+    "loading": "미션을 불러오는 중...",
+    "loadError": "미션을 불러오는데 실패했습니다."
   },
   "Level": {
     "title": "레벨 & XP",
@@ -674,6 +719,10 @@
       "contentLabel": "내용을 입력하세요",
       "contentPlaceholder": "버그 상황, 기능 제안, 문의사항 등을 자세히 적어주세요...",
       "charCount": "{count} / 1000자",
+      "replyEmailLabel": "회신받을 이메일",
+      "replyEmailPlaceholder": "example@email.com",
+      "replyEmailHint": "답변을 받고 싶으시면 이메일을 입력해주세요",
+      "optional": "선택",
       "submit": "피드백 보내기",
       "submitting": "전송 중..."
     },
@@ -745,7 +794,24 @@
       "hoursMinutes": "{hours}시간 {minutes}분"
     },
     "hands": "{count}핸드",
-    "currency": "원"
+    "currency": "원",
+    "detail": {
+      "title": "세션 상세",
+      "profit": "손익",
+      "venue": "장소",
+      "stakes": "스테이크",
+      "duration": "플레이 시간",
+      "hands": "핸드 수",
+      "screenshot": "스크린샷",
+      "viewFull": "크게 보기",
+      "notes": "메모",
+      "notesPlaceholder": "세션에 대한 메모를 작성하세요...",
+      "noNotes": "메모가 없습니다",
+      "tags": "태그",
+      "noTags": "태그가 없습니다",
+      "addTagPlaceholder": "태그 추가...",
+      "saving": "저장 중..."
+    }
   },
   "Types": {
     "levelNames": {
