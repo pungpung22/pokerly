@@ -272,14 +272,49 @@ export class SessionsService {
     });
 
     // 일별 데이터 (최근 30일 또는 선택 기간)
-    const dailyStats = new Map<string, { profit: number; sessions: number }>();
+    const dailyStats = new Map<string, { profit: number; sessions: number; hands: number }>();
     sessions.forEach(s => {
       const dateStr = s.date.toISOString().split('T')[0];
-      const existing = dailyStats.get(dateStr) || { profit: 0, sessions: 0 };
+      const existing = dailyStats.get(dateStr) || { profit: 0, sessions: 0, hands: 0 };
       existing.sessions++;
       existing.profit += Number(s.cashOut) - Number(s.buyIn);
+      existing.hands += s.hands || 0;
       dailyStats.set(dateStr, existing);
     });
+
+    // 총 핸드 수 계산
+    const totalHands = sessions.reduce((sum, s) => sum + (s.hands || 0), 0);
+
+    // bb/100 계산을 위한 세션별 데이터 (블라인드 파싱)
+    const sessionsWithBB = sessions.map(s => {
+      const profit = Number(s.cashOut) - Number(s.buyIn);
+      const hands = s.hands || 0;
+      // stakes에서 BB 파싱 (예: "1/2", "2/5", "5/10")
+      const stakesMatch = s.stakes?.match(/(\d+)\s*[\/\-]\s*(\d+)/);
+      const bigBlind = stakesMatch ? parseInt(stakesMatch[2], 10) : 0;
+      const bbWon = bigBlind > 0 ? profit / bigBlind : 0;
+      const bbPer100 = hands > 0 && bigBlind > 0 ? (bbWon / hands) * 100 : 0;
+      return { ...s, profit, hands, bigBlind, bbWon, bbPer100 };
+    }).filter(s => s.hands > 0 && s.bigBlind > 0);
+
+    // Fixed Window 표준편차 계산 (100핸드 단위)
+    let stdDev = 0;
+    let avgBbPer100 = 0;
+    if (sessionsWithBB.length > 0) {
+      // 전체 bb/100 평균
+      const totalBBWon = sessionsWithBB.reduce((sum, s) => sum + s.bbWon, 0);
+      const totalHandsWithBB = sessionsWithBB.reduce((sum, s) => sum + s.hands, 0);
+      avgBbPer100 = totalHandsWithBB > 0 ? (totalBBWon / totalHandsWithBB) * 100 : 0;
+
+      // 세션별 bb/100 값들의 표준편차 계산
+      if (sessionsWithBB.length >= 2) {
+        const bbPer100Values = sessionsWithBB.map(s => s.bbPer100);
+        const mean = bbPer100Values.reduce((a, b) => a + b, 0) / bbPer100Values.length;
+        const squaredDiffs = bbPer100Values.map(v => Math.pow(v - mean, 2));
+        const variance = squaredDiffs.reduce((a, b) => a + b, 0) / bbPer100Values.length;
+        stdDev = Math.sqrt(variance);
+      }
+    }
 
     // 월별 트렌드 (최근 6개월)
     const monthlyStats = new Map<string, { profit: number; sessions: number }>();
@@ -325,6 +360,36 @@ export class SessionsService {
       .sort((a, b) => a.month.localeCompare(b.month))
       .slice(-6); // 최근 6개월
 
+    // 신뢰도 레벨 계산 (7단계)
+    let reliabilityLevel = 0;
+    let reliabilityLabel = 'veryLow';
+    if (totalHands >= 300000) { reliabilityLevel = 7; reliabilityLabel = 'veryHigh'; }
+    else if (totalHands >= 200000) { reliabilityLevel = 6; reliabilityLabel = 'high'; }
+    else if (totalHands >= 100000) { reliabilityLevel = 5; reliabilityLabel = 'mediumHigh'; }
+    else if (totalHands >= 60000) { reliabilityLevel = 4; reliabilityLabel = 'medium'; }
+    else if (totalHands >= 30000) { reliabilityLevel = 3; reliabilityLabel = 'mediumLow'; }
+    else if (totalHands >= 10000) { reliabilityLevel = 2; reliabilityLabel = 'low'; }
+    else { reliabilityLevel = 1; reliabilityLabel = 'veryLow'; }
+
+    // 플레이 스타일 분석
+    let playStyle = 'stable'; // stable, highVariance, bigLoss
+    if (sessionsWithBB.length >= 3) {
+      const bbPer100Values = sessionsWithBB.map(s => s.bbPer100);
+      const median = [...bbPer100Values].sort((a, b) => a - b)[Math.floor(bbPer100Values.length / 2)];
+      const minBbPer100 = Math.min(...bbPer100Values);
+
+      if (avgBbPer100 > median * 1.5) {
+        playStyle = 'highVariance'; // 대박 세션으로 평균 상승
+      } else if (minBbPer100 < -50) {
+        playStyle = 'bigLoss'; // 큰 손실 세션 있음
+      }
+    }
+
+    // 변동성 레벨 (OCR 기준: <15 안정, 15-25 보통, 25+ 높음)
+    let volatilityLevel = 'stable';
+    if (stdDev >= 25) volatilityLevel = 'high';
+    else if (stdDev >= 15) volatilityLevel = 'normal';
+
     return {
       byGameType,
       byStakes,
@@ -335,6 +400,16 @@ export class SessionsService {
         sessions: sessions.length,
         profit: sessions.reduce((sum, s) => sum + (Number(s.cashOut) - Number(s.buyIn)), 0),
         hours: Math.round(sessions.reduce((sum, s) => sum + s.durationMinutes, 0) / 60),
+        hands: totalHands,
+      },
+      bbStats: {
+        avgBbPer100: Math.round(avgBbPer100 * 100) / 100,
+        stdDev: Math.round(stdDev * 100) / 100,
+        reliabilityLevel,
+        reliabilityLabel,
+        playStyle,
+        volatilityLevel,
+        sessionsWithData: sessionsWithBB.length,
       },
     };
   }
