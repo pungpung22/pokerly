@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString, IsEnum } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString, IsEnum, IsArray } from 'class-validator';
 import { GameType, PlayerLevel } from '../../entities/session.entity';
 
 export class CreateSessionDto {
@@ -61,4 +61,9 @@ export class CreateSessionDto {
   @IsString()
   @IsOptional()
   rawText?: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  tags?: string[];
 }

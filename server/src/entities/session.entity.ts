@@ -83,6 +83,9 @@ export class Session {
   @Column({ name: 'raw_text', type: 'text', nullable: true })
   rawText: string;
 
+  @Column({ type: 'simple-array', nullable: true })
+  tags: string[];
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 

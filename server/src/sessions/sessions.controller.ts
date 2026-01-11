@@ -45,8 +45,9 @@ export class SessionsController {
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
     @Query('gameType') gameType?: string,
+    @Query('platform') platform?: string,
   ) {
-    return this.sessionsService.getAnalytics(user.id, period, startDate, endDate, gameType);
+    return this.sessionsService.getAnalytics(user.id, period, startDate, endDate, gameType, platform);
   }
 
   @Get(':id')

@@ -18,6 +18,7 @@ import { userApi } from '@/lib/api';
 import { useAuth } from '../../../contexts/AuthContext';
 import type { LevelInfo } from '@/lib/types';
 import { useTranslations } from 'next-intl';
+import { LevelUpModal } from '@/components/ui';
 
 const levelColors: Record<number, string> = {
   1: '#D4D4D8',
@@ -47,6 +48,8 @@ export default function LevelPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [claiming, setClaiming] = useState<string | null>(null);
+  const [showLevelUpModal, setShowLevelUpModal] = useState(false);
+  const [newLevelData, setNewLevelData] = useState<{ level: number; name: string } | null>(null);
 
   // Map xp type keys to translation keys
   const xpTypeTranslationKeys: Record<string, string> = {
@@ -80,7 +83,18 @@ export default function LevelPage() {
     try {
       const result = await userApi.addXp(type);
       if (result.xpAwarded > 0) {
-        alert(`+${result.xpAwarded} XP!`);
+        // Check if user leveled up
+        if (result.leveledUp && result.user) {
+          const newLevel = result.user.level;
+          setNewLevelData({
+            level: newLevel,
+            name: tTypes(`levelNames.${newLevel}`),
+          });
+          setShowLevelUpModal(true);
+        } else {
+          // Just show XP gained notification
+          alert(`+${result.xpAwarded} XP!`);
+        }
         fetchLevelInfo();
       } else if (result.message) {
         alert(result.message);
@@ -355,6 +369,16 @@ export default function LevelPage() {
           </div>
         </div>
       </div>
+
+      {/* Level Up Modal */}
+      {newLevelData && (
+        <LevelUpModal
+          isOpen={showLevelUpModal}
+          onClose={() => setShowLevelUpModal(false)}
+          newLevel={newLevelData.level}
+          levelName={newLevelData.name}
+        />
+      )}
     </div>
   );
 }

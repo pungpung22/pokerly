@@ -93,6 +93,7 @@ export interface Session {
   hands: number;
   level: PlayerLevel | null;
   blinds: string | null;
+  tags: string[] | null;
   createdAt: string;
   updatedAt: string;
   profit?: number;
@@ -113,6 +114,7 @@ export interface CreateSessionDto {
   hands?: number;
   level?: PlayerLevel;
   blinds?: string;
+  tags?: string[];
 }
 
 // Challenge types
@@ -194,8 +196,10 @@ export interface Notice {
 export interface Feedback {
   id: string;
   userId: string;
-  category: string;
+  type: string;
+  title: string;
   content: string;
+  replyEmail?: string;
   status: string;
   createdAt: string;
 }

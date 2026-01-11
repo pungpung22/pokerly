@@ -29,6 +29,8 @@ interface AnalyticsData {
 
 const periodKeys: PeriodType[] = ['today', 'week', 'month', 'last30', 'all', 'custom'];
 
+type PlatformType = 'all' | 'onjoy' | 'ggpoker' | 'other';
+
 export default function AnalyticsPage() {
   const { user } = useAuth();
   const t = useTranslations('Analytics');
@@ -37,6 +39,7 @@ export default function AnalyticsPage() {
   const locale = useLocale();
   const [period, setPeriod] = useState<PeriodType>('all');
   const [gameTypeFilter, setGameTypeFilter] = useState<'all' | 'cash' | 'tournament'>('all');
+  const [platformFilter, setPlatformFilter] = useState<PlatformType>('all');
 
   // Locale-aware currency formatting
   const formatCurrency = (value: number | undefined | null): string => {
@@ -86,7 +89,8 @@ export default function AnalyticsPage() {
           period === 'custom' ? 'custom' : period,
           period === 'custom' ? startDate : undefined,
           period === 'custom' ? endDate : undefined,
-          gameTypeFilter
+          gameTypeFilter,
+          platformFilter
         );
         setAnalytics(data);
       } catch (err) {
@@ -99,7 +103,7 @@ export default function AnalyticsPage() {
     if (user) {
       fetchAnalytics();
     }
-  }, [user, period, startDate, endDate, gameTypeFilter]);
+  }, [user, period, startDate, endDate, gameTypeFilter, platformFilter]);
 
   const handlePeriodChange = (newPeriod: PeriodType) => {
     setPeriod(newPeriod);
@@ -310,6 +314,27 @@ export default function AnalyticsPage() {
                 className={`filter-btn ${gameTypeFilter === type ? 'active' : ''}`}
               >
                 {t(`filters.${type}`)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="analytics-filter-divider" />
+
+        {/* Platform Filter */}
+        <div className="analytics-filter-group">
+          <div className="analytics-filter-group-header">
+            <Zap style={{ width: '16px', height: '16px', color: '#F72585' }} />
+            <span className="analytics-filter-group-label">{t('filters.platform')}</span>
+          </div>
+          <div className="analytics-filter-buttons">
+            {(['all', 'onjoy', 'ggpoker', 'other'] as const).map((platform) => (
+              <button
+                key={platform}
+                onClick={() => setPlatformFilter(platform)}
+                className={`filter-btn ${platformFilter === platform ? 'active' : ''}`}
+              >
+                {t(`platforms.${platform}`)}
               </button>
             ))}
           </div>

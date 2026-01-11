@@ -205,7 +205,7 @@ export class SessionsService {
     };
   }
 
-  async getAnalytics(userId: string, period?: string, startDate?: string, endDate?: string, gameType?: string) {
+  async getAnalytics(userId: string, period?: string, startDate?: string, endDate?: string, gameType?: string, platform?: string) {
     let dateFilter = {};
     const today = new Date();
     today.setHours(23, 59, 59, 999);
@@ -241,10 +241,27 @@ export class SessionsService {
       whereClause.gameType = gameType;
     }
 
-    const sessions = await this.sessionRepository.find({
+    let sessions = await this.sessionRepository.find({
       where: whereClause,
       order: { date: 'DESC' },
     });
+
+    // Platform filter (filter by venue name pattern)
+    if (platform && platform !== 'all') {
+      sessions = sessions.filter(s => {
+        const venueLower = s.venue.toLowerCase();
+        if (platform === 'onjoy') {
+          return venueLower.includes('원조이') || venueLower.includes('onjoy') || venueLower.includes('온조이');
+        } else if (platform === 'ggpoker') {
+          return venueLower.includes('ggpoker') || venueLower.includes('gg포커') || venueLower.includes('gg 포커');
+        } else if (platform === 'other') {
+          const isOnjoy = venueLower.includes('원조이') || venueLower.includes('onjoy') || venueLower.includes('온조이');
+          const isGGPoker = venueLower.includes('ggpoker') || venueLower.includes('gg포커') || venueLower.includes('gg 포커');
+          return !isOnjoy && !isGGPoker;
+        }
+        return true;
+      });
+    }
 
     const venueStats = new Map<string, { sessions: number; profit: number; hours: number }>();
     sessions.forEach(s => {

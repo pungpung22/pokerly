@@ -15,13 +15,16 @@ import {
   Clock,
   Layers,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Image as ImageIcon,
+  Tag,
 } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { sessionsApi } from '@/lib/api';
 import { useAuth } from '../../../contexts/AuthContext';
 import type { Session, GameType, PlayerLevel } from '@/lib/types';
 import { playerLevelLabels } from '@/lib/types';
+import SessionDetailModal from '@/components/sessions/SessionDetailModal';
 
 type PeriodType = 'today' | 'week' | 'month' | 'last30' | 'all' | 'custom';
 
@@ -91,6 +94,18 @@ export default function SessionsPage() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [showFilters, setShowFilters] = useState(true);
+  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
+  const [showDetailModal, setShowDetailModal] = useState(false);
+
+  const handleSessionClick = (session: Session) => {
+    setSelectedSession(session);
+    setShowDetailModal(true);
+  };
+
+  const handleSessionUpdate = (updatedSession: Session) => {
+    setSessions(sessions.map(s => s.id === updatedSession.id ? updatedSession : s));
+    setSelectedSession(updatedSession);
+  };
   const formatDuration = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -337,6 +352,8 @@ export default function SessionsPage() {
                 <div
                   key={session.id}
                   className={`session-item session-item-clickable ${index < filteredSessions.length - 1 ? 'session-item-border' : ''}`}
+                  onClick={() => handleSessionClick(session)}
+                  style={{ cursor: 'pointer' }}
                 >
                   <div className="session-item-left">
                     <div className={`session-item-icon ${profit >= 0 ? 'profit' : 'loss'}`}>
@@ -352,6 +369,18 @@ export default function SessionsPage() {
                         <span className={`session-item-badge ${session.gameType === 'cash' ? 'cash' : 'tournament'}`}>
                           {session.gameType === 'cash' ? t('gameTypes.cash') : t('gameTypes.tournament')}
                         </span>
+                        {/* Screenshot & Tags indicators */}
+                        {session.screenshotUrl && (
+                          <span className="session-indicator" title={t('detail.screenshot')}>
+                            <ImageIcon style={{ width: '14px', height: '14px', color: '#A1A1AA' }} />
+                          </span>
+                        )}
+                        {session.tags && session.tags.length > 0 && (
+                          <span className="session-indicator" title={session.tags.join(', ')}>
+                            <Tag style={{ width: '14px', height: '14px', color: '#F72585' }} />
+                            <span style={{ fontSize: '11px', color: '#A1A1AA' }}>{session.tags.length}</span>
+                          </span>
+                        )}
                       </div>
                       <div className="session-item-meta">
                         <span className="session-item-meta-item">
@@ -391,6 +420,26 @@ export default function SessionsPage() {
           </div>
         )}
       </div>
+
+      {/* Session Detail Modal */}
+      <SessionDetailModal
+        isOpen={showDetailModal}
+        onClose={() => setShowDetailModal(false)}
+        session={selectedSession}
+        onUpdate={handleSessionUpdate}
+      />
+
+      <style jsx global>{`
+        .session-indicator {
+          display: flex;
+          align-items: center;
+          gap: 2px;
+          padding: 2px 6px;
+          background: rgba(161, 161, 170, 0.1);
+          border-radius: 4px;
+          margin-left: 4px;
+        }
+      `}</style>
     </div>
   );
 }
