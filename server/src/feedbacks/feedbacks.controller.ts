@@ -20,7 +20,10 @@ export class FeedbacksController {
 
   @Post()
   create(@CurrentUser() user: User, @Body() createFeedbackDto: CreateFeedbackDto) {
-    return this.feedbacksService.create(user.id, createFeedbackDto);
+    return this.feedbacksService.create(user.id, createFeedbackDto, {
+      email: user.email,
+      displayName: user.displayName,
+    });
   }
 
   @Get()

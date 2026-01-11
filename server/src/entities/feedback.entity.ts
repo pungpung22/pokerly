@@ -13,6 +13,7 @@ export enum FeedbackType {
   BUG = 'bug',
   FEATURE = 'feature',
   IMPROVEMENT = 'improvement',
+  QUESTION = 'question',
   OTHER = 'other',
 }
 
@@ -43,6 +44,9 @@ export class Feedback {
 
   @Column({ type: 'text' })
   content: string;
+
+  @Column({ name: 'reply_email', nullable: true })
+  replyEmail: string;
 
   @Column({ type: 'enum', enum: FeedbackStatus, default: FeedbackStatus.PENDING })
   status: FeedbackStatus;

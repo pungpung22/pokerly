@@ -37,6 +37,7 @@ export default function FeedbackPage() {
   const locale = useLocale();
   const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
+  const [replyEmail, setReplyEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [myFeedbacks, setMyFeedbacks] = useState<Feedback[]>([]);
@@ -77,10 +78,15 @@ export default function FeedbackPage() {
 
     setLoading(true);
     try {
-      await feedbackApi.create({ category, content: content.trim() });
+      await feedbackApi.create({
+        category,
+        content: content.trim(),
+        replyEmail: replyEmail.trim() || undefined,
+      });
       setSuccess(true);
       setCategory('');
       setContent('');
+      setReplyEmail('');
       loadMyFeedbacks();
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
@@ -221,6 +227,34 @@ export default function FeedbackPage() {
               {t('form.charCount', { count: content.length })}
             </p>
           </div>
+
+          {/* Reply Email (Optional) */}
+          <div>
+            <label style={{ display: 'block', color: '#D4D4D8', fontSize: '16px', marginBottom: '8px' }}>
+              {t('form.replyEmailLabel')}
+              <span style={{ color: '#71717A', fontSize: '14px', marginLeft: '8px' }}>
+                ({t('form.optional')})
+              </span>
+            </label>
+            <input
+              type="email"
+              value={replyEmail}
+              onChange={(e) => setReplyEmail(e.target.value)}
+              placeholder={t('form.replyEmailPlaceholder')}
+              style={{
+                width: '100%',
+                padding: '14px 16px',
+                background: '#0A0A0B',
+                border: '1px solid #27272A',
+                borderRadius: '10px',
+                color: 'white',
+                fontSize: '16px',
+              }}
+            />
+            <p style={{ color: '#71717A', fontSize: '14px', marginTop: '8px' }}>
+              {t('form.replyEmailHint')}
+            </p>
+          </div>
         </div>
 
         {/* Submit Button */}
@@ -313,7 +347,7 @@ export default function FeedbackPage() {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {myFeedbacks.map((feedback) => {
-                  const catInfo = getCategoryInfo(feedback.category);
+                  const catInfo = getCategoryInfo(feedback.type);
                   const statusColor = statusColors[feedback.status] || statusColors.pending;
                   return (
                     <div

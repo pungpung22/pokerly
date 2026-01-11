@@ -1,22 +1,45 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Feedback, FeedbackStatus } from '../entities/feedback.entity';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
+import { EmailService } from '../common/email.service';
 
 @Injectable()
 export class FeedbacksService {
+  private readonly logger = new Logger(FeedbacksService.name);
+
   constructor(
     @InjectRepository(Feedback)
     private readonly feedbackRepository: Repository<Feedback>,
+    private readonly emailService: EmailService,
   ) {}
 
-  async create(userId: string, createFeedbackDto: CreateFeedbackDto): Promise<Feedback> {
+  async create(
+    userId: string,
+    createFeedbackDto: CreateFeedbackDto,
+    userInfo?: { email?: string; displayName?: string },
+  ): Promise<Feedback> {
     const feedback = this.feedbackRepository.create({
       ...createFeedbackDto,
       userId,
     });
-    return this.feedbackRepository.save(feedback);
+    const savedFeedback = await this.feedbackRepository.save(feedback);
+
+    // 피드백 이메일 알림 전송
+    try {
+      await this.emailService.sendFeedbackNotification({
+        id: savedFeedback.id,
+        category: `[${savedFeedback.type}] ${savedFeedback.title}`,
+        content: savedFeedback.content,
+        userEmail: savedFeedback.replyEmail || userInfo?.email,
+        userName: userInfo?.displayName,
+      });
+    } catch (error) {
+      this.logger.error('Failed to send feedback notification email:', error);
+    }
+
+    return savedFeedback;
   }
 
   async findAllByUser(userId: string): Promise<Feedback[]> {

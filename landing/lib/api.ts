@@ -115,12 +115,13 @@ export const sessionsApi = {
     );
   },
 
-  getAnalytics: (period?: string, startDate?: string, endDate?: string, gameType?: string) => {
+  getAnalytics: (period?: string, startDate?: string, endDate?: string, gameType?: string, platform?: string) => {
     const params = new URLSearchParams();
     if (period) params.append('period', period);
     if (startDate) params.append('startDate', startDate);
     if (endDate) params.append('endDate', endDate);
     if (gameType && gameType !== 'all') params.append('gameType', gameType);
+    if (platform && platform !== 'all') params.append('platform', platform);
     const query = params.toString();
     return fetchWithAuth<{
       byGameType: { type: string; profit: number; sessions: number; winRate: number }[];
@@ -184,12 +185,17 @@ export const noticesApi = {
 
 // Feedback API
 export const feedbackApi = {
-  create: (data: { category: string; content: string }) =>
+  create: (data: { category: string; content: string; replyEmail?: string }) =>
     fetchWithAuth<Feedback>('/feedbacks', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        type: data.category,
+        title: data.content.slice(0, 50) + (data.content.length > 50 ? '...' : ''),
+        content: data.content,
+        replyEmail: data.replyEmail || undefined,
+      }),
     }),
-  getMyFeedbacks: () => fetchWithAuth<Feedback[]>('/feedbacks/me'),
+  getMyFeedbacks: () => fetchWithAuth<Feedback[]>('/feedbacks'),
 };
 
 // Uploads API
