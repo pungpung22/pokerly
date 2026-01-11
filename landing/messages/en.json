@@ -85,10 +85,18 @@
         "4": "Auto-extract date/time"
       },
       "sessions": {
-        "1": { "date": "Today 19:37" },
-        "2": { "date": "Today 18:20" },
-        "3": { "date": "Yesterday 22:15" },
-        "4": { "date": "Yesterday 20:00" }
+        "1": {
+          "date": "Today 19:37"
+        },
+        "2": {
+          "date": "Today 18:20"
+        },
+        "3": {
+          "date": "Yesterday 22:15"
+        },
+        "4": {
+          "date": "Yesterday 20:00"
+        }
       }
     },
     "tournament": {
@@ -106,10 +114,18 @@
         "4": "Auto-calculate ROI"
       },
       "tournaments": {
-        "1": { "date": "Sunday" },
-        "2": { "date": "Saturday" },
-        "3": { "date": "Friday" },
-        "4": { "date": "Friday" }
+        "1": {
+          "date": "Sunday"
+        },
+        "2": {
+          "date": "Saturday"
+        },
+        "3": {
+          "date": "Friday"
+        },
+        "4": {
+          "date": "Friday"
+        }
       }
     },
     "stats": {
@@ -118,16 +134,41 @@
       "chart": {
         "title": "Profit Trend",
         "months": {
-          "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr",
-          "5": "May", "6": "Jun", "7": "Jul", "8": "Aug",
-          "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+          "1": "Jan",
+          "2": "Feb",
+          "3": "Mar",
+          "4": "Apr",
+          "5": "May",
+          "6": "Jun",
+          "7": "Jul",
+          "8": "Aug",
+          "9": "Sep",
+          "10": "Oct",
+          "11": "Nov",
+          "12": "Dec"
         }
       },
       "items": {
-        "profit": { "label": "Total Profit", "value": "+$10,000", "sub": "Last 30 days" },
-        "winrate": { "label": "Win Rate", "value": "62.4%", "sub": "156 sessions" },
-        "bb100": { "label": "BB/100", "value": "+8.5", "sub": "Cash game" },
-        "roi": { "label": "ROI", "value": "+24.3%", "sub": "Tournament" }
+        "profit": {
+          "label": "Total Profit",
+          "value": "+$10,000",
+          "sub": "Last 30 days"
+        },
+        "winrate": {
+          "label": "Win Rate",
+          "value": "62.4%",
+          "sub": "156 sessions"
+        },
+        "bb100": {
+          "label": "BB/100",
+          "value": "+8.5",
+          "sub": "Cash game"
+        },
+        "roi": {
+          "label": "ROI",
+          "value": "+24.3%",
+          "sub": "Tournament"
+        }
       }
     },
     "testimonials": {
@@ -277,14 +318,39 @@
     },
     "ocrStatus": {
       "processing": "Analyzing with OCR...",
-      "complete": "OCR analysis complete! Check the data in the form.",
-      "failed": "OCR analysis failed. Please enter manually."
+      "complete": "OCR analysis complete! Check the data.",
+      "failed": "OCR analysis failed. Please enter manually.",
+      "duplicate": "This screenshot has already been uploaded."
     },
+    "or": "OR",
+    "manualEntry": "Enter Session Manually",
     "guide": {
-      "title": "Screenshot Guide",
-      "tip1": "Capture the results screen after the game ends",
-      "tip2": "Make sure buy-in and cash-out amounts are visible",
-      "tip3": "Including table ID and play time is helpful"
+      "title": "Screenshot Upload Guide",
+      "subtitle": "Follow this guide for accurate data extraction",
+      "fileFormat": {
+        "title": "File Format",
+        "formats": ["PNG", "JPG", "JPEG", "WebP"],
+        "maxSize": "Max 3MB",
+        "maxFiles": "Up to 5 files"
+      },
+      "platforms": {
+        "title": "Supported Platforms",
+        "description": "Currently auto-recognizing screenshots from these platforms",
+        "list": ["WinJoy Poker", "GGPoker", "Others (Manual Entry)"]
+      },
+      "bestPractices": {
+        "title": "Good Screenshots",
+        "good": [
+          "Screen clearly showing profit/loss",
+          "Table name/blind info included",
+          "Clear, full screen without cuts"
+        ],
+        "bad": [
+          "Text is cut off or not visible",
+          "Screen is blurry or low resolution",
+          "Information blocked by other apps"
+        ]
+      }
     },
     "form": {
       "title": "Session Info",
@@ -303,9 +369,9 @@
       "buyinLevelPlaceholder": "$500",
       "duration": "Play Time (min)",
       "buyIn": "Buy-in",
-      "buyInPlaceholder": "500",
+      "buyInPlaceholder": "Enter if needed",
       "cashOut": "Cash Out",
-      "cashOutPlaceholder": "892",
+      "cashOutPlaceholder": "Enter if needed",
       "estimatedProfit": "Est. Profit",
       "notes": "Notes (Optional)",
       "notesPlaceholder": "Add any notes or special circumstances...",
@@ -328,11 +394,54 @@
       "uploadFailed": "Screenshot upload failed. Please try again.",
       "saveFailed": "Session save failed. Please try again."
     },
+    "modal": {
+      "analyzing": {
+        "title": "Analyzing Screenshot...",
+        "subtitle": "Extracting data with OCR. Please wait a moment."
+      },
+      "results": {
+        "title": "OCR Extraction Complete ({count})",
+        "warning": "Please review and save the extracted records!",
+        "cashTip": "Cash Game: Verify buy-in amount and profit",
+        "tournamentTip": "Tournament: Check prize, entry fee, and rebuys",
+        "table": {
+          "type": "Type",
+          "date": "Date",
+          "venue": "Game Name",
+          "startTime": "Start Time",
+          "hands": "Hands Played",
+          "profit": "Profit/Prize"
+        },
+        "saveNote": "After reviewing, click [Save All] to save to database!",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
+      }
+    },
     "success": "Session saved successfully!"
   },
   "Analytics": {
     "title": "Analytics",
     "subtitle": "Analyze your poker performance from various perspectives",
+    "filters": {
+      "gameType": "Game Type",
+      "period": "Period",
+      "all": "All",
+      "cash": "Cash Game",
+      "tournament": "Tournament"
+    },
+    "selectedPeriod": "Selected Period",
+    "periodAnalysis": {
+      "title": "Period Analysis",
+      "bestDay": "Best Day",
+      "worstDay": "Worst Day"
+    },
+    "insights": {
+      "title": "Insights",
+      "worstStakes": "Needs improvement: {profit} at {stakes}",
+      "bestVenue": "Best venue: {profit} at {venue}",
+      "lowWinRate": "Win rate is {rate}%. Consider reviewing your strategy.",
+      "highWinRate": "{rate}% win rate! Keep up the good work."
+    },
     "periods": {
       "today": "Today",
       "week": "This Week",
@@ -348,10 +457,12 @@
     },
     "stats": {
       "totalProfit": "Total Profit",
+      "totalLoss": "Total Loss",
       "sessions": "Sessions",
       "sessionsCount": "{count}",
       "playTime": "Play Time",
-      "hourlyRate": "Hourly Rate"
+      "hourlyRate": "Hourly Rate",
+      "hourlyLoss": "Hourly Loss"
     },
     "profitTrend": "Profit Trend",
     "daily": "Daily",
@@ -364,7 +475,8 @@
     "sessionsCount": "{count} sessions",
     "bb100": "BB/100: {value}",
     "loading": "Loading analytics...",
-    "loadError": "Failed to load analytics"
+    "loadError": "Failed to load analytics",
+    "chartHint": "More data will reveal trends over time"
   },
   "Challenges": {
     "title": "Challenges",
@@ -563,27 +675,58 @@
   },
   "Sessions": {
     "title": "Session Records",
-    "subtitle": "View all your poker sessions",
+    "subtitle": "View and manage all your poker sessions",
+    "addSession": "Add Session",
     "summary": {
       "totalSessions": "Total Sessions",
       "totalProfit": "Total Profit",
-      "avgProfit": "Avg Profit",
-      "winRate": "Win Rate"
+      "winRate": "Win Rate",
+      "playTime": "Play Time"
+    },
+    "periods": {
+      "today": "Today",
+      "week": "This Week",
+      "month": "This Month",
+      "last30": "Last 30 Days",
+      "all": "All",
+      "custom": "Custom"
     },
     "filters": {
       "all": "All",
       "cash": "Cash Game",
       "tournament": "Tournament",
-      "profitable": "Profitable",
-      "losing": "Losing"
+      "filter": "Filter",
+      "clear": "Clear",
+      "gameType": "Game Type",
+      "period": "Period",
+      "startDate": "Start Date",
+      "endDate": "End Date"
     },
-    "empty": "No sessions recorded",
-    "recordFirst": "Record First Session",
+    "search": {
+      "placeholder": "Search venue..."
+    },
+    "empty": {
+      "noMatch": "No sessions match your filters",
+      "noSessions": "No sessions recorded yet",
+      "tryOtherFilter": "Try different filter options",
+      "startRecording": "Record your first session and start analyzing your poker skills!",
+      "clearFilter": "Clear Filters",
+      "recordFirst": "Record First Session"
+    },
     "loading": "Loading sessions...",
     "loadError": "Failed to load sessions",
-    "deleteConfirm": "Delete this session?",
-    "duration": "{hours}h {minutes}m",
-    "hands": "{count} hands"
+    "retry": "Retry",
+    "gameTypes": {
+      "cash": "Cash",
+      "tournament": "Tournament"
+    },
+    "duration": {
+      "hours": "{hours}h",
+      "minutes": "{minutes}m",
+      "hoursMinutes": "{hours}h {minutes}m"
+    },
+    "hands": "{count} hands",
+    "currency": ""
   },
   "Types": {
     "levelNames": {

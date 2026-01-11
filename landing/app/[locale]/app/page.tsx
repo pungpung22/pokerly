@@ -101,7 +101,7 @@ export default function DashboardPage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
         <div style={{ textAlign: 'center' }}>
           <Loader2 style={{ width: '40px', height: '40px', color: '#F72585', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }} />
-          <p style={{ color: '#A1A1AA' }}>{t('loadingData')}</p>
+          <p style={{ color: '#D4D4D8' }}>{t('loadingData')}</p>
         </div>
       </div>
     );
@@ -131,13 +131,13 @@ export default function DashboardPage() {
             </div>
             <div>
               <h3 style={{ color: 'white', fontWeight: 600, marginBottom: '6px', fontSize: '18px' }}>{t('welcome')}</h3>
-              <p style={{ color: '#A1A1AA', fontSize: '15px' }}>
+              <p style={{ color: '#D4D4D8', fontSize: '15px' }}>
                 {t('welcomeSubtitle')}
               </p>
             </div>
           </div>
           <button onClick={dismissWelcomeBanner} style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '8px', flexShrink: 0 }}>
-            <X style={{ width: '24px', height: '24px', color: '#A1A1AA' }} />
+            <X style={{ width: '24px', height: '24px', color: '#D4D4D8' }} />
           </button>
         </div>
       )}
@@ -172,7 +172,7 @@ export default function DashboardPage() {
             </div>
             <div>
               <p style={{ color: '#F72585', fontSize: '15px', fontWeight: 600 }}>{t('today')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>{new Date().toLocaleDateString(locale === 'ko' ? 'ko-KR' : locale === 'ja' ? 'ja-JP' : 'en-US', { month: 'long', day: 'numeric' })}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{new Date().toLocaleDateString(locale === 'ko' ? 'ko-KR' : locale === 'ja' ? 'ja-JP' : 'en-US', { month: 'long', day: 'numeric' })}</p>
             </div>
           </div>
           <p className="stats-card-value" style={{ color: stats.todayProfit >= 0 ? '#10B981' : '#EF4444', fontSize: '32px' }}>
@@ -188,7 +188,7 @@ export default function DashboardPage() {
             </div>
             <div>
               <p style={{ color: '#22D3EE', fontSize: '15px', fontWeight: 600 }}>{t('thisWeek')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>{t('fromSunday')}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('fromSunday')}</p>
             </div>
           </div>
           <p className="stats-card-value" style={{ color: stats.weekProfit >= 0 ? '#10B981' : '#EF4444', fontSize: '32px' }}>
@@ -210,7 +210,7 @@ export default function DashboardPage() {
           <p className="stats-card-value" style={{ color: stats.totalProfit >= 0 ? '#10B981' : '#EF4444' }}>
             {formatFullCurrency(stats.totalProfit)}
           </p>
-          <p style={{ color: '#A1A1AA', fontSize: '13px', marginTop: '6px' }}>{t('sessions', { count: stats.totalSessions })}</p>
+          <p style={{ color: '#D4D4D8', fontSize: '13px', marginTop: '6px' }}>{t('sessions', { count: stats.totalSessions })}</p>
         </div>
 
         {/* This Month */}
@@ -277,7 +277,7 @@ export default function DashboardPage() {
           <div style={{ padding: '16px 24px' }}>
             {activeChallenges.length === 0 ? (
               <div style={{ padding: '24px 0', textAlign: 'center' }}>
-                <p style={{ color: '#A1A1AA', marginBottom: '16px' }}>{t('noChallenges')}</p>
+                <p style={{ color: '#D4D4D8', marginBottom: '16px' }}>{t('noChallenges')}</p>
                 <Link href="/app/challenges" className="btn-secondary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px' }}>
                   {t('joinChallenge')}
                 </Link>
@@ -297,7 +297,7 @@ export default function DashboardPage() {
                           {tTypes(`challengeTypes.${challenge.type}`)}
                         </span>
                       </div>
-                      <span style={{ fontSize: '13px', color: daysRemaining <= 3 ? '#EF4444' : '#A1A1AA' }}>
+                      <span style={{ fontSize: '13px', color: daysRemaining <= 3 ? '#EF4444' : '#D4D4D8' }}>
                         {t('daysRemaining', { count: daysRemaining })}
                       </span>
                     </div>
@@ -331,7 +331,7 @@ export default function DashboardPage() {
 
           {recentSessions.length === 0 ? (
             <div style={{ padding: '48px 24px', textAlign: 'center' }}>
-              <p style={{ color: '#A1A1AA', marginBottom: '16px' }}>{t('noSessions')}</p>
+              <p style={{ color: '#D4D4D8', marginBottom: '16px' }}>{t('noSessions')}</p>
               <Link href="/app/upload" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                 <Plus style={{ width: '18px', height: '18px' }} />
                 {t('firstSession')}
@@ -372,7 +372,7 @@ export default function DashboardPage() {
                       </div>
                       <div>
                         <p style={{ color: 'white', fontWeight: 500, marginBottom: '4px', fontSize: '15px' }}>{session.venue}</p>
-                        <p style={{ color: '#A1A1AA', fontSize: '13px' }}>
+                        <p style={{ color: '#D4D4D8', fontSize: '13px' }}>
                           {session.stakes} · {session.gameType === 'cash' ? t('cashGame') : t('tournament')} · {session.date}
                         </p>
                       </div>

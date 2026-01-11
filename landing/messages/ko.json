@@ -85,10 +85,18 @@
         "4": "날짜/시간 자동 추출"
       },
       "sessions": {
-        "1": { "date": "오늘 19:37" },
-        "2": { "date": "오늘 18:20" },
-        "3": { "date": "어제 22:15" },
-        "4": { "date": "어제 20:00" }
+        "1": {
+          "date": "오늘 19:37"
+        },
+        "2": {
+          "date": "오늘 18:20"
+        },
+        "3": {
+          "date": "어제 22:15"
+        },
+        "4": {
+          "date": "어제 20:00"
+        }
       }
     },
     "tournament": {
@@ -106,10 +114,18 @@
         "4": "ROI 자동 계산"
       },
       "tournaments": {
-        "1": { "date": "일요일" },
-        "2": { "date": "토요일" },
-        "3": { "date": "금요일" },
-        "4": { "date": "금요일" }
+        "1": {
+          "date": "일요일"
+        },
+        "2": {
+          "date": "토요일"
+        },
+        "3": {
+          "date": "금요일"
+        },
+        "4": {
+          "date": "금요일"
+        }
       }
     },
     "stats": {
@@ -118,16 +134,41 @@
       "chart": {
         "title": "수익 추이",
         "months": {
-          "1": "1월", "2": "2월", "3": "3월", "4": "4월",
-          "5": "5월", "6": "6월", "7": "7월", "8": "8월",
-          "9": "9월", "10": "10월", "11": "11월", "12": "12월"
+          "1": "1월",
+          "2": "2월",
+          "3": "3월",
+          "4": "4월",
+          "5": "5월",
+          "6": "6월",
+          "7": "7월",
+          "8": "8월",
+          "9": "9월",
+          "10": "10월",
+          "11": "11월",
+          "12": "12월"
         }
       },
       "items": {
-        "profit": { "label": "총 수익", "value": "+₩12,450,000", "sub": "최근 30일" },
-        "winrate": { "label": "승률", "value": "62.4%", "sub": "156세션 기준" },
-        "bb100": { "label": "BB/100", "value": "+8.5", "sub": "캐시게임" },
-        "roi": { "label": "ROI", "value": "+24.3%", "sub": "토너먼트" }
+        "profit": {
+          "label": "총 수익",
+          "value": "+₩12,450,000",
+          "sub": "최근 30일"
+        },
+        "winrate": {
+          "label": "승률",
+          "value": "62.4%",
+          "sub": "156세션 기준"
+        },
+        "bb100": {
+          "label": "BB/100",
+          "value": "+8.5",
+          "sub": "캐시게임"
+        },
+        "roi": {
+          "label": "ROI",
+          "value": "+24.3%",
+          "sub": "토너먼트"
+        }
       }
     },
     "testimonials": {
@@ -277,14 +318,39 @@
     },
     "ocrStatus": {
       "processing": "OCR 분석 중...",
-      "complete": "OCR 분석 완료! 오른쪽 폼에서 데이터를 확인하세요.",
-      "failed": "OCR 분석 실패. 수동으로 입력해주세요."
+      "complete": "OCR 분석 완료! 데이터를 확인하세요.",
+      "failed": "OCR 분석 실패. 수동으로 입력해주세요.",
+      "duplicate": "이미 등록된 스크린샷입니다."
     },
+    "or": "또는",
+    "manualEntry": "수동으로 기록 입력",
     "guide": {
-      "title": "스크린샷 가이드",
-      "tip1": "게임 종료 후 결과 화면을 캡처하세요",
-      "tip2": "바이인, 캐시아웃 금액이 보이도록 촬영하세요",
-      "tip3": "테이블 ID, 플레이 시간이 포함되면 좋습니다"
+      "title": "스크린샷 업로드 가이드",
+      "subtitle": "정확한 데이터 추출을 위해 아래 가이드를 참고하세요",
+      "fileFormat": {
+        "title": "파일 형식",
+        "formats": ["PNG", "JPG", "JPEG", "WebP"],
+        "maxSize": "최대 3MB",
+        "maxFiles": "최대 5장"
+      },
+      "platforms": {
+        "title": "지원 플랫폼",
+        "description": "현재 아래 플랫폼의 스크린샷을 자동 인식합니다",
+        "list": ["윈조이 포커", "GGPoker", "기타 (수동 입력)"]
+      },
+      "bestPractices": {
+        "title": "좋은 스크린샷",
+        "good": [
+          "손익 금액이 명확히 보이는 화면",
+          "테이블명/블라인드 정보 포함",
+          "선명하고 잘리지 않은 전체 화면"
+        ],
+        "bad": [
+          "텍스트가 잘려서 보이지 않는 경우",
+          "화면이 흐리거나 해상도가 낮은 경우",
+          "다른 앱이 가려서 정보가 안 보이는 경우"
+        ]
+      }
     },
     "form": {
       "title": "세션 정보",
@@ -303,9 +369,9 @@
       "buyinLevelPlaceholder": "500K",
       "duration": "플레이 시간 (분)",
       "buyIn": "바이인 (원)",
-      "buyInPlaceholder": "500000",
+      "buyInPlaceholder": "필요시 입력",
       "cashOut": "캐시아웃 (원)",
-      "cashOutPlaceholder": "892000",
+      "cashOutPlaceholder": "필요시 입력",
       "estimatedProfit": "예상 수익",
       "notes": "메모 (선택)",
       "notesPlaceholder": "특이사항이나 메모를 남겨보세요...",
@@ -328,11 +394,54 @@
       "uploadFailed": "스크린샷 업로드에 실패했습니다. 다시 시도해주세요.",
       "saveFailed": "세션 저장에 실패했습니다. 다시 시도해주세요."
     },
+    "modal": {
+      "analyzing": {
+        "title": "스크린샷 분석 중...",
+        "subtitle": "OCR로 데이터를 추출하고 있습니다. 잠시만 기다려주세요."
+      },
+      "results": {
+        "title": "OCR 추출 완료 ({count}개)",
+        "warning": "추출된 기록을 반드시 확인하고 저장해주세요!",
+        "cashTip": "캐시게임: 바이인 금액과 수익을 꼭 확인하세요",
+        "tournamentTip": "토너먼트: 상금, 참가비, 리바이 횟수를 확인하세요",
+        "table": {
+          "type": "타입",
+          "date": "날짜",
+          "venue": "게임명",
+          "startTime": "핸드 시작 시간",
+          "hands": "플레이 횟수",
+          "profit": "수익/상금"
+        },
+        "saveNote": "확인 완료 후 반드시 아래 [모두 저장] 버튼을 클릭해야 데이터베이스에 저장됩니다!",
+        "confirm": "확인 완료",
+        "cancel": "취소"
+      }
+    },
     "success": "세션이 성공적으로 저장되었습니다!"
   },
   "Analytics": {
     "title": "분석",
     "subtitle": "포커 성과를 다양한 관점에서 분석합니다",
+    "filters": {
+      "gameType": "게임 유형",
+      "period": "기간",
+      "all": "전체",
+      "cash": "캐시게임",
+      "tournament": "토너먼트"
+    },
+    "selectedPeriod": "선택 기간",
+    "periodAnalysis": {
+      "title": "기간 분석",
+      "bestDay": "최고 수익일",
+      "worstDay": "최대 손실일"
+    },
+    "insights": {
+      "title": "인사이트",
+      "worstStakes": "개선 필요: {stakes} 스테이크에서 {profit}",
+      "bestVenue": "최고 성적 장소: {venue}에서 {profit}",
+      "lowWinRate": "승률이 {rate}%로 낮습니다. 플레이 전략을 점검해보세요.",
+      "highWinRate": "승률 {rate}%! 좋은 성적을 유지하고 있습니다."
+    },
     "periods": {
       "today": "오늘",
       "week": "이번 주",
@@ -348,10 +457,12 @@
     },
     "stats": {
       "totalProfit": "총 수익",
+      "totalLoss": "총 손실",
       "sessions": "세션 수",
       "sessionsCount": "{count}회",
       "playTime": "플레이 시간",
-      "hourlyRate": "시간당 수익"
+      "hourlyRate": "시간당 수익",
+      "hourlyLoss": "시간당 손실"
     },
     "profitTrend": "수익 추이",
     "daily": "일별",
@@ -364,7 +475,8 @@
     "sessionsCount": "{count} 세션",
     "bb100": "BB/100: {value}",
     "loading": "분석 데이터를 불러오는 중...",
-    "loadError": "분석 데이터를 불러오는데 실패했습니다"
+    "loadError": "분석 데이터를 불러오는데 실패했습니다",
+    "chartHint": "데이터가 더 쌓이면 추이를 확인할 수 있습니다"
   },
   "Challenges": {
     "title": "챌린지",
@@ -563,27 +675,58 @@
   },
   "Sessions": {
     "title": "세션 기록",
-    "subtitle": "모든 포커 세션을 확인하세요",
+    "subtitle": "모든 포커 세션을 확인하고 관리하세요",
+    "addSession": "새 세션 추가",
     "summary": {
       "totalSessions": "총 세션",
       "totalProfit": "총 수익",
-      "avgProfit": "평균 수익",
-      "winRate": "승률"
+      "winRate": "승률",
+      "playTime": "플레이 시간"
+    },
+    "periods": {
+      "today": "오늘",
+      "week": "이번 주",
+      "month": "이번 달",
+      "last30": "최근 30일",
+      "all": "전체",
+      "custom": "커스텀"
     },
     "filters": {
       "all": "전체",
       "cash": "캐시게임",
       "tournament": "토너먼트",
-      "profitable": "수익",
-      "losing": "손실"
+      "filter": "필터",
+      "clear": "초기화",
+      "gameType": "게임 타입",
+      "period": "기간",
+      "startDate": "시작일",
+      "endDate": "종료일"
     },
-    "empty": "기록된 세션이 없습니다",
-    "recordFirst": "첫 세션 기록하기",
-    "loading": "세션을 불러오는 중...",
-    "loadError": "세션을 불러오는데 실패했습니다",
-    "deleteConfirm": "이 세션을 삭제하시겠습니까?",
-    "duration": "{hours}시간 {minutes}분",
-    "hands": "{count} 핸드"
+    "search": {
+      "placeholder": "장소 검색..."
+    },
+    "empty": {
+      "noMatch": "필터 조건에 맞는 세션이 없습니다",
+      "noSessions": "아직 기록된 세션이 없습니다",
+      "tryOtherFilter": "다른 필터 조건을 시도해 보세요",
+      "startRecording": "첫 세션을 기록하고 포커 실력을 분석해 보세요!",
+      "clearFilter": "필터 초기화",
+      "recordFirst": "첫 세션 기록하기"
+    },
+    "loading": "세션 목록을 불러오는 중...",
+    "loadError": "세션 목록을 불러오는데 실패했습니다",
+    "retry": "다시 시도",
+    "gameTypes": {
+      "cash": "캐시",
+      "tournament": "토너먼트"
+    },
+    "duration": {
+      "hours": "{hours}시간",
+      "minutes": "{minutes}분",
+      "hoursMinutes": "{hours}시간 {minutes}분"
+    },
+    "hands": "{count}핸드",
+    "currency": "원"
   },
   "Types": {
     "levelNames": {

@@ -102,7 +102,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0A0A0B', display: 'flex' }}>
+    <div style={{ background: '#0A0A0B', display: 'flex' }}>
       {/* Desktop Sidebar */}
       <aside className="desktop-sidebar">
         {/* Logo */}
@@ -129,13 +129,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                       padding: '12px 16px',
                       borderRadius: '8px',
                       textDecoration: 'none',
-                      color: isActive ? 'white' : '#A1A1AA',
+                      color: isActive ? 'white' : '#D4D4D8',
                       background: isActive ? 'rgba(247, 37, 133, 0.2)' : 'transparent',
                       fontWeight: isActive ? 500 : 400,
                       transition: 'all 0.2s',
                     }}
                   >
-                    <item.icon style={{ width: '20px', height: '20px', color: isActive ? '#F72585' : '#A1A1AA' }} />
+                    <item.icon style={{ width: '20px', height: '20px', color: isActive ? '#F72585' : '#D4D4D8' }} />
                     {item.label}
                   </Link>
                 </li>
@@ -185,13 +185,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               <p style={{ color: 'white', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {user.displayName || tSettings('user')}
               </p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <p style={{ color: '#D4D4D8', fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {user.email}
               </p>
             </div>
           </Link>
           <div style={{ marginBottom: '12px' }}>
-            <LanguageSwitcher />
+            <LanguageSwitcher direction="up" />
           </div>
           <button
             onClick={handleSignOut}
@@ -204,7 +204,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               background: 'transparent',
               border: '1px solid #27272A',
               borderRadius: '8px',
-              color: '#A1A1AA',
+              color: '#D4D4D8',
               cursor: 'pointer',
               fontSize: '14px',
             }}
@@ -233,7 +233,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               justifyContent: 'center',
               borderRadius: '50%',
               background: pathname === '/app/notices' ? 'rgba(247, 37, 133, 0.2)' : 'transparent',
-              color: pathname === '/app/notices' ? '#F72585' : '#A1A1AA',
+              color: pathname === '/app/notices' ? '#F72585' : '#D4D4D8',
             }}
           >
             <Bell style={{ width: '22px', height: '22px' }} />
@@ -292,12 +292,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                         padding: '14px 16px',
                         borderRadius: '8px',
                         textDecoration: 'none',
-                        color: isActive ? 'white' : '#A1A1AA',
+                        color: isActive ? 'white' : '#D4D4D8',
                         background: isActive ? 'rgba(247, 37, 133, 0.2)' : 'transparent',
                         fontWeight: isActive ? 500 : 400,
                       }}
                     >
-                      <item.icon style={{ width: '20px', height: '20px', color: isActive ? '#F72585' : '#A1A1AA' }} />
+                      <item.icon style={{ width: '20px', height: '20px', color: isActive ? '#F72585' : '#D4D4D8' }} />
                       {item.label}
                     </Link>
                   </li>
@@ -316,7 +316,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 background: 'transparent',
                 border: '1px solid #27272A',
                 borderRadius: '8px',
-                color: '#A1A1AA',
+                color: '#D4D4D8',
                 cursor: 'pointer',
                 fontSize: '14px',
               }}
@@ -329,7 +329,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       )}
 
       {/* Main Content */}
-      <main className="app-main" style={{ flex: 1, minHeight: '100vh' }}>
+      <main className="app-main" style={{ flex: 1 }}>
         {children}
       </main>
 
@@ -356,7 +356,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   background: 'transparent',
                   border: 'none',
                   cursor: 'pointer',
-                  color: isActive ? '#F72585' : '#A1A1AA',
+                  color: isActive ? '#F72585' : '#D4D4D8',
                 }}
               >
                 <item.icon style={{ width: '22px', height: '22px' }} />
@@ -378,7 +378,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 gap: '4px',
                 padding: '8px 0',
                 textDecoration: 'none',
-                color: isActive ? '#F72585' : '#A1A1AA',
+                color: isActive ? '#F72585' : '#D4D4D8',
               }}
             >
               <item.icon style={{ width: '22px', height: '22px' }} />
@@ -433,11 +433,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     padding: '14px 16px',
                     borderRadius: '12px',
                     textDecoration: 'none',
-                    color: isActive ? 'white' : '#A1A1AA',
+                    color: isActive ? 'white' : '#D4D4D8',
                     background: isActive ? 'rgba(247, 37, 133, 0.2)' : 'transparent',
                   }}
                 >
-                  <item.icon style={{ width: '22px', height: '22px', color: isActive ? '#F72585' : '#A1A1AA' }} />
+                  <item.icon style={{ width: '22px', height: '22px', color: isActive ? '#F72585' : '#D4D4D8' }} />
                   <span style={{ fontSize: '15px', fontWeight: isActive ? 500 : 400 }}>{t(item.labelKey)}</span>
                 </Link>
               );

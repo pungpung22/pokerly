@@ -38,11 +38,11 @@ export default function StatsPreview() {
               }}
             >
               <stat.icon style={{ width: '36px', height: '36px', color: '#6366F1', margin: '0 auto 16px' }} />
-              <p style={{ color: '#A1A1AA', marginBottom: '8px' }}>{stat.label}</p>
+              <p style={{ color: '#D4D4D8', marginBottom: '8px' }}>{stat.label}</p>
               <p style={{ fontSize: 'var(--section-subtitle)', fontWeight: 'bold', color: stat.positive ? '#10B981' : 'white', marginBottom: '4px' }}>
                 {stat.value}
               </p>
-              <p style={{ fontSize: '13px', color: '#A1A1AA' }}>{stat.sub}</p>
+              <p style={{ fontSize: '13px', color: '#D4D4D8' }}>{stat.sub}</p>
             </div>
           ))}
         </div>
@@ -66,7 +66,7 @@ export default function StatsPreview() {
                     background: 'linear-gradient(to top, #6366F1, #22D3EE)'
                   }}
                 />
-                <span style={{ fontSize: '13px', color: '#A1A1AA' }}>{t(`stats.chart.months.${i + 1}`)}</span>
+                <span style={{ fontSize: '13px', color: '#D4D4D8' }}>{t(`stats.chart.months.${i + 1}`)}</span>
               </div>
             ))}
           </div>

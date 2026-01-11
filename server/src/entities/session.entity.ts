@@ -77,6 +77,12 @@ export class Session {
   @Column({ nullable: true })
   blinds: string;
 
+  @Column({ name: 'image_hash', nullable: true })
+  imageHash: string;
+
+  @Column({ name: 'raw_text', type: 'text', nullable: true })
+  rawText: string;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 

@@ -25,7 +25,7 @@ export default function TournamentShowcase() {
     if (rank === 2) return { icon: Medal, color: '#C0C0C0', label: '2nd' };
     if (rank === 3) return { icon: Award, color: '#CD7F32', label: '3rd' };
     if (rank && rank <= 10) return { icon: Star, color: '#6366F1', label: `${rank}th` };
-    if (rank) return { icon: null, color: '#A1A1AA', label: `${rank}th` };
+    if (rank) return { icon: null, color: '#D4D4D8', label: `${rank}th` };
     return { icon: null, color: '#EF4444', label: t('tournament.eliminated') };
   }
 
@@ -54,16 +54,16 @@ export default function TournamentShowcase() {
                     <span style={{ fontWeight: 500, color: badge.color }}>
                       {badge.label}
                     </span>
-                    <span style={{ fontSize: '13px', color: '#A1A1AA' }}>{tournament.date}</span>
+                    <span style={{ fontSize: '13px', color: '#D4D4D8' }}>{tournament.date}</span>
                   </div>
 
                   {/* Buy-in */}
-                  <div style={{ color: '#A1A1AA', marginBottom: '4px' }}>
+                  <div style={{ color: '#D4D4D8', marginBottom: '4px' }}>
                     {t('tournament.buyIn')}: {tournament.buyIn.toLocaleString()}{t('tournament.currency')}
                   </div>
 
                   {/* Prize */}
-                  <div style={{ color: '#A1A1AA', marginBottom: '8px' }}>
+                  <div style={{ color: '#D4D4D8', marginBottom: '8px' }}>
                     {t('tournament.prize')}: {tournament.prize.toLocaleString()}{t('tournament.currency')}
                   </div>
 

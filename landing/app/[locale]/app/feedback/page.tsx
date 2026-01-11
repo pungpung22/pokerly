@@ -29,7 +29,7 @@ const statusColors: Record<string, string> = {
   pending: '#F72585',
   reviewing: '#3B82F6',
   resolved: '#10B981',
-  closed: '#A1A1AA',
+  closed: '#D4D4D8',
 };
 
 export default function FeedbackPage() {
@@ -124,8 +124,8 @@ export default function FeedbackPage() {
             <MessageSquare style={{ width: '24px', height: '24px', color: '#F72585' }} />
           </div>
           <div>
-            <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white' }}>{t('title')}</h1>
-            <p style={{ color: '#A1A1AA', fontSize: '14px' }}>{t('subtitle')}</p>
+            <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: 'white' }}>{t('title')}</h1>
+            <p style={{ color: '#D4D4D8', fontSize: '16px' }}>{t('subtitle')}</p>
           </div>
         </div>
       </div>
@@ -153,7 +153,7 @@ export default function FeedbackPage() {
         <div className="card" style={{ marginBottom: '24px' }}>
           {/* Category Selection */}
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', color: '#A1A1AA', fontSize: '14px', marginBottom: '12px' }}>
+            <label style={{ display: 'block', color: '#D4D4D8', fontSize: '16px', marginBottom: '12px' }}>
               {t('form.categoryLabel')}
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
@@ -178,13 +178,13 @@ export default function FeedbackPage() {
                     style={{
                       width: '20px',
                       height: '20px',
-                      color: category === cat.value ? cat.color : '#A1A1AA',
+                      color: category === cat.value ? cat.color : '#D4D4D8',
                     }}
                   />
                   <span
                     style={{
-                      color: category === cat.value ? cat.color : '#A1A1AA',
-                      fontSize: '14px',
+                      color: category === cat.value ? cat.color : '#D4D4D8',
+                      fontSize: '16px',
                       fontWeight: category === cat.value ? 500 : 400,
                     }}
                   >
@@ -197,7 +197,7 @@ export default function FeedbackPage() {
 
           {/* Content */}
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', color: '#A1A1AA', fontSize: '14px', marginBottom: '8px' }}>
+            <label style={{ display: 'block', color: '#D4D4D8', fontSize: '16px', marginBottom: '8px' }}>
               {t('form.contentLabel')}
             </label>
             <textarea
@@ -212,12 +212,12 @@ export default function FeedbackPage() {
                 border: '1px solid #27272A',
                 borderRadius: '10px',
                 color: 'white',
-                fontSize: '15px',
+                fontSize: '16px',
                 resize: 'vertical',
                 lineHeight: 1.6,
               }}
             />
-            <p style={{ color: '#52525B', fontSize: '12px', marginTop: '8px' }}>
+            <p style={{ color: '#A1A1AA', fontSize: '14px', marginTop: '8px' }}>
               {t('form.charCount', { count: content.length })}
             </p>
           </div>
@@ -268,8 +268,8 @@ export default function FeedbackPage() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Clock style={{ width: '18px', height: '18px', color: '#A1A1AA' }} />
-            <span style={{ fontSize: '15px' }}>{t('myFeedbacks')}</span>
+            <Clock style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
+            <span style={{ fontSize: '17px' }}>{t('myFeedbacks')}</span>
             {myFeedbacks.length > 0 && (
               <span
                 style={{
@@ -277,7 +277,7 @@ export default function FeedbackPage() {
                   background: 'rgba(247, 37, 133, 0.2)',
                   borderRadius: '10px',
                   color: '#F72585',
-                  fontSize: '12px',
+                  fontSize: '14px',
                   fontWeight: 500,
                 }}
               >
@@ -286,9 +286,9 @@ export default function FeedbackPage() {
             )}
           </div>
           {showMyFeedbacks ? (
-            <ChevronUp style={{ width: '18px', height: '18px', color: '#A1A1AA' }} />
+            <ChevronUp style={{ width: '18px', height: '18px', color: '#D4D4D8' }} />
           ) : (
-            <ChevronDown style={{ width: '18px', height: '18px', color: '#A1A1AA' }} />
+            <ChevronDown style={{ width: '18px', height: '18px', color: '#D4D4D8' }} />
           )}
         </button>
 
@@ -308,7 +308,7 @@ export default function FeedbackPage() {
                   border: '1px solid #27272A',
                 }}
               >
-                <p style={{ color: '#A1A1AA' }}>{t('noFeedbacks')}</p>
+                <p style={{ color: '#D4D4D8', fontSize: '16px' }}>{t('noFeedbacks')}</p>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -327,8 +327,8 @@ export default function FeedbackPage() {
                     >
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <catInfo.icon style={{ width: '16px', height: '16px', color: catInfo.color }} />
-                          <span style={{ color: catInfo.color, fontSize: '13px', fontWeight: 500 }}>
+                          <catInfo.icon style={{ width: '18px', height: '18px', color: catInfo.color }} />
+                          <span style={{ color: catInfo.color, fontSize: '15px', fontWeight: 500 }}>
                             {catInfo.label}
                           </span>
                         </div>
@@ -338,7 +338,7 @@ export default function FeedbackPage() {
                             background: `${statusColor}20`,
                             borderRadius: '6px',
                             color: statusColor,
-                            fontSize: '12px',
+                            fontSize: '14px',
                             fontWeight: 500,
                           }}
                         >
@@ -347,8 +347,8 @@ export default function FeedbackPage() {
                       </div>
                       <p
                         style={{
-                          color: '#A1A1AA',
-                          fontSize: '14px',
+                          color: '#D4D4D8',
+                          fontSize: '16px',
                           lineHeight: 1.5,
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
@@ -359,7 +359,7 @@ export default function FeedbackPage() {
                       >
                         {feedback.content}
                       </p>
-                      <p style={{ color: '#52525B', fontSize: '12px', marginTop: '10px' }}>
+                      <p style={{ color: '#A1A1AA', fontSize: '14px', marginTop: '10px' }}>
                         {formatDate(feedback.createdAt)}
                       </p>
                     </div>

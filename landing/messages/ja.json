@@ -85,10 +85,18 @@
         "4": "日時自動抽出"
       },
       "sessions": {
-        "1": { "date": "今日 19:37" },
-        "2": { "date": "今日 18:20" },
-        "3": { "date": "昨日 22:15" },
-        "4": { "date": "昨日 20:00" }
+        "1": {
+          "date": "今日 19:37"
+        },
+        "2": {
+          "date": "今日 18:20"
+        },
+        "3": {
+          "date": "昨日 22:15"
+        },
+        "4": {
+          "date": "昨日 20:00"
+        }
       }
     },
     "tournament": {
@@ -106,10 +114,18 @@
         "4": "ROI自動計算"
       },
       "tournaments": {
-        "1": { "date": "日曜日" },
-        "2": { "date": "土曜日" },
-        "3": { "date": "金曜日" },
-        "4": { "date": "金曜日" }
+        "1": {
+          "date": "日曜日"
+        },
+        "2": {
+          "date": "土曜日"
+        },
+        "3": {
+          "date": "金曜日"
+        },
+        "4": {
+          "date": "金曜日"
+        }
       }
     },
     "stats": {
@@ -118,16 +134,41 @@
       "chart": {
         "title": "収益推移",
         "months": {
-          "1": "1月", "2": "2月", "3": "3月", "4": "4月",
-          "5": "5月", "6": "6月", "7": "7月", "8": "8月",
-          "9": "9月", "10": "10月", "11": "11月", "12": "12月"
+          "1": "1月",
+          "2": "2月",
+          "3": "3月",
+          "4": "4月",
+          "5": "5月",
+          "6": "6月",
+          "7": "7月",
+          "8": "8月",
+          "9": "9月",
+          "10": "10月",
+          "11": "11月",
+          "12": "12月"
         }
       },
       "items": {
-        "profit": { "label": "総収益", "value": "+¥1,500,000", "sub": "過去30日" },
-        "winrate": { "label": "勝率", "value": "62.4%", "sub": "156セッション" },
-        "bb100": { "label": "BB/100", "value": "+8.5", "sub": "キャッシュゲーム" },
-        "roi": { "label": "ROI", "value": "+24.3%", "sub": "トーナメント" }
+        "profit": {
+          "label": "総収益",
+          "value": "+¥1,500,000",
+          "sub": "過去30日"
+        },
+        "winrate": {
+          "label": "勝率",
+          "value": "62.4%",
+          "sub": "156セッション"
+        },
+        "bb100": {
+          "label": "BB/100",
+          "value": "+8.5",
+          "sub": "キャッシュゲーム"
+        },
+        "roi": {
+          "label": "ROI",
+          "value": "+24.3%",
+          "sub": "トーナメント"
+        }
       }
     },
     "testimonials": {
@@ -277,14 +318,39 @@
     },
     "ocrStatus": {
       "processing": "OCR分析中...",
-      "complete": "OCR分析完了！フォームでデータを確認してください。",
-      "failed": "OCR分析失敗。手動で入力してください。"
+      "complete": "OCR分析完了！データを確認してください。",
+      "failed": "OCR分析失敗。手動で入力してください。",
+      "duplicate": "このスクリーンショットは既に登録されています。"
     },
+    "or": "または",
+    "manualEntry": "手動でセッションを入力",
     "guide": {
-      "title": "スクリーンショットガイド",
-      "tip1": "ゲーム終了後の結果画面をキャプチャ",
-      "tip2": "バイイン、キャッシュアウト金額が見えるように撮影",
-      "tip3": "テーブルID、プレイ時間が含まれると良い"
+      "title": "スクリーンショットアップロードガイド",
+      "subtitle": "正確なデータ抽出のため、以下のガイドを参考にしてください",
+      "fileFormat": {
+        "title": "ファイル形式",
+        "formats": ["PNG", "JPG", "JPEG", "WebP"],
+        "maxSize": "最大3MB",
+        "maxFiles": "最大5枚"
+      },
+      "platforms": {
+        "title": "対応プラットフォーム",
+        "description": "現在、以下のプラットフォームのスクリーンショットを自動認識します",
+        "list": ["WinJoyポーカー", "GGPoker", "その他（手動入力）"]
+      },
+      "bestPractices": {
+        "title": "良いスクリーンショット",
+        "good": [
+          "損益金額が明確に表示された画面",
+          "テーブル名/ブラインド情報を含む",
+          "鮮明で切れていない全画面"
+        ],
+        "bad": [
+          "テキストが切れて見えない場合",
+          "画面がぼやけているか解像度が低い場合",
+          "他のアプリで情報が隠れている場合"
+        ]
+      }
     },
     "form": {
       "title": "セッション情報",
@@ -303,9 +369,9 @@
       "buyinLevelPlaceholder": "¥50,000",
       "duration": "プレイ時間（分）",
       "buyIn": "バイイン",
-      "buyInPlaceholder": "50000",
+      "buyInPlaceholder": "必要に応じて入力",
       "cashOut": "キャッシュアウト",
-      "cashOutPlaceholder": "89200",
+      "cashOutPlaceholder": "必要に応じて入力",
       "estimatedProfit": "予想収益",
       "notes": "メモ（任意）",
       "notesPlaceholder": "特記事項やメモを残してください...",
@@ -328,11 +394,54 @@
       "uploadFailed": "スクリーンショットのアップロードに失敗しました。",
       "saveFailed": "セッションの保存に失敗しました。"
     },
+    "modal": {
+      "analyzing": {
+        "title": "スクリーンショット分析中...",
+        "subtitle": "OCRでデータを抽出しています。しばらくお待ちください。"
+      },
+      "results": {
+        "title": "OCR抽出完了 ({count}件)",
+        "warning": "抽出された記録を必ず確認して保存してください！",
+        "cashTip": "キャッシュゲーム：バイイン金額と収益を確認",
+        "tournamentTip": "トーナメント：賞金、参加費、リバイ回数を確認",
+        "table": {
+          "type": "タイプ",
+          "date": "日付",
+          "venue": "ゲーム名",
+          "startTime": "開始時刻",
+          "hands": "プレイ回数",
+          "profit": "収益/賞金"
+        },
+        "saveNote": "確認後、[すべて保存]をクリックしてデータベースに保存してください！",
+        "confirm": "確認完了",
+        "cancel": "キャンセル"
+      }
+    },
     "success": "セッションが正常に保存されました！"
   },
   "Analytics": {
     "title": "分析",
     "subtitle": "様々な観点からポーカー成績を分析",
+    "filters": {
+      "gameType": "ゲームタイプ",
+      "period": "期間",
+      "all": "すべて",
+      "cash": "キャッシュゲーム",
+      "tournament": "トーナメント"
+    },
+    "selectedPeriod": "選択期間",
+    "periodAnalysis": {
+      "title": "期間分析",
+      "bestDay": "最高収益日",
+      "worstDay": "最大損失日"
+    },
+    "insights": {
+      "title": "インサイト",
+      "worstStakes": "改善が必要: {stakes}で{profit}",
+      "bestVenue": "最高成績の場所: {venue}で{profit}",
+      "lowWinRate": "勝率が{rate}%と低いです。戦略を見直してみましょう。",
+      "highWinRate": "勝率{rate}%！好調を維持しています。"
+    },
     "periods": {
       "today": "今日",
       "week": "今週",
@@ -348,10 +457,12 @@
     },
     "stats": {
       "totalProfit": "総収益",
+      "totalLoss": "総損失",
       "sessions": "セッション数",
       "sessionsCount": "{count}回",
       "playTime": "プレイ時間",
-      "hourlyRate": "時給"
+      "hourlyRate": "時給",
+      "hourlyLoss": "時間当たり損失"
     },
     "profitTrend": "収益推移",
     "daily": "日別",
@@ -364,7 +475,8 @@
     "sessionsCount": "{count}セッション",
     "bb100": "BB/100: {value}",
     "loading": "分析データを読み込み中...",
-    "loadError": "分析データの読み込みに失敗しました"
+    "loadError": "分析データの読み込みに失敗しました",
+    "chartHint": "データが増えると推移を確認できます"
   },
   "Challenges": {
     "title": "チャレンジ",
@@ -563,27 +675,58 @@
   },
   "Sessions": {
     "title": "セッション記録",
-    "subtitle": "すべてのポーカーセッションを確認",
+    "subtitle": "すべてのポーカーセッションを確認・管理",
+    "addSession": "セッション追加",
     "summary": {
       "totalSessions": "総セッション",
       "totalProfit": "総収益",
-      "avgProfit": "平均収益",
-      "winRate": "勝率"
+      "winRate": "勝率",
+      "playTime": "プレイ時間"
+    },
+    "periods": {
+      "today": "今日",
+      "week": "今週",
+      "month": "今月",
+      "last30": "過去30日",
+      "all": "全期間",
+      "custom": "カスタム"
     },
     "filters": {
       "all": "すべて",
       "cash": "キャッシュゲーム",
       "tournament": "トーナメント",
-      "profitable": "収益",
-      "losing": "損失"
+      "filter": "フィルター",
+      "clear": "クリア",
+      "gameType": "ゲームタイプ",
+      "period": "期間",
+      "startDate": "開始日",
+      "endDate": "終了日"
     },
-    "empty": "記録されたセッションがありません",
-    "recordFirst": "最初のセッションを記録",
+    "search": {
+      "placeholder": "会場検索..."
+    },
+    "empty": {
+      "noMatch": "条件に一致するセッションがありません",
+      "noSessions": "まだ記録されたセッションがありません",
+      "tryOtherFilter": "別のフィルター条件をお試しください",
+      "startRecording": "最初のセッションを記録してポーカースキルを分析しましょう！",
+      "clearFilter": "フィルタークリア",
+      "recordFirst": "最初のセッションを記録"
+    },
     "loading": "セッションを読み込み中...",
     "loadError": "セッションの読み込みに失敗しました",
-    "deleteConfirm": "このセッションを削除しますか？",
-    "duration": "{hours}時間 {minutes}分",
-    "hands": "{count}ハンド"
+    "retry": "再試行",
+    "gameTypes": {
+      "cash": "キャッシュ",
+      "tournament": "トーナメント"
+    },
+    "duration": {
+      "hours": "{hours}時間",
+      "minutes": "{minutes}分",
+      "hoursMinutes": "{hours}時間{minutes}分"
+    },
+    "hands": "{count}ハンド",
+    "currency": "円"
   },
   "Types": {
     "levelNames": {

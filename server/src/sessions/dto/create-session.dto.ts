@@ -53,4 +53,12 @@ export class CreateSessionDto {
   @IsString()
   @IsOptional()
   blinds?: string;
+
+  @IsString()
+  @IsOptional()
+  imageHash?: string;
+
+  @IsString()
+  @IsOptional()
+  rawText?: string;
 }

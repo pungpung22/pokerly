@@ -60,7 +60,7 @@ export default function LoginPage() {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              color: '#A1A1AA',
+              color: '#D4D4D8',
               textDecoration: 'none'
             }}
           >
@@ -123,11 +123,13 @@ export default function LoginPage() {
               </p>
             )}
 
-            <p style={{ marginTop: '24px', fontSize: '13px', color: '#A1A1AA', textAlign: 'center', lineHeight: 1.6 }}>
-              {t('terms.prefix')} <a href="#" style={{ color: '#6366F1', textDecoration: 'none' }}>{t('terms.tos')}</a> {t('terms.and')}{' '}
-              <a href="#" style={{ color: '#6366F1', textDecoration: 'none' }}>{t('terms.privacy')}</a>{t('terms.suffix')}
-            </p>
           </div>
+
+          {/* Terms - outside the card */}
+          <p style={{ marginTop: '20px', fontSize: '13px', color: '#71717A', textAlign: 'center', lineHeight: 1.6, padding: '0 16px' }}>
+            {t('terms.prefix')} <a href="#" style={{ color: '#6366F1', textDecoration: 'none' }}>{t('terms.tos')}</a> {t('terms.and')}{' '}
+            <a href="#" style={{ color: '#6366F1', textDecoration: 'none' }}>{t('terms.privacy')}</a>{t('terms.suffix')}
+          </p>
         </div>
       </main>
     </div>

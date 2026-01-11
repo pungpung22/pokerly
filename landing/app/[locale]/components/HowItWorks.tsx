@@ -59,7 +59,7 @@ export default function HowItWorks() {
               </h3>
 
               {/* Description */}
-              <p style={{ color: '#A1A1AA', fontSize: 'var(--body-text)' }}>{step.description}</p>
+              <p style={{ color: '#D4D4D8', fontSize: 'var(--body-text)' }}>{step.description}</p>
             </div>
           ))}
         </div>

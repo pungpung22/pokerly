@@ -92,13 +92,13 @@ export default function CashGameShowcase() {
                   >
                     {session.level}
                   </span>
-                  <span style={{ fontSize: '13px', color: '#A1A1AA' }}>{session.date}</span>
+                  <span style={{ fontSize: '13px', color: '#D4D4D8' }}>{session.date}</span>
                 </div>
 
                 {/* Info */}
                 <div style={{ marginBottom: '12px' }}>
                   <p style={{ color: 'white', fontWeight: 500 }}>{session.table}</p>
-                  <p style={{ color: '#A1A1AA' }}>{session.hands} hands</p>
+                  <p style={{ color: '#D4D4D8' }}>{session.hands} hands</p>
                 </div>
 
                 {/* Profit */}

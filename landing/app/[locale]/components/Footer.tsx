@@ -46,7 +46,7 @@ export default function Footer() {
               </div>
               <span style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>Pokerly</span>
             </div>
-            <p style={{ lineHeight: 1.6, color: '#A1A1AA' }}>
+            <p style={{ lineHeight: 1.6, color: '#D4D4D8' }}>
               {t('footer.description')}
             </p>
           </div>
@@ -57,7 +57,7 @@ export default function Footer() {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {links.product.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} style={{ color: '#A1A1AA', textDecoration: 'none' }}>
+                  <a href={link.href} style={{ color: '#D4D4D8', textDecoration: 'none' }}>
                     {link.label}
                   </a>
                 </li>
@@ -71,7 +71,7 @@ export default function Footer() {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {links.support.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} style={{ color: '#A1A1AA', textDecoration: 'none' }}>
+                  <a href={link.href} style={{ color: '#D4D4D8', textDecoration: 'none' }}>
                     {link.label}
                   </a>
                 </li>
@@ -85,7 +85,7 @@ export default function Footer() {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {links.legal.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} style={{ color: '#A1A1AA', textDecoration: 'none' }}>
+                  <a href={link.href} style={{ color: '#D4D4D8', textDecoration: 'none' }}>
                     {link.label}
                   </a>
                 </li>
@@ -96,10 +96,10 @@ export default function Footer() {
 
         {/* Bottom section */}
         <div style={{ paddingTop: '32px', borderTop: '1px solid #27272A', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
-          <p style={{ color: '#A1A1AA' }}>
+          <p style={{ color: '#D4D4D8' }}>
             {t('footer.copyright')}
           </p>
-          <p style={{ color: '#A1A1AA' }}>
+          <p style={{ color: '#D4D4D8' }}>
             {t('footer.madeWith')}
           </p>
         </div>

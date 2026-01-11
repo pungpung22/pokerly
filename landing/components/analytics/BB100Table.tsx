@@ -29,17 +29,17 @@ export function BB100Table({ data }: BB100TableProps) {
         <table className="w-full">
           <thead>
             <tr className="border-b border-[#27272A]">
-              <th className="px-5 py-3 text-left text-sm font-medium text-[#A1A1AA]">블라인드</th>
-              <th className="px-5 py-3 text-right text-sm font-medium text-[#A1A1AA]">BB/100</th>
-              <th className="px-5 py-3 text-right text-sm font-medium text-[#A1A1AA]">총 수익</th>
-              <th className="px-5 py-3 text-right text-sm font-medium text-[#A1A1AA]">게임 수</th>
-              <th className="px-5 py-3 text-right text-sm font-medium text-[#A1A1AA]">핸드 수</th>
+              <th className="px-5 py-3 text-left text-sm font-medium text-[#D4D4D8]">블라인드</th>
+              <th className="px-5 py-3 text-right text-sm font-medium text-[#D4D4D8]">BB/100</th>
+              <th className="px-5 py-3 text-right text-sm font-medium text-[#D4D4D8]">총 수익</th>
+              <th className="px-5 py-3 text-right text-sm font-medium text-[#D4D4D8]">게임 수</th>
+              <th className="px-5 py-3 text-right text-sm font-medium text-[#D4D4D8]">핸드 수</th>
             </tr>
           </thead>
           <tbody>
             {data.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-5 py-8 text-center text-[#A1A1AA]">
+                <td colSpan={5} className="px-5 py-8 text-center text-[#D4D4D8]">
                   데이터가 없습니다
                 </td>
               </tr>
@@ -57,8 +57,8 @@ export function BB100Table({ data }: BB100TableProps) {
                   }`}>
                     {row.totalProfit >= 0 ? '+' : ''}{row.totalProfit.toLocaleString()}원
                   </td>
-                  <td className="px-5 py-3 text-sm text-right text-[#A1A1AA]">{row.games}게임</td>
-                  <td className="px-5 py-3 text-sm text-right text-[#A1A1AA]">{row.hands}</td>
+                  <td className="px-5 py-3 text-sm text-right text-[#D4D4D8]">{row.games}게임</td>
+                  <td className="px-5 py-3 text-sm text-right text-[#D4D4D8]">{row.hands}</td>
                 </tr>
               ))
             )}

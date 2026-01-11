@@ -11,7 +11,11 @@ const languages = [
   { code: 'ja', label: '日本語', flag: '🇯🇵' },
 ] as const;
 
-export default function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  direction?: 'up' | 'down';
+}
+
+export default function LanguageSwitcher({ direction = 'down' }: LanguageSwitcherProps) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -36,6 +40,10 @@ export default function LanguageSwitcher() {
     setIsOpen(false);
   };
 
+  const dropdownStyle = direction === 'up'
+    ? { bottom: '100%', marginBottom: '4px' }
+    : { top: '100%', marginTop: '4px' };
+
   return (
     <div ref={dropdownRef} style={{ position: 'relative' }}>
       <button
@@ -43,24 +51,25 @@ export default function LanguageSwitcher() {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          padding: '8px 12px',
+          gap: '10px',
+          padding: '12px 18px',
           background: '#141416',
           border: '1px solid #27272A',
-          borderRadius: '8px',
+          borderRadius: '10px',
           color: '#FAFAFA',
           cursor: 'pointer',
-          fontSize: '14px',
+          fontSize: '16px',
+          fontWeight: 500,
         }}
       >
-        <Globe style={{ width: '16px', height: '16px', color: '#A1A1AA' }} />
-        <span>{currentLanguage.flag}</span>
+        <Globe style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
+        <span style={{ fontSize: '18px' }}>{currentLanguage.flag}</span>
         <span>{currentLanguage.label}</span>
         <ChevronDown
           style={{
-            width: '16px',
-            height: '16px',
-            color: '#A1A1AA',
+            width: '18px',
+            height: '18px',
+            color: '#D4D4D8',
             transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
             transition: 'transform 0.2s',
           }}
@@ -71,15 +80,15 @@ export default function LanguageSwitcher() {
         <div
           style={{
             position: 'absolute',
-            top: '100%',
-            right: 0,
-            marginTop: '4px',
-            background: '#141416',
+            left: 0,
+            ...dropdownStyle,
+            background: '#1C1C1E',
             border: '1px solid #27272A',
-            borderRadius: '8px',
+            borderRadius: '10px',
             overflow: 'hidden',
-            zIndex: 50,
-            minWidth: '150px',
+            zIndex: 9999,
+            minWidth: '180px',
+            boxShadow: direction === 'up' ? '0 -4px 20px rgba(0, 0, 0, 0.5)' : '0 4px 20px rgba(0, 0, 0, 0.5)',
           }}
         >
           {languages.map((lang) => (
@@ -89,18 +98,18 @@ export default function LanguageSwitcher() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
+                gap: '10px',
                 width: '100%',
-                padding: '10px 12px',
+                padding: '14px 18px',
                 background: lang.code === locale ? 'rgba(99, 102, 241, 0.2)' : 'transparent',
                 border: 'none',
                 color: lang.code === locale ? '#6366F1' : '#FAFAFA',
                 cursor: 'pointer',
-                fontSize: '14px',
+                fontSize: '16px',
                 textAlign: 'left',
               }}
             >
-              <span>{lang.flag}</span>
+              <span style={{ fontSize: '18px' }}>{lang.flag}</span>
               <span>{lang.label}</span>
             </button>
           ))}

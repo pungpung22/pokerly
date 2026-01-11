@@ -69,7 +69,7 @@ export default function NoticesPage() {
           </div>
           <div>
             <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white' }}>{t('title')}</h1>
-            <p style={{ color: '#A1A1AA', fontSize: '14px' }}>{t('subtitle')}</p>
+            <p style={{ color: '#D4D4D8', fontSize: '14px' }}>{t('subtitle')}</p>
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@ export default function NoticesPage() {
       {notices.length === 0 ? (
         <div className="card" style={{ textAlign: 'center', padding: '60px 24px' }}>
           <Megaphone style={{ width: '48px', height: '48px', color: '#3F3F46', margin: '0 auto 16px' }} />
-          <p style={{ color: '#A1A1AA', fontSize: '16px' }}>{t('empty')}</p>
+          <p style={{ color: '#D4D4D8', fontSize: '16px' }}>{t('empty')}</p>
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -131,7 +131,7 @@ export default function NoticesPage() {
                   <h3 style={{ color: 'white', fontSize: '16px', fontWeight: 500, marginBottom: '8px' }}>
                     {notice.title}
                   </h3>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#A1A1AA', fontSize: '13px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#D4D4D8', fontSize: '13px' }}>
                     <Calendar style={{ width: '14px', height: '14px' }} />
                     {formatDate(notice.createdAt)}
                   </div>
@@ -140,7 +140,7 @@ export default function NoticesPage() {
                   style={{
                     width: '20px',
                     height: '20px',
-                    color: '#A1A1AA',
+                    color: '#D4D4D8',
                     transform: expandedId === notice.id ? 'rotate(90deg)' : 'none',
                     transition: 'transform 0.2s',
                     flexShrink: 0,
@@ -157,7 +157,7 @@ export default function NoticesPage() {
                     borderTop: '1px solid #27272A',
                   }}
                 >
-                  <p style={{ color: '#A1A1AA', fontSize: '14px', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>
+                  <p style={{ color: '#D4D4D8', fontSize: '14px', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>
                     {notice.content}
                   </p>
                 </div>

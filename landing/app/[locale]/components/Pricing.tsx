@@ -84,7 +84,7 @@ export default function Pricing() {
               {/* Price */}
               <div style={{ marginBottom: '24px' }}>
                 <span style={{ fontSize: 'var(--section-title)', fontWeight: 'bold', color: 'white' }}>{plan.price}</span>
-                <span style={{ color: '#A1A1AA', fontSize: 'var(--body-text)' }}>{plan.period}</span>
+                <span style={{ color: '#D4D4D8', fontSize: 'var(--body-text)' }}>{plan.period}</span>
               </div>
 
               {/* Features */}

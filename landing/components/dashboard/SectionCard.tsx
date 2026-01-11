@@ -34,7 +34,7 @@ export function SectionCard({
         </div>
         <Link
           href={href}
-          className="text-sm text-[#A1A1AA] hover:text-[#F72585] transition-colors flex items-center gap-1"
+          className="text-sm text-[#D4D4D8] hover:text-[#F72585] transition-colors flex items-center gap-1"
         >
           전체 보기
           <ChevronRight className="w-4 h-4" />
@@ -45,7 +45,7 @@ export function SectionCard({
       <div className="p-5">
         {isEmpty ? (
           <div className="text-center py-8 space-y-4">
-            <p className="text-[#A1A1AA]">{emptyMessage}</p>
+            <p className="text-[#D4D4D8]">{emptyMessage}</p>
             <Link
               href={actionHref}
               className="inline-flex items-center gap-2 px-4 py-2 bg-[#F72585]/10 hover:bg-[#F72585]/20 text-[#F72585] font-medium rounded-lg transition-colors border border-[#F72585]/20"

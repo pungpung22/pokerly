@@ -20,24 +20,6 @@ export default function HeroSection() {
       />
 
       <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
-        {/* Badge */}
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 16px',
-            borderRadius: '9999px',
-            background: '#141416',
-            border: '1px solid #27272A',
-            color: '#A1A1AA',
-            marginBottom: '32px'
-          }}
-        >
-          <span style={{ color: '#F72585' }}>✨</span>
-          <span>{t('hero.badge')}</span>
-        </div>
-
         {/* Main title */}
         <h1 className="hero-title">
           {t('hero.title.line1')}
@@ -65,7 +47,7 @@ export default function HeroSection() {
         </div>
 
         {/* Trust indicators */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '24px', color: '#A1A1AA' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '24px', color: '#D4D4D8' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Lock style={{ width: '18px', height: '18px' }} />
             {t('hero.trust.privacy')}
@@ -86,7 +68,7 @@ export default function HeroSection() {
             <div style={{ background: '#0A0A0B', borderRadius: '12px', padding: '48px', minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div style={{ textAlign: 'center' }}>
                 <BarChart3Icon style={{ width: '80px', height: '80px', color: '#F72585', margin: '0 auto 16px' }} />
-                <p style={{ color: '#A1A1AA', fontSize: 'var(--body-text)' }}>{t('hero.preview')}</p>
+                <p style={{ color: '#D4D4D8', fontSize: 'var(--body-text)' }}>{t('hero.preview')}</p>
               </div>
             </div>
           </div>

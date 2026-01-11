@@ -20,7 +20,7 @@ import type { LevelInfo } from '@/lib/types';
 import { useTranslations } from 'next-intl';
 
 const levelColors: Record<number, string> = {
-  1: '#A1A1AA',
+  1: '#D4D4D8',
   2: '#22C55E',
   3: '#3B82F6',
   4: '#FF4EA3',
@@ -277,7 +277,7 @@ export default function LevelPage() {
             return (
               <div key={key} className="level-xp-guide-item">
                 <div className="level-xp-guide-left">
-                  <Icon style={{ width: '18px', height: '18px', color: '#A1A1AA' }} />
+                  <Icon style={{ width: '18px', height: '18px', color: '#D4D4D8' }} />
                   <span className="level-xp-guide-label">{t(`xpGuide.${translationKey}`)}</span>
                 </div>
                 <div className="level-xp-guide-right">
@@ -338,12 +338,12 @@ export default function LevelPage() {
                     className="level-roadmap-badge"
                     style={{
                       background: isCompleted || isCurrentLevel ? color : '#27272A',
-                      color: isCompleted || isCurrentLevel ? 'white' : '#A1A1AA',
+                      color: isCompleted || isCurrentLevel ? 'white' : '#D4D4D8',
                     }}
                   >
                     {isCompleted ? <CheckCircle style={{ width: '18px', height: '18px' }} /> : level}
                   </div>
-                  <div className="level-roadmap-name" style={{ color: isCurrentLevel ? 'white' : isCompleted ? '#A1A1AA' : '#A1A1AA', fontWeight: isCurrentLevel ? 600 : 400 }}>
+                  <div className="level-roadmap-name" style={{ color: isCurrentLevel ? 'white' : isCompleted ? '#D4D4D8' : '#D4D4D8', fontWeight: isCurrentLevel ? 600 : 400 }}>
                     {tTypes(`levelNames.${level}`)}
                   </div>
                   {isCurrentLevel && (

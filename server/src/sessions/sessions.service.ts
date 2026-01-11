@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Between } from 'typeorm';
 import { Session } from '../entities/session.entity';
@@ -12,13 +12,39 @@ export class SessionsService {
     private readonly sessionRepository: Repository<Session>,
   ) {}
 
+  /**
+   * 중복 세션 체크 (날짜 + 장소 + 게임타입 + 스테이크)
+   */
+  async checkDuplicate(userId: string, dto: CreateSessionDto): Promise<Session | null> {
+    return this.sessionRepository.findOne({
+      where: {
+        userId,
+        date: new Date(dto.date),
+        venue: dto.venue,
+        gameType: dto.gameType,
+        stakes: dto.stakes,
+      },
+    });
+  }
+
   async create(userId: string, createSessionDto: CreateSessionDto): Promise<Session> {
+    // 중복 체크
+    const duplicate = await this.checkDuplicate(userId, createSessionDto);
+    if (duplicate) {
+      throw new ConflictException({
+        message: '동일한 세션이 이미 등록되어 있습니다.',
+        duplicateSessionId: duplicate.id,
+      });
+    }
+
     const session = this.sessionRepository.create({
       ...createSessionDto,
       userId,
       date: new Date(createSessionDto.date),
       startTime: createSessionDto.startTime ? new Date(createSessionDto.startTime) : undefined,
       hands: createSessionDto.hands || 0,
+      imageHash: createSessionDto.imageHash,
+      rawText: createSessionDto.rawText,
     });
     return this.sessionRepository.save(session);
   }
@@ -179,7 +205,7 @@ export class SessionsService {
     };
   }
 
-  async getAnalytics(userId: string, period?: string, startDate?: string, endDate?: string) {
+  async getAnalytics(userId: string, period?: string, startDate?: string, endDate?: string, gameType?: string) {
     let dateFilter = {};
     const today = new Date();
     today.setHours(23, 59, 59, 999);
@@ -209,8 +235,14 @@ export class SessionsService {
       dateFilter = { date: Between(start, end) };
     }
 
+    // Build where clause with optional gameType filter
+    const whereClause: any = { userId, ...dateFilter };
+    if (gameType && gameType !== 'all') {
+      whereClause.gameType = gameType;
+    }
+
     const sessions = await this.sessionRepository.find({
-      where: { userId, ...dateFilter },
+      where: whereClause,
       order: { date: 'DESC' },
     });
 

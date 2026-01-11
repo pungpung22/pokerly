@@ -37,7 +37,7 @@ export function StatsCard({
   };
 
   const iconBg = {
-    default: 'bg-[#1A1A20] text-[#A1A1AA]',
+    default: 'bg-[#1A1A20] text-[#D4D4D8]',
     highlight: 'bg-[#F72585]/20 text-[#F72585]',
     profit: 'bg-[#22C55E]/20 text-[#22C55E]',
     loss: 'bg-[#EF4444]/20 text-[#EF4444]',
@@ -58,11 +58,11 @@ export function StatsCard({
 
       <div className="relative flex items-start justify-between">
         <div className="space-y-2">
-          <p className="text-sm text-[#A1A1AA]">{title}</p>
+          <p className="text-sm text-[#D4D4D8]">{title}</p>
           <p className={cn('text-3xl font-bold tracking-tight', valueColors[variant])}>
             {value}
           </p>
-          {subtitle && <p className="text-xs text-[#A1A1AA]">{subtitle}</p>}
+          {subtitle && <p className="text-xs text-[#D4D4D8]">{subtitle}</p>}
         </div>
         <div className={cn('p-2.5 rounded-xl', iconBg[variant])}>
           <Icon className="w-5 h-5" />

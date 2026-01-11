@@ -103,7 +103,7 @@ export default function SettingsPage() {
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
         <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>{t('title')}</h1>
-        <p style={{ color: '#A1A1AA' }}>{t('subtitle')}</p>
+        <p style={{ color: '#D4D4D8' }}>{t('subtitle')}</p>
       </div>
 
       {/* Profile Section */}
@@ -129,7 +129,7 @@ export default function SettingsPage() {
             <p style={{ color: 'white', fontWeight: 'bold', fontSize: '18px', marginBottom: '4px' }}>
               {user?.displayName || t('user')}
             </p>
-            <p style={{ color: '#A1A1AA', fontSize: '14px' }}>{user?.email}</p>
+            <p style={{ color: '#D4D4D8', fontSize: '14px' }}>{user?.email}</p>
           </div>
         </div>
       </div>
@@ -141,10 +141,10 @@ export default function SettingsPage() {
         {/* Notifications */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: '1px solid #27272A' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Bell style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            <Bell style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <div>
               <p style={{ color: 'white', fontWeight: 500 }}>{t('notifications.title')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>{t('notifications.subtitle')}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('notifications.subtitle')}</p>
             </div>
           </div>
           <button
@@ -178,10 +178,10 @@ export default function SettingsPage() {
         {/* Dark Mode */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: '1px solid #27272A' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Moon style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            <Moon style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <div>
               <p style={{ color: 'white', fontWeight: 500 }}>{t('darkMode.title')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>{t('darkMode.subtitle')}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('darkMode.subtitle')}</p>
             </div>
           </div>
           <button
@@ -215,10 +215,10 @@ export default function SettingsPage() {
         {/* Language */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Globe style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            <Globe style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <div>
               <p style={{ color: 'white', fontWeight: 500 }}>{t('language.title')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>{t('language.subtitle')}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('language.subtitle')}</p>
             </div>
           </div>
           <select
@@ -250,10 +250,10 @@ export default function SettingsPage() {
         {/* Korean Unit */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: '1px solid #27272A' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Hash style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            <Hash style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <div>
               <p style={{ color: 'white', fontWeight: 500 }}>{t('display.koreanUnit.title')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>{t('display.koreanUnit.subtitle')}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('display.koreanUnit.subtitle')}</p>
             </div>
           </div>
           <button
@@ -287,10 +287,10 @@ export default function SettingsPage() {
         {/* Round to Ten Thousand */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: '1px solid #27272A' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Hash style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            <Hash style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <div>
               <p style={{ color: 'white', fontWeight: 500 }}>{t('display.roundToTenThousand.title')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>{t('display.roundToTenThousand.subtitle')}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('display.roundToTenThousand.subtitle')}</p>
             </div>
           </div>
           <button
@@ -324,10 +324,10 @@ export default function SettingsPage() {
         {/* Currency */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <DollarSign style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            <DollarSign style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <div>
               <p style={{ color: 'white', fontWeight: 500 }}>{t('display.currency.title')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>{t('display.currency.subtitle')}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('display.currency.subtitle')}</p>
             </div>
           </div>
           <select
@@ -358,13 +358,13 @@ export default function SettingsPage() {
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: '1px solid #27272A', textDecoration: 'none' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Mail style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            <Mail style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <div>
               <p style={{ color: 'white', fontWeight: 500 }}>{t('support.contact')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>pung0805@gmail.com</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>pung0805@gmail.com</p>
             </div>
           </div>
-          <ExternalLink style={{ width: '18px', height: '18px', color: '#A1A1AA' }} />
+          <ExternalLink style={{ width: '18px', height: '18px', color: '#D4D4D8' }} />
         </a>
 
         <a
@@ -372,10 +372,10 @@ export default function SettingsPage() {
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: '1px solid #27272A', textDecoration: 'none' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Shield style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            <Shield style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <p style={{ color: 'white', fontWeight: 500 }}>{t('support.privacy')}</p>
           </div>
-          <ChevronRight style={{ width: '18px', height: '18px', color: '#A1A1AA' }} />
+          <ChevronRight style={{ width: '18px', height: '18px', color: '#D4D4D8' }} />
         </a>
 
         <a
@@ -383,10 +383,10 @@ export default function SettingsPage() {
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', textDecoration: 'none' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Shield style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            <Shield style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <p style={{ color: 'white', fontWeight: 500 }}>{t('support.terms')}</p>
           </div>
-          <ChevronRight style={{ width: '18px', height: '18px', color: '#A1A1AA' }} />
+          <ChevronRight style={{ width: '18px', height: '18px', color: '#D4D4D8' }} />
         </a>
       </div>
 
@@ -415,10 +415,10 @@ export default function SettingsPage() {
             <Trash2 style={{ width: '20px', height: '20px', color: '#EF4444' }} />
             <div>
               <p style={{ color: '#EF4444', fontWeight: 500 }}>{t('account.deleteAccount.title')}</p>
-              <p style={{ color: '#A1A1AA', fontSize: '13px' }}>{t('account.deleteAccount.subtitle')}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('account.deleteAccount.subtitle')}</p>
             </div>
           </div>
-          <ChevronRight style={{ width: '18px', height: '18px', color: '#A1A1AA' }} />
+          <ChevronRight style={{ width: '18px', height: '18px', color: '#D4D4D8' }} />
         </button>
       </div>
 
@@ -446,7 +446,7 @@ export default function SettingsPage() {
       </button>
 
       {/* App Version */}
-      <p style={{ textAlign: 'center', color: '#A1A1AA', fontSize: '13px', marginTop: '24px' }}>
+      <p style={{ textAlign: 'center', color: '#D4D4D8', fontSize: '13px', marginTop: '24px' }}>
         {t('version')}
       </p>
 
@@ -476,7 +476,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <h3 style={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}>{t('account.deleteAccount.title')}</h3>
-                <p style={{ color: '#A1A1AA', fontSize: '14px' }}>{t('account.deleteAccount.warning')}</p>
+                <p style={{ color: '#D4D4D8', fontSize: '14px' }}>{t('account.deleteAccount.warning')}</p>
               </div>
             </div>
 
@@ -492,7 +492,7 @@ export default function SettingsPage() {
             </div>
 
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', color: '#A1A1AA', fontSize: '14px', marginBottom: '8px' }}>
+              <label style={{ display: 'block', color: '#D4D4D8', fontSize: '14px', marginBottom: '8px' }}>
                 {t('account.deleteAccount.confirmPrompt', { text: '' })}
                 <span style={{ color: '#EF4444', fontWeight: 'bold' }}>"{confirmText}"</span>
               </label>
@@ -525,7 +525,7 @@ export default function SettingsPage() {
                   background: 'transparent',
                   border: '1px solid #27272A',
                   borderRadius: '8px',
-                  color: '#A1A1AA',
+                  color: '#D4D4D8',
                   cursor: 'pointer',
                   fontSize: '14px',
                   fontWeight: 500,
@@ -542,7 +542,7 @@ export default function SettingsPage() {
                   background: deleteConfirmText === confirmText ? '#EF4444' : '#27272A',
                   border: 'none',
                   borderRadius: '8px',
-                  color: deleteConfirmText === confirmText ? 'white' : '#A1A1AA',
+                  color: deleteConfirmText === confirmText ? 'white' : '#D4D4D8',
                   cursor: deleteConfirmText === confirmText ? 'pointer' : 'not-allowed',
                   fontSize: '14px',
                   fontWeight: 500,

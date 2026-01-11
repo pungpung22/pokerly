@@ -19,7 +19,7 @@ export function WelcomeBanner({ userName }: WelcomeBannerProps) {
 
       <button
         onClick={() => setIsVisible(false)}
-        className="absolute top-4 right-4 p-1 text-[#A1A1AA] hover:text-white transition-colors"
+        className="absolute top-4 right-4 p-1 text-[#D4D4D8] hover:text-white transition-colors"
       >
         <X className="w-5 h-5" />
       </button>
@@ -32,7 +32,7 @@ export function WelcomeBanner({ userName }: WelcomeBannerProps) {
           <h2 className="text-lg font-semibold text-white">
             Pokerly에 오신 것을 환영합니다!
           </h2>
-          <p className="text-sm text-[#A1A1AA] max-w-xl">
+          <p className="text-sm text-[#D4D4D8] max-w-xl">
             세션을 기록하고 분석하여 포커 실력을 향상시켜 보세요.
           </p>
         </div>

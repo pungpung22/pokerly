@@ -261,7 +261,7 @@ export default function ChallengesPage() {
       ) : displayedChallenges.length === 0 ? (
         <div className="card" style={{ textAlign: 'center', padding: '48px 24px' }}>
           <Trophy style={{ width: '48px', height: '48px', color: '#27272A', margin: '0 auto 16px' }} />
-          <p style={{ color: '#A1A1AA', marginBottom: '16px' }}>
+          <p style={{ color: '#D4D4D8', marginBottom: '16px' }}>
             {activeTab === 'active' ? t('empty.active') : t('empty.completed')}
           </p>
           {activeTab === 'active' && (
@@ -340,14 +340,14 @@ export default function ChallengesPage() {
                           {tTypes(`challengeTypes.${challenge.type}`)}
                         </span>
                       </div>
-                      <p style={{ fontSize: '13px', color: '#A1A1AA', marginBottom: '12px' }}>
+                      <p style={{ fontSize: '13px', color: '#D4D4D8', marginBottom: '12px' }}>
                         {challenge.description}
                       </p>
 
                       {/* Progress */}
                       <div style={{ marginBottom: '8px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                          <span style={{ fontSize: '13px', color: '#A1A1AA' }}>
+                          <span style={{ fontSize: '13px', color: '#D4D4D8' }}>
                             {formatTargetValue(challenge.currentValue, challenge.type)} / {formatTargetValue(challenge.targetValue, challenge.type)}
                           </span>
                           <span style={{ fontSize: '13px', color: getProgressColor(progress), fontWeight: 500 }}>
@@ -378,7 +378,7 @@ export default function ChallengesPage() {
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                           {challenge.status === 'active' && (
-                            <span style={{ fontSize: '12px', color: daysRemaining <= 3 ? '#EF4444' : '#A1A1AA' }}>
+                            <span style={{ fontSize: '12px', color: daysRemaining <= 3 ? '#EF4444' : '#D4D4D8' }}>
                               <Calendar style={{ width: '12px', height: '12px', display: 'inline', marginRight: '4px' }} />
                               {t('daysRemaining', { count: daysRemaining })}
                             </span>
@@ -397,7 +397,7 @@ export default function ChallengesPage() {
                               background: 'transparent',
                               border: '1px solid #27272A',
                               borderRadius: '4px',
-                              color: '#A1A1AA',
+                              color: '#D4D4D8',
                               fontSize: '12px',
                               cursor: 'pointer',
                             }}
@@ -439,7 +439,7 @@ export default function ChallengesPage() {
               <h2 style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>{t('create.title')}</h2>
               <button
                 onClick={() => setShowCreateModal(false)}
-                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#A1A1AA' }}
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#D4D4D8' }}
               >
                 <X style={{ width: '20px', height: '20px' }} />
               </button>
@@ -447,7 +447,7 @@ export default function ChallengesPage() {
 
             {/* Presets */}
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', color: '#A1A1AA', fontSize: '14px', marginBottom: '8px' }}>
+              <label style={{ display: 'block', color: '#D4D4D8', fontSize: '14px', marginBottom: '8px' }}>
                 {t('create.quickPresets')}
               </label>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
@@ -466,7 +466,7 @@ export default function ChallengesPage() {
                       background: newChallenge.type === preset.type ? 'rgba(247, 37, 133, 0.2)' : '#0A0A0B',
                       border: `1px solid ${newChallenge.type === preset.type ? '#F72585' : '#27272A'}`,
                       borderRadius: '6px',
-                      color: newChallenge.type === preset.type ? '#F72585' : '#A1A1AA',
+                      color: newChallenge.type === preset.type ? '#F72585' : '#D4D4D8',
                       cursor: 'pointer',
                       fontSize: '13px',
                     }}
@@ -479,7 +479,7 @@ export default function ChallengesPage() {
 
             {/* Title */}
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', color: '#A1A1AA', fontSize: '14px', marginBottom: '8px' }}>
+              <label style={{ display: 'block', color: '#D4D4D8', fontSize: '14px', marginBottom: '8px' }}>
                 {t('create.name')}
               </label>
               <input
@@ -501,7 +501,7 @@ export default function ChallengesPage() {
 
             {/* Description */}
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', color: '#A1A1AA', fontSize: '14px', marginBottom: '8px' }}>
+              <label style={{ display: 'block', color: '#D4D4D8', fontSize: '14px', marginBottom: '8px' }}>
                 {t('create.description')}
               </label>
               <input
@@ -523,7 +523,7 @@ export default function ChallengesPage() {
 
             {/* Target Value */}
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', color: '#A1A1AA', fontSize: '14px', marginBottom: '8px' }}>
+              <label style={{ display: 'block', color: '#D4D4D8', fontSize: '14px', marginBottom: '8px' }}>
                 {t('create.targetValue')} ({newChallenge.type === 'profit' ? tTypes('challengeTypes.profit') : newChallenge.type === 'hours' ? tTypes('challengeTypes.hours') : tTypes('challengeTypes.sessions')})
               </label>
               {newChallenge.type === 'profit' && (
@@ -538,7 +538,7 @@ export default function ChallengesPage() {
                         background: newChallenge.targetValue === target.value ? 'rgba(247, 37, 133, 0.2)' : '#0A0A0B',
                         border: `1px solid ${newChallenge.targetValue === target.value ? '#F72585' : '#27272A'}`,
                         borderRadius: '6px',
-                        color: newChallenge.targetValue === target.value ? '#F72585' : '#A1A1AA',
+                        color: newChallenge.targetValue === target.value ? '#F72585' : '#D4D4D8',
                         cursor: 'pointer',
                         fontSize: '13px',
                       }}
@@ -593,7 +593,7 @@ export default function ChallengesPage() {
 
             {/* Reward Points */}
             <div style={{ marginBottom: '24px' }}>
-              <label style={{ display: 'block', color: '#A1A1AA', fontSize: '14px', marginBottom: '8px' }}>
+              <label style={{ display: 'block', color: '#D4D4D8', fontSize: '14px', marginBottom: '8px' }}>
                 {t('create.rewardPoints')}
               </label>
               <input
@@ -623,7 +623,7 @@ export default function ChallengesPage() {
                   background: 'transparent',
                   border: '1px solid #27272A',
                   borderRadius: '8px',
-                  color: '#A1A1AA',
+                  color: '#D4D4D8',
                   cursor: 'pointer',
                   fontSize: '14px',
                   fontWeight: 500,

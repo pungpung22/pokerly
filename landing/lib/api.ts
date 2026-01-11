@@ -15,7 +15,7 @@ import type {
   XpType
 } from './types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9999/api';
 
 async function getAuthHeader(): Promise<HeadersInit> {
   const user = auth.currentUser;
@@ -115,11 +115,12 @@ export const sessionsApi = {
     );
   },
 
-  getAnalytics: (period?: string, startDate?: string, endDate?: string) => {
+  getAnalytics: (period?: string, startDate?: string, endDate?: string, gameType?: string) => {
     const params = new URLSearchParams();
     if (period) params.append('period', period);
     if (startDate) params.append('startDate', startDate);
     if (endDate) params.append('endDate', endDate);
+    if (gameType && gameType !== 'all') params.append('gameType', gameType);
     const query = params.toString();
     return fetchWithAuth<{
       byGameType: { type: string; profit: number; sessions: number; winRate: number }[];

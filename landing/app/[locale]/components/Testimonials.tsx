@@ -44,7 +44,7 @@ export default function Testimonials() {
               {/* Author */}
               <div>
                 <p style={{ color: 'white', fontWeight: 'bold' }}>{testimonial.name}</p>
-                <p style={{ color: '#A1A1AA' }}>{testimonial.info}</p>
+                <p style={{ color: '#D4D4D8' }}>{testimonial.info}</p>
               </div>
             </div>
           ))}
