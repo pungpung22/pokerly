@@ -7,55 +7,73 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useTranslations } from 'next-intl';
 import {
   BarChart3,
-  LayoutDashboard,
-  History,
-  TrendingUp,
-  Upload,
-  Settings,
+  Home,
+  CalendarDays,
+  LineChart,
+  Camera,
+  SlidersHorizontal,
   LogOut,
   Loader2,
   Menu,
   X,
-  Trophy,
-  Star,
+  Target,
+  Crown,
   Bell,
   MoreHorizontal,
-  MessageSquare,
+  Send,
+  Newspaper,
+  ChevronLeft,
+  ChevronRight,
+  Zap,
+  TrendingUp,
+  History,
+  Star,
   Megaphone,
+  MessageSquare,
+  Settings,
 } from 'lucide-react';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import { sessionsApi, userApi } from '@/lib/api';
+import type { DashboardStats, LevelInfo } from '@/lib/types';
 
 // Navigation items with translation keys
 const navItemsConfig = [
-  { href: '/app', icon: LayoutDashboard, labelKey: 'dashboard' },
-  { href: '/app/sessions', icon: History, labelKey: 'sessions' },
-  { href: '/app/challenges', icon: Trophy, labelKey: 'challenges' },
-  { href: '/app/level', icon: Star, labelKey: 'level' },
-  { href: '/app/analytics', icon: TrendingUp, labelKey: 'analytics' },
-  { href: '/app/upload', icon: Upload, labelKey: 'upload' },
-  { href: '/app/notices', icon: Megaphone, labelKey: 'notices' },
-  { href: '/app/feedback', icon: MessageSquare, labelKey: 'feedback' },
-  { href: '/app/settings', icon: Settings, labelKey: 'settings' },
+  { href: '/app', icon: Home, labelKey: 'dashboard' },
+  { href: '/app/sessions', icon: CalendarDays, labelKey: 'sessions' },
+  { href: '/app/missions', icon: Target, labelKey: 'missions' },
+  { href: '/app/level', icon: Crown, labelKey: 'level' },
+  { href: '/app/analytics', icon: LineChart, labelKey: 'analytics' },
+  { href: '/app/upload', icon: Camera, labelKey: 'upload' },
+  { href: '/app/notices', icon: Newspaper, labelKey: 'notices' },
+  { href: '/app/feedback', icon: Send, labelKey: 'feedback' },
+  { href: '/app/settings', icon: SlidersHorizontal, labelKey: 'settings' },
 ];
 
 // Bottom tab items with translation keys
 const bottomTabItemsConfig = [
-  { href: '/app', icon: LayoutDashboard, labelKey: 'home' },
-  { href: '/app/challenges', icon: Trophy, labelKey: 'challenges' },
-  { href: '/app/upload', icon: Upload, labelKey: 'upload' },
-  { href: '/app/analytics', icon: TrendingUp, labelKey: 'analytics' },
+  { href: '/app', icon: Home, labelKey: 'home' },
+  { href: '/app/missions', icon: Target, labelKey: 'missions' },
+  { href: '/app/upload', icon: Camera, labelKey: 'upload' },
+  { href: '/app/analytics', icon: LineChart, labelKey: 'analytics' },
   { href: '/app/more', icon: MoreHorizontal, labelKey: 'more' },
 ];
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const pathname = usePathname();
+  const rawPathname = usePathname();
   const { user, loading, signOut } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [todayProfit, setTodayProfit] = useState<number>(0);
+  const [levelInfo, setLevelInfo] = useState<LevelInfo | null>(null);
   const t = useTranslations('Navigation');
   const tCommon = useTranslations('Common');
   const tSettings = useTranslations('Settings');
+  const tUnits = useTranslations('Units');
+
+  // Remove locale prefix from pathname for matching (e.g., /ko/app -> /app)
+  const pathname = rawPathname.replace(/^\/(ko|en|ja)/, '');
 
   // Create translated nav items
   const navItems = navItemsConfig.map(item => ({
@@ -73,6 +91,24 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       router.push('/login');
     }
   }, [user, loading, router]);
+
+  // Fetch today's profit and level info
+  useEffect(() => {
+    async function fetchSidebarData() {
+      if (!user) return;
+      try {
+        const [stats, level] = await Promise.all([
+          sessionsApi.getStats(),
+          userApi.getLevelInfo(),
+        ]);
+        setTodayProfit(stats.todayProfit || 0);
+        setLevelInfo(level);
+      } catch (err) {
+        console.error('Failed to fetch sidebar data:', err);
+      }
+    }
+    fetchSidebarData();
+  }, [user]);
 
   // Close more menu when pathname changes
   useEffect(() => {
@@ -104,17 +140,50 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ background: '#0A0A0B', display: 'flex' }}>
       {/* Desktop Sidebar */}
-      <aside className="desktop-sidebar">
-        {/* Logo */}
-        <div style={{ padding: '24px', borderBottom: '1px solid #27272A' }}>
-          <Link href="/app" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-            <BarChart3 style={{ width: '32px', height: '32px', color: '#F72585' }} />
-            <span style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>Pokerly</span>
-          </Link>
+      <aside className={`desktop-sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
+        {/* Logo & Toggle */}
+        <div style={{ padding: sidebarCollapsed ? '24px 16px' : '24px', borderBottom: '1px solid #27272A' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Link href="/app" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+              <BarChart3 style={{ width: '32px', height: '32px', color: '#F72585' }} />
+              {!sidebarCollapsed && <span style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>Pokerly</span>}
+            </Link>
+            <button
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="sidebar-toggle-btn"
+              title={sidebarCollapsed ? '펼치기' : '접기'}
+            >
+              {sidebarCollapsed ? <ChevronRight style={{ width: '18px', height: '18px' }} /> : <ChevronLeft style={{ width: '18px', height: '18px' }} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Today's Profit Mini Card */}
+        <div style={{ padding: sidebarCollapsed ? '12px 8px' : '12px 16px' }}>
+          <div className="today-profit-card">
+            {sidebarCollapsed ? (
+              <div style={{ textAlign: 'center' }}>
+                <TrendingUp style={{ width: '18px', height: '18px', color: todayProfit >= 0 ? '#00D4AA' : '#EF4444' }} />
+                <p style={{ fontSize: '12px', fontWeight: 600, color: todayProfit >= 0 ? '#00D4AA' : '#EF4444', marginTop: '4px' }}>
+                  {todayProfit >= 0 ? '+' : ''}{Math.abs(todayProfit) >= 10000 ? `${(todayProfit / 10000).toFixed(0)}만` : todayProfit.toLocaleString()}
+                </p>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <TrendingUp style={{ width: '14px', height: '14px', color: '#A1A1AA' }} />
+                  <span style={{ fontSize: '12px', color: '#A1A1AA' }}>{t('todayProfit')}</span>
+                </div>
+                <p style={{ fontSize: '18px', fontWeight: 700, color: todayProfit >= 0 ? '#00D4AA' : '#EF4444' }}>
+                  {todayProfit >= 0 ? '+' : ''}{todayProfit.toLocaleString()}{tUnits('won')}
+                </p>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Navigation */}
-        <nav style={{ flex: 1, padding: '16px' }}>
+        <nav style={{ flex: 1, padding: sidebarCollapsed ? '16px 8px' : '16px' }}>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {navItems.map((item) => {
               const isActive = pathname === item.href || (item.href !== '/app' && pathname.startsWith(item.href));
@@ -122,21 +191,32 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <li key={item.href}>
                   <Link
                     href={item.href}
+                    title={sidebarCollapsed ? item.label : undefined}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
+                      justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
                       gap: '12px',
-                      padding: '12px 16px',
+                      padding: sidebarCollapsed ? '12px' : '12px 16px',
                       borderRadius: '8px',
                       textDecoration: 'none',
-                      color: isActive ? 'white' : '#D4D4D8',
-                      background: isActive ? 'rgba(247, 37, 133, 0.2)' : 'transparent',
-                      fontWeight: isActive ? 500 : 400,
+                      color: isActive ? 'white' : '#A1A1AA',
+                      background: isActive
+                        ? 'linear-gradient(90deg, rgba(247, 37, 133, 0.3) 0%, rgba(247, 37, 133, 0.1) 100%)'
+                        : 'transparent',
+                      fontWeight: isActive ? 600 : 400,
+                      borderLeft: isActive ? '3px solid #F72585' : '3px solid transparent',
+                      boxShadow: isActive ? '0 2px 8px rgba(247, 37, 133, 0.2)' : 'none',
                       transition: 'all 0.2s',
                     }}
                   >
-                    <item.icon style={{ width: '20px', height: '20px', color: isActive ? '#F72585' : '#D4D4D8' }} />
-                    {item.label}
+                    <item.icon style={{
+                      width: '20px',
+                      height: '20px',
+                      color: isActive ? '#F72585' : '#A1A1AA',
+                      filter: isActive ? 'drop-shadow(0 0 4px rgba(247, 37, 133, 0.5))' : 'none',
+                    }} />
+                    {!sidebarCollapsed && item.label}
                   </Link>
                 </li>
               );
@@ -145,8 +225,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </nav>
 
         {/* User section */}
-        <div style={{ padding: '16px', borderTop: '1px solid #27272A' }}>
-          <Link href="/app/level" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px', textDecoration: 'none' }}>
+        <div style={{ padding: sidebarCollapsed ? '16px 8px' : '16px', borderTop: '1px solid #27272A' }}>
+          <Link href="/app/level" style={{ display: 'flex', alignItems: 'center', justifyContent: sidebarCollapsed ? 'center' : 'flex-start', gap: '12px', marginBottom: '12px', textDecoration: 'none' }}>
             <div style={{ position: 'relative' }}>
               {user.photoURL ? (
                 <img
@@ -178,29 +258,67 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   border: '2px solid #141416',
                 }}
               >
-                <Star style={{ width: '10px', height: '10px' }} />
+                {levelInfo?.level || <Crown style={{ width: '10px', height: '10px' }} />}
               </div>
             </div>
-            <div style={{ flex: 1, overflow: 'hidden' }}>
-              <p style={{ color: 'white', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {user.displayName || tSettings('user')}
-              </p>
-              <p style={{ color: '#D4D4D8', fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {user.email}
-              </p>
-            </div>
+            {!sidebarCollapsed && (
+              <div style={{ flex: 1, overflow: 'hidden' }}>
+                <p style={{ color: 'white', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {user.displayName || tSettings('user')}
+                </p>
+                <p style={{ color: '#D4D4D8', fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {user.email}
+                </p>
+              </div>
+            )}
           </Link>
-          <div style={{ marginBottom: '12px' }}>
-            <LanguageSwitcher direction="up" />
-          </div>
+
+          {/* XP Gauge Bar */}
+          {levelInfo && !sidebarCollapsed && (
+            <div className="sidebar-xp-gauge">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <Zap style={{ width: '12px', height: '12px', color: '#F72585' }} />
+                  <span style={{ fontSize: '11px', color: '#A1A1AA' }}>Lv.{levelInfo.level}</span>
+                </div>
+                <span style={{ fontSize: '11px', color: '#71717A' }}>{levelInfo.currentXp}/{levelInfo.requiredXp} XP</span>
+              </div>
+              <div className="xp-gauge-bar">
+                <div
+                  className="xp-gauge-fill"
+                  style={{ width: `${levelInfo.progress}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* XP Gauge for collapsed mode */}
+          {levelInfo && sidebarCollapsed && (
+            <div style={{ marginBottom: '12px' }}>
+              <div className="xp-gauge-bar" style={{ height: '4px' }}>
+                <div
+                  className="xp-gauge-fill"
+                  style={{ width: `${levelInfo.progress}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          {!sidebarCollapsed && (
+            <div style={{ marginBottom: '12px' }}>
+              <LanguageSwitcher direction="up" />
+            </div>
+          )}
           <button
             onClick={handleSignOut}
+            title={sidebarCollapsed ? tCommon('logout') : undefined}
             style={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
               gap: '8px',
               width: '100%',
-              padding: '10px 16px',
+              padding: sidebarCollapsed ? '10px' : '10px 16px',
               background: 'transparent',
               border: '1px solid #27272A',
               borderRadius: '8px',
@@ -210,7 +328,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             }}
           >
             <LogOut style={{ width: '18px', height: '18px' }} />
-            {tCommon('logout')}
+            {!sidebarCollapsed && tCommon('logout')}
           </button>
         </div>
       </aside>
@@ -480,6 +598,50 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           top: 0;
           left: 0;
           bottom: 0;
+          transition: width 0.2s ease;
+          z-index: 50;
+        }
+        .desktop-sidebar.collapsed {
+          width: 72px;
+        }
+        .sidebar-toggle-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 28px;
+          height: 28px;
+          border-radius: 6px;
+          background: transparent;
+          border: 1px solid #27272A;
+          color: #A1A1AA;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .sidebar-toggle-btn:hover {
+          background: rgba(247, 37, 133, 0.1);
+          border-color: #F72585;
+          color: #F72585;
+        }
+        .today-profit-card {
+          background: rgba(0, 212, 170, 0.08);
+          border: 1px solid rgba(0, 212, 170, 0.2);
+          border-radius: 10px;
+          padding: 12px;
+        }
+        .sidebar-xp-gauge {
+          margin-bottom: 12px;
+        }
+        .xp-gauge-bar {
+          height: 6px;
+          background: #27272A;
+          border-radius: 3px;
+          overflow: hidden;
+        }
+        .xp-gauge-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #F72585 0%, #7B2FF7 100%);
+          border-radius: 3px;
+          transition: width 0.3s ease;
         }
         .mobile-header {
           display: none;
@@ -494,6 +656,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           margin-left: 260px;
           padding-top: 0;
           padding-bottom: 0;
+          transition: margin-left 0.2s ease;
+        }
+        .desktop-sidebar.collapsed ~ .app-main {
+          margin-left: 72px;
         }
 
         /* 태블릿/모바일 (1024px 미만) */
