@@ -38,6 +38,9 @@
     "more": "더보기"
   },
   "Landing": {
+    "header": {
+      "dashboard": "대시보드"
+    },
     "hero": {
       "badge": "200명 이상의 플레이어가 사용 중",
       "title": {

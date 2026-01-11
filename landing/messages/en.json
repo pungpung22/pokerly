@@ -38,6 +38,9 @@
     "more": "More"
   },
   "Landing": {
+    "header": {
+      "dashboard": "Dashboard"
+    },
     "hero": {
       "badge": "Used by 200+ players",
       "title": {

@@ -1,12 +1,14 @@
 'use client';
 
 import { Link } from '@/src/i18n/navigation';
-import { BarChart3 } from 'lucide-react';
+import { BarChart3, LayoutDashboard } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useAuth } from '@/app/contexts/AuthContext';
 
 export default function Header() {
   const t = useTranslations('Landing');
+  const { user, loading } = useAuth();
 
   return (
     <header
@@ -33,9 +35,18 @@ export default function Header() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <LanguageSwitcher />
-          <Link href="/login" className="btn-primary" style={{ padding: '12px 24px' }}>
-            {t('hero.cta')}
-          </Link>
+          {loading ? (
+            <div style={{ width: '120px', height: '44px' }} />
+          ) : user ? (
+            <Link href="/app" className="btn-primary" style={{ padding: '12px 24px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <LayoutDashboard style={{ width: '18px', height: '18px' }} />
+              {t('header.dashboard') || '대시보드'}
+            </Link>
+          ) : (
+            <Link href="/login" className="btn-primary" style={{ padding: '12px 24px' }}>
+              {t('hero.cta')}
+            </Link>
+          )}
         </div>
       </div>
     </header>

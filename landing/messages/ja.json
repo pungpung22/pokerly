@@ -38,6 +38,9 @@
     "more": "もっと見る"
   },
   "Landing": {
+    "header": {
+      "dashboard": "ダッシュボード"
+    },
     "hero": {
       "badge": "200人以上のプレイヤーが利用中",
       "title": {
