@@ -16,6 +16,9 @@ export interface User {
   locale: string;
   theme: string;
   notificationsEnabled: boolean;
+  rankingOptIn: boolean;
+  rankingOptInDate: string | null;
+  rankingNickname: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -226,4 +229,38 @@ export interface MonthlyStats {
   month: string;
   profit: number;
   sessions: number;
+}
+
+// Ranking types
+export type RankingCategory = 'winRate' | 'profit' | 'sessions' | 'level' | 'missions';
+
+export interface RankingEntry {
+  rank: number;
+  nickname: string;
+  value: number;
+  userId: string;
+  level: number;
+}
+
+export interface RankingsResponse {
+  rankings: RankingEntry[];
+  totalParticipants: number;
+}
+
+export interface MyRankingCategory {
+  rank: number;
+  value: number;
+  total: number;
+}
+
+export interface MyRankingResponse {
+  optedIn: boolean;
+  nickname?: string;
+  rankings?: {
+    winRate: MyRankingCategory | null;
+    profit: MyRankingCategory;
+    sessions: MyRankingCategory;
+    level: MyRankingCategory;
+    missions: MyRankingCategory;
+  };
 }

@@ -12,7 +12,10 @@ import type {
   DashboardStats,
   LevelInfo,
   AddXpResult,
-  XpType
+  XpType,
+  RankingCategory,
+  RankingsResponse,
+  MyRankingResponse
 } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9999/api';
@@ -72,6 +75,20 @@ export const userApi = {
       method: 'POST',
       body: JSON.stringify({ type }),
     }),
+
+  // 랭킹 참여 설정
+  updateRankingOptIn: (optIn: boolean, nickname?: string) =>
+    fetchWithAuth<User>('/users/me/ranking', {
+      method: 'POST',
+      body: JSON.stringify({ optIn, nickname }),
+    }),
+
+  // 내 랭킹 조회
+  getMyRanking: () => fetchWithAuth<MyRankingResponse>('/users/me/ranking'),
+
+  // 전체 랭킹 조회
+  getRankings: (category: RankingCategory = 'profit') =>
+    fetchWithAuth<RankingsResponse>(`/users/ranking?category=${category}`),
 };
 
 // Sessions API

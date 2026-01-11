@@ -27,7 +27,7 @@
   "Navigation": {
     "dashboard": "대시보드",
     "sessions": "세션 기록",
-    "missions": "미션",
+    "missions": "미션 & 랭킹",
     "level": "레벨",
     "analytics": "분석",
     "upload": "업로드",
@@ -506,8 +506,8 @@
     "times": "회"
   },
   "Missions": {
-    "title": "미션",
-    "subtitle": "미션을 달성하고 보상을 받으세요",
+    "title": "미션 & 랭킹",
+    "subtitle": "미션을 달성하고 랭킹에서 경쟁하세요",
     "stats": {
       "active": "진행 중",
       "completed": "완료",
@@ -652,6 +652,27 @@
       "ko": "한국어",
       "en": "English",
       "ja": "日本語"
+    },
+    "ranking": {
+      "title": "랭킹 참여",
+      "subtitle": "다른 플레이어와 순위를 겨뤄보세요",
+      "currentNickname": "닉네임",
+      "modalTitle": "랭킹 시스템 참여",
+      "modalSubtitle": "개인정보 동의 후 참여할 수 있습니다",
+      "privacyTitle": "개인정보 이용 동의",
+      "privacy1": "닉네임만 공개되며, 이메일/실명은 비공개입니다",
+      "privacy2": "승률, 수익, 세션 수, 레벨 데이터가 랭킹에 사용됩니다",
+      "privacy3": "언제든지 설정에서 랭킹 참여를 해제할 수 있습니다",
+      "privacy4": "랭킹 해제 시 즉시 목록에서 제거됩니다",
+      "nicknameLabel": "공개될 닉네임",
+      "nicknamePlaceholder": "닉네임을 입력하세요 (최대 12자)",
+      "nicknameHint": "이 닉네임이 랭킹에 공개됩니다. 실명 사용을 피해주세요.",
+      "nicknameRequired": "닉네임을 입력해주세요",
+      "agree": "동의하고 참여",
+      "saving": "저장 중...",
+      "optInError": "랭킹 참여 설정에 실패했습니다",
+      "optOutConfirm": "랭킹 참여를 해제하시겠습니까? 랭킹 목록에서 즉시 제거됩니다.",
+      "optOutError": "랭킹 참여 해제에 실패했습니다"
     },
     "display": {
       "title": "표시 설정",

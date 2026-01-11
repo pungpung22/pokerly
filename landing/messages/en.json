@@ -27,7 +27,7 @@
   "Navigation": {
     "dashboard": "Dashboard",
     "sessions": "Sessions",
-    "missions": "Missions",
+    "missions": "Missions & Ranking",
     "level": "Level",
     "analytics": "Analytics",
     "upload": "Upload",
@@ -506,8 +506,8 @@
     "times": ""
   },
   "Missions": {
-    "title": "Missions",
-    "subtitle": "Complete missions and earn rewards",
+    "title": "Missions & Ranking",
+    "subtitle": "Complete missions and compete in rankings",
     "stats": {
       "active": "In Progress",
       "completed": "Completed",
@@ -652,6 +652,27 @@
       "ko": "한국어",
       "en": "English",
       "ja": "日本語"
+    },
+    "ranking": {
+      "title": "Ranking Participation",
+      "subtitle": "Compete with other players",
+      "currentNickname": "Nickname",
+      "modalTitle": "Join Ranking System",
+      "modalSubtitle": "Consent required to participate",
+      "privacyTitle": "Privacy Agreement",
+      "privacy1": "Only your nickname will be public, email/real name stays private",
+      "privacy2": "Win rate, profit, sessions, and level data will be used for ranking",
+      "privacy3": "You can opt out of ranking anytime in settings",
+      "privacy4": "You will be removed from ranking immediately upon opt-out",
+      "nicknameLabel": "Public Nickname",
+      "nicknamePlaceholder": "Enter nickname (max 12 chars)",
+      "nicknameHint": "This nickname will be shown on rankings. Avoid using real names.",
+      "nicknameRequired": "Please enter a nickname",
+      "agree": "Agree & Join",
+      "saving": "Saving...",
+      "optInError": "Failed to update ranking settings",
+      "optOutConfirm": "Are you sure you want to leave ranking? You will be removed immediately.",
+      "optOutError": "Failed to leave ranking"
     },
     "display": {
       "title": "Display Settings",

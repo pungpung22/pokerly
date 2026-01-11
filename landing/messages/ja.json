@@ -27,7 +27,7 @@
   "Navigation": {
     "dashboard": "ダッシュボード",
     "sessions": "セッション記録",
-    "missions": "ミッション",
+    "missions": "ミッション & ランキング",
     "level": "レベル",
     "analytics": "分析",
     "upload": "アップロード",
@@ -506,8 +506,8 @@
     "times": "回"
   },
   "Missions": {
-    "title": "ミッション",
-    "subtitle": "ミッションを達成して報酬を獲得",
+    "title": "ミッション & ランキング",
+    "subtitle": "ミッションを達成してランキングで競いましょう",
     "stats": {
       "active": "進行中",
       "completed": "完了",
@@ -652,6 +652,27 @@
       "ko": "한국어",
       "en": "English",
       "ja": "日本語"
+    },
+    "ranking": {
+      "title": "ランキング参加",
+      "subtitle": "他のプレイヤーと競い合おう",
+      "currentNickname": "ニックネーム",
+      "modalTitle": "ランキングシステムに参加",
+      "modalSubtitle": "参加するには同意が必要です",
+      "privacyTitle": "個人情報利用同意",
+      "privacy1": "ニックネームのみ公開、メール/本名は非公開です",
+      "privacy2": "勝率、収益、セッション数、レベルデータがランキングに使用されます",
+      "privacy3": "設定からいつでもランキング参加を解除できます",
+      "privacy4": "解除すると即座にリストから削除されます",
+      "nicknameLabel": "公開ニックネーム",
+      "nicknamePlaceholder": "ニックネームを入力（最大12文字）",
+      "nicknameHint": "このニックネームがランキングに表示されます。本名の使用は避けてください。",
+      "nicknameRequired": "ニックネームを入力してください",
+      "agree": "同意して参加",
+      "saving": "保存中...",
+      "optInError": "ランキング設定の更新に失敗しました",
+      "optOutConfirm": "ランキング参加を解除しますか？即座にリストから削除されます。",
+      "optOutError": "ランキング参加の解除に失敗しました"
     },
     "display": {
       "title": "表示設定",

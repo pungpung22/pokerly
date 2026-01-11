@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
-import { User, Bell, Moon, Globe, Mail, Shield, LogOut, ChevronRight, ExternalLink, DollarSign, Hash, AlertTriangle, Trash2, Loader2 } from 'lucide-react';
+import { User, Bell, Moon, Globe, Mail, Shield, LogOut, ChevronRight, ExternalLink, DollarSign, Hash, AlertTriangle, Trash2, Loader2, Trophy, Check } from 'lucide-react';
+import { userApi } from '../../../../lib/api';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -35,6 +36,12 @@ export default function SettingsPage() {
   const [roundToTenThousand, setRoundToTenThousand] = useState(false);
   const [currency, setCurrency] = useState<Currency>('KRW');
 
+  // 랭킹 참여
+  const [rankingOptIn, setRankingOptIn] = useState(false);
+  const [showRankingModal, setShowRankingModal] = useState(false);
+  const [rankingNickname, setRankingNickname] = useState('');
+  const [savingRanking, setSavingRanking] = useState(false);
+
   // 회원 탈퇴
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
@@ -63,6 +70,68 @@ export default function SettingsPage() {
       currency,
     }));
   }, [useKoreanUnit, roundToTenThousand, currency]);
+
+  // 랭킹 참여 상태 로드
+  useEffect(() => {
+    const loadRankingStatus = async () => {
+      try {
+        const response = await userApi.getMyRanking();
+        setRankingOptIn(response.optedIn);
+        if (response.nickname) {
+          setRankingNickname(response.nickname);
+        }
+      } catch (error) {
+        console.error('Failed to load ranking status:', error);
+      }
+    };
+    loadRankingStatus();
+  }, []);
+
+  const handleRankingToggle = () => {
+    if (rankingOptIn) {
+      // 랭킹 참여 해제
+      handleRankingOptOut();
+    } else {
+      // 랭킹 참여 동의 모달 표시
+      setShowRankingModal(true);
+    }
+  };
+
+  const handleRankingOptIn = async () => {
+    if (!rankingNickname.trim()) {
+      alert(t('ranking.nicknameRequired'));
+      return;
+    }
+
+    setSavingRanking(true);
+    try {
+      await userApi.updateRankingOptIn(true, rankingNickname.trim());
+      setRankingOptIn(true);
+      setShowRankingModal(false);
+    } catch (error) {
+      console.error('Failed to opt in to ranking:', error);
+      alert(t('ranking.optInError'));
+    } finally {
+      setSavingRanking(false);
+    }
+  };
+
+  const handleRankingOptOut = async () => {
+    if (!confirm(t('ranking.optOutConfirm'))) {
+      return;
+    }
+
+    setSavingRanking(true);
+    try {
+      await userApi.updateRankingOptIn(false);
+      setRankingOptIn(false);
+    } catch (error) {
+      console.error('Failed to opt out of ranking:', error);
+      alert(t('ranking.optOutError'));
+    } finally {
+      setSavingRanking(false);
+    }
+  };
 
   const confirmText = t('account.deleteAccount.confirmText');
 
@@ -213,7 +282,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Language */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: '1px solid #27272A' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Globe style={{ width: '20px', height: '20px', color: '#D4D4D8' }} />
             <div>
@@ -237,6 +306,50 @@ export default function SettingsPage() {
             <option value="en">{t('language.en')}</option>
             <option value="ja">{t('language.ja')}</option>
           </select>
+        </div>
+
+        {/* Ranking Opt-in */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Trophy style={{ width: '20px', height: '20px', color: rankingOptIn ? '#FFD700' : '#D4D4D8' }} />
+            <div>
+              <p style={{ color: 'white', fontWeight: 500 }}>{t('ranking.title')}</p>
+              <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('ranking.subtitle')}</p>
+              {rankingOptIn && rankingNickname && (
+                <p style={{ color: '#F72585', fontSize: '12px', marginTop: '4px' }}>
+                  {t('ranking.currentNickname')}: {rankingNickname}
+                </p>
+              )}
+            </div>
+          </div>
+          <button
+            onClick={handleRankingToggle}
+            disabled={savingRanking}
+            style={{
+              width: '48px',
+              height: '28px',
+              borderRadius: '14px',
+              background: rankingOptIn ? '#F72585' : '#27272A',
+              border: 'none',
+              cursor: savingRanking ? 'not-allowed' : 'pointer',
+              position: 'relative',
+              transition: 'background 0.2s',
+              opacity: savingRanking ? 0.7 : 1,
+            }}
+          >
+            <div
+              style={{
+                width: '22px',
+                height: '22px',
+                borderRadius: '50%',
+                background: 'white',
+                position: 'absolute',
+                top: '3px',
+                left: rankingOptIn ? '23px' : '3px',
+                transition: 'left 0.2s',
+              }}
+            />
+          </button>
         </div>
       </div>
 
@@ -449,6 +562,130 @@ export default function SettingsPage() {
       <p style={{ textAlign: 'center', color: '#D4D4D8', fontSize: '13px', marginTop: '24px' }}>
         {t('version')}
       </p>
+
+      {/* Ranking Opt-in Modal */}
+      {showRankingModal && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 100,
+            padding: '24px',
+          }}
+          onClick={() => setShowRankingModal(false)}
+        >
+          <div
+            className="card"
+            style={{ maxWidth: '450px', width: '100%' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'linear-gradient(135deg, #FFD700, #FFA500)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Trophy style={{ width: '24px', height: '24px', color: 'white' }} />
+              </div>
+              <div>
+                <h3 style={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}>{t('ranking.modalTitle')}</h3>
+                <p style={{ color: '#D4D4D8', fontSize: '14px' }}>{t('ranking.modalSubtitle')}</p>
+              </div>
+            </div>
+
+            <div style={{ padding: '16px', background: '#0A0A0B', borderRadius: '8px', marginBottom: '20px' }}>
+              <h4 style={{ color: 'white', fontWeight: 'bold', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Shield style={{ width: '16px', height: '16px', color: '#F72585' }} />
+                {t('ranking.privacyTitle')}
+              </h4>
+              <ul style={{ color: '#D4D4D8', fontSize: '14px', lineHeight: 1.8, paddingLeft: '20px' }}>
+                <li>{t('ranking.privacy1')}</li>
+                <li>{t('ranking.privacy2')}</li>
+                <li>{t('ranking.privacy3')}</li>
+                <li>{t('ranking.privacy4')}</li>
+              </ul>
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', color: 'white', fontSize: '14px', marginBottom: '8px', fontWeight: 500 }}>
+                {t('ranking.nicknameLabel')}
+              </label>
+              <input
+                type="text"
+                value={rankingNickname}
+                onChange={(e) => setRankingNickname(e.target.value)}
+                placeholder={t('ranking.nicknamePlaceholder')}
+                maxLength={12}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: '#0A0A0B',
+                  border: '1px solid #27272A',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '16px',
+                }}
+              />
+              <p style={{ color: '#D4D4D8', fontSize: '12px', marginTop: '8px' }}>
+                {t('ranking.nicknameHint')}
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button
+                onClick={() => {
+                  setShowRankingModal(false);
+                  setRankingNickname('');
+                }}
+                style={{
+                  flex: 1,
+                  padding: '14px',
+                  background: 'transparent',
+                  border: '1px solid #27272A',
+                  borderRadius: '8px',
+                  color: '#D4D4D8',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                }}
+              >
+                {tCommon('cancel')}
+              </button>
+              <button
+                onClick={handleRankingOptIn}
+                disabled={savingRanking || !rankingNickname.trim()}
+                style={{
+                  flex: 1,
+                  padding: '14px',
+                  background: rankingNickname.trim() ? 'linear-gradient(135deg, #F72585, #B5179E)' : '#27272A',
+                  border: 'none',
+                  borderRadius: '8px',
+                  color: rankingNickname.trim() ? 'white' : '#D4D4D8',
+                  cursor: rankingNickname.trim() && !savingRanking ? 'pointer' : 'not-allowed',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                }}
+              >
+                {savingRanking ? (
+                  <>
+                    <Loader2 style={{ width: '16px', height: '16px', animation: 'spin 1s linear infinite' }} />
+                    {t('ranking.saving')}
+                  </>
+                ) : (
+                  <>
+                    <Check style={{ width: '16px', height: '16px' }} />
+                    {t('ranking.agree')}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Delete Account Modal */}
       {showDeleteModal && (

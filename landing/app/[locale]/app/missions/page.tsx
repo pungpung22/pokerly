@@ -13,11 +13,16 @@ import {
   Calendar,
   Zap,
   Lock,
+  Crown,
+  Medal,
+  Users,
+  Settings,
 } from 'lucide-react';
-import { sessionsApi } from '@/lib/api';
+import { sessionsApi, userApi } from '@/lib/api';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTranslations, useLocale } from 'next-intl';
-import type { DashboardStats } from '@/lib/types';
+import { useRouter } from 'next/navigation';
+import type { DashboardStats, RankingCategory, RankingEntry, MyRankingResponse } from '@/lib/types';
 
 // Mission template type
 type MissionCategory = 'winRate' | 'profit' | 'sessions' | 'streak';
@@ -70,12 +75,26 @@ const difficultyColors: Record<MissionDifficulty, { bg: string; text: string; bo
 export default function MissionsPage() {
   const { user } = useAuth();
   const t = useTranslations('Missions');
+  const tSettings = useTranslations('Settings');
   const locale = useLocale();
+  const router = useRouter();
+
+  // Main tab state (missions vs ranking)
+  const [mainTab, setMainTab] = useState<'missions' | 'ranking'>('missions');
+
+  // Missions state
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'available' | 'inProgress' | 'completed'>('available');
   const [selectedCategory, setSelectedCategory] = useState<MissionCategory | 'all'>('all');
+
+  // Ranking state
+  const [rankingCategory, setRankingCategory] = useState<RankingCategory>('profit');
+  const [rankings, setRankings] = useState<RankingEntry[]>([]);
+  const [myRanking, setMyRanking] = useState<MyRankingResponse | null>(null);
+  const [rankingLoading, setRankingLoading] = useState(false);
+  const [totalParticipants, setTotalParticipants] = useState(0);
 
   // Fetch user stats to calculate mission progress
   useEffect(() => {
@@ -94,6 +113,28 @@ export default function MissionsPage() {
     }
     fetchStats();
   }, [user, t]);
+
+  // Fetch ranking data
+  useEffect(() => {
+    async function fetchRankings() {
+      if (!user || mainTab !== 'ranking') return;
+      setRankingLoading(true);
+      try {
+        const [rankingsData, myRankingData] = await Promise.all([
+          userApi.getRankings(rankingCategory),
+          userApi.getMyRanking(),
+        ]);
+        setRankings(rankingsData.rankings);
+        setTotalParticipants(rankingsData.totalParticipants);
+        setMyRanking(myRankingData);
+      } catch (err) {
+        console.error('Failed to fetch rankings:', err);
+      } finally {
+        setRankingLoading(false);
+      }
+    }
+    fetchRankings();
+  }, [user, mainTab, rankingCategory]);
 
   // Calculate mission progress and status
   const missionsWithProgress = useMemo(() => {
@@ -195,6 +236,40 @@ export default function MissionsPage() {
     return locale === 'ko' ? `${target}세션` : locale === 'ja' ? `${target}セッション` : `${target} sessions`;
   };
 
+  // Format ranking value based on category
+  const formatRankingValue = (value: number, category: RankingCategory): string => {
+    if (category === 'winRate') {
+      return `${value.toFixed(1)}%`;
+    }
+    if (category === 'profit') {
+      if (locale === 'ko') {
+        if (value >= 100000000) return `${(value / 100000000).toFixed(1)}억`;
+        if (value >= 10000) return `${Math.floor(value / 10000)}만`;
+        return value.toLocaleString() + '원';
+      }
+      return value.toLocaleString();
+    }
+    if (category === 'level') {
+      return `Lv.${value}`;
+    }
+    if (category === 'missions') {
+      return locale === 'ko' ? `${value}개` : locale === 'ja' ? `${value}個` : `${value}`;
+    }
+    return value.toString();
+  };
+
+  // Get ranking category label
+  const getRankingCategoryLabel = (cat: RankingCategory): string => {
+    const labels: Record<RankingCategory, Record<string, string>> = {
+      winRate: { ko: '승률', en: 'Win Rate', ja: '勝率' },
+      profit: { ko: '수익', en: 'Profit', ja: '収益' },
+      sessions: { ko: '세션 수', en: 'Sessions', ja: 'セッション' },
+      level: { ko: '레벨', en: 'Level', ja: 'レベル' },
+      missions: { ko: '달성 미션', en: 'Missions', ja: '達成ミッション' },
+    };
+    return labels[cat][locale] || labels[cat].en;
+  };
+
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
@@ -213,6 +288,70 @@ export default function MissionsPage() {
         </div>
       </div>
 
+      {/* Main Tab Switcher (Missions / Ranking) */}
+      <div style={{
+        display: 'flex',
+        gap: '8px',
+        marginBottom: '24px',
+        background: '#0A0A0B',
+        padding: '6px',
+        borderRadius: '16px',
+        border: '1px solid #27272A',
+      }}>
+        <button
+          onClick={() => setMainTab('missions')}
+          style={{
+            flex: 1,
+            padding: '14px 20px',
+            borderRadius: '12px',
+            border: 'none',
+            background: mainTab === 'missions'
+              ? 'linear-gradient(135deg, #F72585 0%, #D91C6B 100%)'
+              : 'transparent',
+            color: mainTab === 'missions' ? 'white' : '#A1A1AA',
+            fontSize: '15px',
+            fontWeight: mainTab === 'missions' ? 600 : 400,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            boxShadow: mainTab === 'missions' ? '0 4px 16px rgba(247, 37, 133, 0.35)' : 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+          }}
+        >
+          <Target style={{ width: '18px', height: '18px' }} />
+          {locale === 'ko' ? '미션' : locale === 'ja' ? 'ミッション' : 'Missions'}
+        </button>
+        <button
+          onClick={() => setMainTab('ranking')}
+          style={{
+            flex: 1,
+            padding: '14px 20px',
+            borderRadius: '12px',
+            border: 'none',
+            background: mainTab === 'ranking'
+              ? 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)'
+              : 'transparent',
+            color: mainTab === 'ranking' ? '#000' : '#A1A1AA',
+            fontSize: '15px',
+            fontWeight: mainTab === 'ranking' ? 600 : 400,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            boxShadow: mainTab === 'ranking' ? '0 4px 16px rgba(255, 215, 0, 0.35)' : 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+          }}
+        >
+          <Crown style={{ width: '18px', height: '18px' }} />
+          {locale === 'ko' ? '랭킹' : locale === 'ja' ? 'ランキング' : 'Ranking'}
+        </button>
+      </div>
+
+      {/* Missions Tab Content */}
+      {mainTab === 'missions' && (<>
       {/* Stats Banner */}
       <div className="challenges-stats-banner">
         <div className="challenges-stat-item">
@@ -526,6 +665,210 @@ export default function MissionsPage() {
             );
           })}
         </div>
+      )}
+      </>)}
+
+      {/* Ranking Tab Content */}
+      {mainTab === 'ranking' && (
+        <>
+          {/* My Ranking Banner */}
+          {myRanking?.optedIn ? (
+            <div className="card" style={{
+              marginBottom: '24px',
+              background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.05))',
+              border: '1px solid rgba(255, 215, 0, 0.3)',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  width: '56px',
+                  height: '56px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #FFD700, #FFA500)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <Crown style={{ width: '28px', height: '28px', color: 'white' }} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p style={{ color: '#FFD700', fontSize: '13px', marginBottom: '4px' }}>
+                    {locale === 'ko' ? '내 닉네임' : locale === 'ja' ? 'マイニックネーム' : 'My Nickname'}
+                  </p>
+                  <p style={{ color: 'white', fontSize: '20px', fontWeight: 'bold' }}>
+                    {myRanking.nickname}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', gap: '16px' }}>
+                  {myRanking.rankings?.profit && (
+                    <div style={{ textAlign: 'center' }}>
+                      <p style={{ color: '#A1A1AA', fontSize: '12px' }}>{getRankingCategoryLabel('profit')}</p>
+                      <p style={{ color: '#FFD700', fontWeight: 'bold' }}>#{myRanking.rankings.profit.rank}</p>
+                    </div>
+                  )}
+                  {myRanking.rankings?.winRate && (
+                    <div style={{ textAlign: 'center' }}>
+                      <p style={{ color: '#A1A1AA', fontSize: '12px' }}>{getRankingCategoryLabel('winRate')}</p>
+                      <p style={{ color: '#FFD700', fontWeight: 'bold' }}>#{myRanking.rankings.winRate.rank}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="card" style={{
+              marginBottom: '24px',
+              textAlign: 'center',
+              padding: '32px 24px',
+            }}>
+              <Users style={{ width: '48px', height: '48px', color: '#52525B', margin: '0 auto 16px' }} />
+              <h3 style={{ color: 'white', fontSize: '18px', marginBottom: '8px' }}>
+                {locale === 'ko' ? '랭킹에 참여하세요!' : locale === 'ja' ? 'ランキングに参加しましょう！' : 'Join the Ranking!'}
+              </h3>
+              <p style={{ color: '#A1A1AA', fontSize: '14px', marginBottom: '20px' }}>
+                {locale === 'ko' ? '설정에서 랭킹 참여를 활성화하면 다른 플레이어들과 순위를 겨룰 수 있습니다.' : locale === 'ja' ? '設定でランキング参加を有効にすると、他のプレイヤーと競えます。' : 'Enable ranking participation in settings to compete with other players.'}
+              </p>
+              <button
+                onClick={() => router.push(`/${locale}/app/settings`)}
+                style={{
+                  padding: '12px 24px',
+                  background: 'linear-gradient(135deg, #FFD700, #FFA500)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  color: 'black',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}
+              >
+                <Settings style={{ width: '16px', height: '16px' }} />
+                {locale === 'ko' ? '설정으로 이동' : locale === 'ja' ? '設定へ移動' : 'Go to Settings'}
+              </button>
+            </div>
+          )}
+
+          {/* Ranking Category Tabs */}
+          <div style={{
+            display: 'flex',
+            gap: '8px',
+            marginBottom: '20px',
+            overflowX: 'auto',
+            paddingBottom: '4px',
+          }}>
+            {(['profit', 'winRate', 'sessions', 'level', 'missions'] as RankingCategory[]).map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setRankingCategory(cat)}
+                style={{
+                  padding: '10px 20px',
+                  background: rankingCategory === cat ? 'rgba(255, 215, 0, 0.2)' : '#18181B',
+                  border: `1px solid ${rankingCategory === cat ? '#FFD700' : '#27272A'}`,
+                  borderRadius: '20px',
+                  color: rankingCategory === cat ? '#FFD700' : '#D4D4D8',
+                  fontSize: '14px',
+                  fontWeight: rankingCategory === cat ? 600 : 400,
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {getRankingCategoryLabel(cat)}
+              </button>
+            ))}
+          </div>
+
+          {/* Participants Count */}
+          <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Users style={{ width: '16px', height: '16px', color: '#A1A1AA' }} />
+            <span style={{ color: '#A1A1AA', fontSize: '14px' }}>
+              {locale === 'ko' ? `총 ${totalParticipants}명 참여중` : locale === 'ja' ? `${totalParticipants}人参加中` : `${totalParticipants} participants`}
+            </span>
+          </div>
+
+          {/* Ranking List */}
+          {rankingLoading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '48px' }}>
+              <Loader2 style={{ width: '32px', height: '32px', color: '#FFD700', animation: 'spin 1s linear infinite' }} />
+            </div>
+          ) : rankings.length === 0 ? (
+            <div className="card" style={{ textAlign: 'center', padding: '48px 24px' }}>
+              <Trophy style={{ width: '48px', height: '48px', color: '#27272A', margin: '0 auto 16px' }} />
+              <p style={{ color: '#D4D4D8' }}>
+                {locale === 'ko' ? '아직 참여자가 없습니다' : locale === 'ja' ? 'まだ参加者がいません' : 'No participants yet'}
+              </p>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {rankings.map((entry, index) => {
+                const isTop3 = entry.rank <= 3;
+                const isMe = myRanking?.optedIn && myRanking?.nickname === entry.nickname;
+                const medalColors = ['#FFD700', '#C0C0C0', '#CD7F32'];
+
+                return (
+                  <div
+                    key={entry.userId}
+                    className="card"
+                    style={{
+                      padding: '16px 20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '16px',
+                      background: isMe ? 'rgba(247, 37, 133, 0.1)' : isTop3 ? 'rgba(255, 215, 0, 0.05)' : '#141416',
+                      border: isMe ? '1px solid #F72585' : isTop3 ? '1px solid rgba(255, 215, 0, 0.3)' : '1px solid #27272A',
+                    }}
+                  >
+                    {/* Rank */}
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: isTop3 ? medalColors[entry.rank - 1] : '#27272A',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}>
+                      {isTop3 ? (
+                        <Medal style={{ width: '20px', height: '20px', color: entry.rank === 1 ? '#000' : '#fff' }} />
+                      ) : (
+                        <span style={{ color: 'white', fontWeight: 'bold', fontSize: '14px' }}>
+                          {entry.rank}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Nickname & Level */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{
+                        color: isMe ? '#F72585' : 'white',
+                        fontWeight: isMe ? 600 : 500,
+                        fontSize: '15px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}>
+                        {entry.nickname} {isMe && <span style={{ fontSize: '12px' }}>(나)</span>}
+                      </p>
+                      <p style={{ color: '#A1A1AA', fontSize: '12px' }}>
+                        Lv.{entry.level}
+                      </p>
+                    </div>
+
+                    {/* Value */}
+                    <div style={{
+                      textAlign: 'right',
+                      color: isTop3 ? '#FFD700' : isMe ? '#F72585' : '#D4D4D8',
+                      fontWeight: 'bold',
+                      fontSize: '16px',
+                    }}>
+                      {formatRankingValue(entry.value, rankingCategory)}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

@@ -233,6 +233,213 @@ export class UsersService {
     return { user, xpAwarded, leveledUp, message };
   }
 
+  // 랭킹 참여 설정
+  async updateRankingOptIn(
+    userId: string,
+    optIn: boolean,
+    nickname?: string,
+  ): Promise<User> {
+    const user = await this.findById(userId);
+    user.rankingOptIn = optIn;
+    if (optIn) {
+      user.rankingOptInDate = new Date();
+      if (nickname) {
+        user.rankingNickname = nickname;
+      } else if (!user.rankingNickname) {
+        // 닉네임이 없으면 displayName 일부를 사용
+        user.rankingNickname = user.displayName
+          ? `${user.displayName.slice(0, 2)}***`
+          : `Player${Math.floor(Math.random() * 10000)}`;
+      }
+    }
+    return this.userRepository.save(user);
+  }
+
+  // 미션 달성 수 계산 (프론트엔드 로직과 동일)
+  private calculateMissionsCompleted(winRate: number, profit: number, sessions: number): number {
+    let completed = 0;
+    // 승률 미션
+    if (winRate >= 10) completed++;
+    if (winRate >= 30) completed++;
+    if (winRate >= 50) completed++;
+    // 수익 미션
+    if (profit >= 1000000) completed++;
+    if (profit >= 5000000) completed++;
+    if (profit >= 10000000) completed++;
+    // 세션 미션
+    if (sessions >= 10) completed++;
+    if (sessions >= 50) completed++;
+    if (sessions >= 100) completed++;
+    return completed;
+  }
+
+  // 랭킹 조회
+  async getRankings(category: 'winRate' | 'profit' | 'sessions' | 'level' | 'missions'): Promise<{
+    rankings: {
+      rank: number;
+      nickname: string;
+      value: number;
+      userId: string;
+      level: number;
+    }[];
+    totalParticipants: number;
+  }> {
+    // 랭킹 참여 동의한 사용자만 조회
+    const users = await this.userRepository.find({
+      where: { rankingOptIn: true },
+      relations: ['sessions'],
+    });
+
+    const userStats = users.map((user) => {
+      const sessions = user.sessions || [];
+      const totalSessions = sessions.length;
+      const totalProfit = sessions.reduce(
+        (sum, s) => sum + (Number(s.cashOut) - Number(s.buyIn)),
+        0,
+      );
+      const winningSessions = sessions.filter(
+        (s) => Number(s.cashOut) > Number(s.buyIn),
+      ).length;
+      const winRate = totalSessions > 0 ? (winningSessions / totalSessions) * 100 : 0;
+      const missionsCompleted = this.calculateMissionsCompleted(winRate, totalProfit, totalSessions);
+
+      return {
+        userId: user.id,
+        nickname: user.rankingNickname || user.displayName?.slice(0, 2) + '***' || 'Player',
+        level: user.level,
+        winRate: Math.round(winRate * 10) / 10,
+        profit: totalProfit,
+        sessions: totalSessions,
+        missions: missionsCompleted,
+      };
+    });
+
+    // 카테고리별 정렬
+    let sortedStats: typeof userStats;
+    switch (category) {
+      case 'winRate':
+        sortedStats = userStats
+          .filter((u) => u.sessions >= 5) // 최소 5세션 이상만
+          .sort((a, b) => b.winRate - a.winRate);
+        break;
+      case 'profit':
+        sortedStats = userStats.sort((a, b) => b.profit - a.profit);
+        break;
+      case 'sessions':
+        sortedStats = userStats.sort((a, b) => b.sessions - a.sessions);
+        break;
+      case 'level':
+        sortedStats = userStats.sort((a, b) => b.level - a.level);
+        break;
+      case 'missions':
+        sortedStats = userStats.sort((a, b) => b.missions - a.missions);
+        break;
+      default:
+        sortedStats = userStats;
+    }
+
+    const rankings = sortedStats.slice(0, 100).map((stat, index) => ({
+      rank: index + 1,
+      nickname: stat.nickname,
+      value: category === 'winRate' ? stat.winRate :
+             category === 'profit' ? stat.profit :
+             category === 'sessions' ? stat.sessions :
+             category === 'missions' ? stat.missions :
+             stat.level,
+      userId: stat.userId,
+      level: stat.level,
+    }));
+
+    return {
+      rankings,
+      totalParticipants: users.length,
+    };
+  }
+
+  // 내 랭킹 조회
+  async getMyRanking(userId: string): Promise<{
+    optedIn: boolean;
+    nickname?: string;
+    rankings?: {
+      winRate: { rank: number; value: number; total: number } | null;
+      profit: { rank: number; value: number; total: number };
+      sessions: { rank: number; value: number; total: number };
+      level: { rank: number; value: number; total: number };
+      missions: { rank: number; value: number; total: number };
+    };
+  }> {
+    const user = await this.findById(userId);
+
+    if (!user.rankingOptIn) {
+      return { optedIn: false };
+    }
+
+    // 모든 참여자 조회
+    const allRankings = await this.userRepository.find({
+      where: { rankingOptIn: true },
+      relations: ['sessions'],
+    });
+
+    const userStats = allRankings.map((u) => {
+      const sessions = u.sessions || [];
+      const totalSessions = sessions.length;
+      const totalProfit = sessions.reduce(
+        (sum, s) => sum + (Number(s.cashOut) - Number(s.buyIn)),
+        0,
+      );
+      const winningSessions = sessions.filter(
+        (s) => Number(s.cashOut) > Number(s.buyIn),
+      ).length;
+      const winRate = totalSessions > 0 ? (winningSessions / totalSessions) * 100 : 0;
+      const missions = this.calculateMissionsCompleted(winRate, totalProfit, totalSessions);
+
+      return {
+        id: u.id,
+        winRate: Math.round(winRate * 10) / 10,
+        profit: totalProfit,
+        sessions: totalSessions,
+        level: u.level,
+        missions,
+      };
+    });
+
+    // 내 통계
+    const myStats = userStats.find((s) => s.id === userId);
+    if (!myStats) {
+      return { optedIn: true, nickname: user.rankingNickname };
+    }
+
+    // 승률 랭킹 (5세션 이상만)
+    const winRateRanking = userStats.filter((u) => u.sessions >= 5);
+    const winRateRank = myStats.sessions >= 5
+      ? winRateRanking.sort((a, b) => b.winRate - a.winRate).findIndex((u) => u.id === userId) + 1
+      : null;
+
+    // 수익 랭킹
+    const profitRank = userStats.sort((a, b) => b.profit - a.profit).findIndex((u) => u.id === userId) + 1;
+
+    // 세션 랭킹
+    const sessionsRank = userStats.sort((a, b) => b.sessions - a.sessions).findIndex((u) => u.id === userId) + 1;
+
+    // 레벨 랭킹
+    const levelRank = userStats.sort((a, b) => b.level - a.level).findIndex((u) => u.id === userId) + 1;
+
+    // 미션 달성 랭킹
+    const missionsRank = userStats.sort((a, b) => b.missions - a.missions).findIndex((u) => u.id === userId) + 1;
+
+    return {
+      optedIn: true,
+      nickname: user.rankingNickname,
+      rankings: {
+        winRate: winRateRank ? { rank: winRateRank, value: myStats.winRate, total: winRateRanking.length } : null,
+        profit: { rank: profitRank, value: myStats.profit, total: allRankings.length },
+        sessions: { rank: sessionsRank, value: myStats.sessions, total: allRankings.length },
+        level: { rank: levelRank, value: myStats.level, total: allRankings.length },
+        missions: { rank: missionsRank, value: myStats.missions, total: allRankings.length },
+      },
+    };
+  }
+
   // 레벨 정보 조회
   async getLevelInfo(userId: string): Promise<{
     level: number;

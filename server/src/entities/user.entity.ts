@@ -76,6 +76,15 @@ export class User {
   @Column({ name: 'notifications_enabled', default: true })
   notificationsEnabled: boolean;
 
+  @Column({ name: 'ranking_opt_in', default: false })
+  rankingOptIn: boolean;
+
+  @Column({ name: 'ranking_opt_in_date', type: 'timestamp', nullable: true })
+  rankingOptInDate: Date;
+
+  @Column({ name: 'ranking_nickname', nullable: true })
+  rankingNickname: string;
+
   @OneToMany(() => Session, (session) => session.user)
   sessions: Session[];
 
