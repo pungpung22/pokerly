@@ -66,7 +66,7 @@ export default function CashGameShowcase() {
                       flexShrink: 0
                     }}
                   >
-                    <Check style={{ width: '16px', height: '16px', color: '#10B981' }} />
+                    <Check style={{ width: '16px', height: '16px', color: '#00D4AA' }} />
                   </div>
                   <span style={{ color: 'white' }}>{feature}</span>
                 </li>
@@ -106,7 +106,7 @@ export default function CashGameShowcase() {
                   style={{
                     fontSize: 'var(--section-subtitle)',
                     fontWeight: 'bold',
-                    color: session.profit >= 0 ? '#10B981' : '#EF4444'
+                    color: session.profit >= 0 ? '#00D4AA' : '#EF4444'
                   }}
                 >
                   {session.profit >= 0 ? '+' : ''}

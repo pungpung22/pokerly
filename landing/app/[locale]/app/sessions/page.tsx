@@ -196,7 +196,7 @@ export default function SessionsPage() {
         </div>
         <div className="card sessions-summary-card">
           <p className="sessions-summary-label">{t('summary.totalProfit')}</p>
-          <p className="sessions-summary-value" style={{ color: totalProfit >= 0 ? '#10B981' : '#EF4444' }}>
+          <p className="sessions-summary-value" style={{ color: totalProfit >= 0 ? '#00D4AA' : '#EF4444' }}>
             {totalProfit >= 0 ? '+' : ''}{totalProfit.toLocaleString()}{t('currency')}
           </p>
         </div>
@@ -341,7 +341,7 @@ export default function SessionsPage() {
                   <div className="session-item-left">
                     <div className={`session-item-icon ${profit >= 0 ? 'profit' : 'loss'}`}>
                       {profit >= 0 ? (
-                        <TrendingUp style={{ width: '22px', height: '22px', color: '#10B981' }} />
+                        <TrendingUp style={{ width: '22px', height: '22px', color: '#00D4AA' }} />
                       ) : (
                         <TrendingDown style={{ width: '22px', height: '22px', color: '#EF4444' }} />
                       )}

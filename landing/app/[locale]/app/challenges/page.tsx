@@ -38,7 +38,7 @@ function getDaysRemaining(endDate: string): number {
 }
 
 function getProgressColor(progress: number): string {
-  if (progress >= 100) return '#10B981';
+  if (progress >= 100) return '#00D4AA';
   if (progress >= 75) return '#F72585';
   if (progress >= 50) return '#D91C6B';
   return '#EF4444';
@@ -220,7 +220,7 @@ export default function ChallengesPage() {
             <p className="challenges-stat-label">{t('stats.active')}</p>
           </div>
           <div className="challenges-stat-item">
-            <div style={{ color: '#10B981', marginBottom: '8px' }}>
+            <div style={{ color: '#00D4AA', marginBottom: '8px' }}>
               <Trophy className="challenges-stat-icon" />
             </div>
             <p className="challenges-stat-value">{stats.completed}</p>
@@ -247,7 +247,7 @@ export default function ChallengesPage() {
         <button
           onClick={() => setActiveTab('completed')}
           className={`filter-btn ${activeTab === 'completed' ? 'active' : ''}`}
-          style={activeTab === 'completed' ? { background: 'rgba(16, 185, 129, 0.2)', borderColor: '#10B981', color: '#10B981' } : {}}
+          style={activeTab === 'completed' ? { background: 'rgba(16, 185, 129, 0.2)', borderColor: '#00D4AA', color: '#00D4AA' } : {}}
         >
           {t('tabs.completed')} ({completedChallenges.length})
         </button>
@@ -316,7 +316,7 @@ export default function ChallengesPage() {
                       }}
                     >
                       {challenge.status === 'completed' ? (
-                        <Check style={{ width: '24px', height: '24px', color: '#10B981' }} />
+                        <Check style={{ width: '24px', height: '24px', color: '#00D4AA' }} />
                       ) : (
                         <Icon style={{ width: '24px', height: '24px', color: '#F72585' }} />
                       )}

@@ -2,16 +2,17 @@
 
 /* Responsive CSS Variables - Outside @layer for proper cascade */
 :root {
-  /* 배경 색상 */
-  --background: #0C0C0E;
-  --background-card: #121216;
-  --background-secondary: #121216;
-  --background-tertiary: #1A1A20;
+  /* 배경 색상 - 보라빛 추가 */
+  --background: #0A0A0F;
+  --background-card: #12121A;
+  --background-secondary: #14141C;
+  --background-tertiary: #1A1A24;
 
   /* 포인트 컬러 - 네온 바이브 */
   --primary: #F72585;
   --primary-light: #FF4EA3;
   --primary-dark: #D91C6B;
+  --primary-gradient: linear-gradient(135deg, #F72585 0%, #7B2FF7 100%);
   --secondary: #5CE1E6;
   --tertiary: #BFFF00;
 
@@ -23,12 +24,17 @@
   --text-muted: #D4D4D8;
 
   /* 보더 */
-  --border: #27272A;
-  --border-hover: #3F3F46;
+  --border: #2A2A35;
+  --border-hover: #3F3F4A;
 
-  /* 수익/손실 */
-  --profit: #BFFF00;
+  /* 수익/손실 - 청록색으로 변경 */
+  --profit: #00D4AA;
+  --profit-light: #00FFD0;
   --loss: #EF4444;
+
+  /* 차트 그라데이션 */
+  --chart-profit-gradient: linear-gradient(180deg, #00D4AA 0%, #007A63 100%);
+  --chart-loss-gradient: linear-gradient(180deg, #EF4444 0%, #991B1B 100%);
 
   /* Mobile first - base sizes (+4px) */
   --hero-title: 36px;
@@ -181,7 +187,7 @@ body {
 /* Buttons */
 .btn-primary {
   padding: 14px 28px;
-  background: var(--primary);
+  background: var(--primary-gradient);
   color: white;
   font-weight: 600;
   border-radius: 12px;
@@ -192,11 +198,31 @@ body {
   gap: 8px;
   font-size: var(--button-text);
   text-decoration: none;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .btn-primary:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(247, 37, 133, 0.5), 0 0 40px rgba(123, 47, 247, 0.3);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-secondary {
@@ -231,6 +257,13 @@ body {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 24px;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(247, 37, 133, 0.1);
 }
 
 @media (min-width: 768px) {
@@ -1078,7 +1111,7 @@ body {
 
 .level-claim-completed {
   font-size: 13px;
-  color: #10B981;
+  color: #00D4AA;
 }
 
 .level-xp-guide-header {
@@ -1574,7 +1607,7 @@ body {
 }
 
 .analytics-period-card.success {
-  border-left: 3px solid #10B981;
+  border-left: 3px solid #00D4AA;
 }
 
 .analytics-period-card.warning {
@@ -2525,7 +2558,7 @@ body {
 .analytics-reliability-badge.level-4 { color: #EAB308; }
 .analytics-reliability-badge.level-5 { color: #84CC16; }
 .analytics-reliability-badge.level-6 { color: #22C55E; }
-.analytics-reliability-badge.level-7 { color: #10B981; }
+.analytics-reliability-badge.level-7 { color: #00D4AA; }
 
 @media (min-width: 768px) {
   .analytics-period-display {
@@ -2574,11 +2607,11 @@ body {
 }
 
 .analytics-highlight-card.success {
-  border-left: 3px solid #10B981;
+  border-left: 3px solid #00D4AA;
 }
 
 .analytics-highlight-card.success svg {
-  color: #10B981;
+  color: #00D4AA;
 }
 
 .analytics-highlight-card.warning {
@@ -2775,7 +2808,7 @@ body {
 }
 
 .analytics-streak-item.win {
-  border-left: 3px solid #10B981;
+  border-left: 3px solid #00D4AA;
 }
 
 .analytics-streak-item.loss {
@@ -2810,7 +2843,7 @@ body {
 }
 
 .analytics-streak-value.win {
-  color: #10B981;
+  color: #00D4AA;
 }
 
 .analytics-streak-value.loss {
@@ -3099,7 +3132,7 @@ body {
 }
 
 .upload-file-item.success {
-  border-color: #10B981;
+  border-color: #00D4AA;
 }
 
 .upload-file-item.duplicate {
@@ -3155,7 +3188,7 @@ body {
 
 .upload-ocr-status.complete {
   background: rgba(16, 185, 129, 0.1);
-  border: 1px solid #10B981;
+  border: 1px solid #00D4AA;
 }
 
 .upload-ocr-status.failed {
@@ -3178,7 +3211,7 @@ body {
 }
 
 .upload-ocr-status-text.complete {
-  color: #10B981;
+  color: #00D4AA;
 }
 
 .upload-ocr-status-text.failed {
@@ -3292,7 +3325,7 @@ body {
 }
 
 .upload-guide-label.green {
-  color: #10B981;
+  color: #00D4AA;
 }
 
 .upload-guide-label.yellow {
@@ -3533,7 +3566,7 @@ body {
 }
 
 .upload-profit-value.positive {
-  color: #10B981;
+  color: #00D4AA;
 }
 
 .upload-profit-value.negative {
@@ -3994,7 +4027,7 @@ body {
 }
 
 .session-item-profit.positive {
-  color: #10B981;
+  color: #00D4AA;
 }
 
 .session-item-profit.negative {
@@ -4018,7 +4051,7 @@ body {
 }
 
 .session-item-buyin-value.positive {
-  color: #10B981;
+  color: #00D4AA;
 }
 
 .session-item-buyin-value.negative {
@@ -4242,7 +4275,7 @@ body {
 .results-title {
   font-size: 22px;
   font-weight: 700;
-  color: #10B981;
+  color: #00D4AA;
   margin: 0;
 }
 
@@ -4619,7 +4652,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 28px 32px;
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  background: linear-gradient(135deg, #00D4AA 0%, #059669 100%);
 }
 
 .results-modal-title-row {

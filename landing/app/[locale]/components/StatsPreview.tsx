@@ -39,7 +39,7 @@ export default function StatsPreview() {
             >
               <stat.icon style={{ width: '36px', height: '36px', color: '#6366F1', margin: '0 auto 16px' }} />
               <p style={{ color: '#D4D4D8', marginBottom: '8px' }}>{stat.label}</p>
-              <p style={{ fontSize: 'var(--section-subtitle)', fontWeight: 'bold', color: stat.positive ? '#10B981' : 'white', marginBottom: '4px' }}>
+              <p style={{ fontSize: 'var(--section-subtitle)', fontWeight: 'bold', color: stat.positive ? '#00D4AA' : 'white', marginBottom: '4px' }}>
                 {stat.value}
               </p>
               <p style={{ fontSize: '13px', color: '#D4D4D8' }}>{stat.sub}</p>

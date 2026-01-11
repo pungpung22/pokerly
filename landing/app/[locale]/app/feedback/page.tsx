@@ -28,7 +28,7 @@ const categoryIcons = {
 const statusColors: Record<string, string> = {
   pending: '#F72585',
   reviewing: '#3B82F6',
-  resolved: '#10B981',
+  resolved: '#00D4AA',
   closed: '#D4D4D8',
 };
 
@@ -143,8 +143,8 @@ export default function FeedbackPage() {
             marginBottom: '24px',
           }}
         >
-          <CheckCircle style={{ width: '20px', height: '20px', color: '#10B981' }} />
-          <span style={{ color: '#10B981' }}>{t('success')}</span>
+          <CheckCircle style={{ width: '20px', height: '20px', color: '#00D4AA' }} />
+          <span style={{ color: '#00D4AA' }}>{t('success')}</span>
         </div>
       )}
 

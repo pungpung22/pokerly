@@ -199,7 +199,7 @@ export default function LevelPage() {
               {levelInfo.canEarnLoginXp ? (
                 <Circle style={{ width: '20px', height: '20px', color: '#F72585' }} />
               ) : (
-                <CheckCircle style={{ width: '20px', height: '20px', color: '#10B981' }} />
+                <CheckCircle style={{ width: '20px', height: '20px', color: '#00D4AA' }} />
               )}
               <div>
                 <p className="level-claim-label">{t('claimable.dailyLogin')}</p>
@@ -230,7 +230,7 @@ export default function LevelPage() {
               {levelInfo.canEarnAnalyticsXp ? (
                 <Circle style={{ width: '20px', height: '20px', color: '#F72585' }} />
               ) : (
-                <CheckCircle style={{ width: '20px', height: '20px', color: '#10B981' }} />
+                <CheckCircle style={{ width: '20px', height: '20px', color: '#00D4AA' }} />
               )}
               <div>
                 <p className="level-claim-label">{t('claimable.analyticsView')}</p>

@@ -23,6 +23,7 @@ import {
 import { useAuth } from '../../contexts/AuthContext';
 import { sessionsApi, challengesApi } from '@/lib/api';
 import type { Session, DashboardStats, Challenge } from '@/lib/types';
+import { CountUp, AnimatedCard, AnimatedContainer, AnimatedItem } from '@/components/ui';
 
 const emptyStats: DashboardStats = {
   totalProfit: 0,
@@ -175,7 +176,7 @@ export default function DashboardPage() {
               <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{new Date().toLocaleDateString(locale === 'ko' ? 'ko-KR' : locale === 'ja' ? 'ja-JP' : 'en-US', { month: 'long', day: 'numeric' })}</p>
             </div>
           </div>
-          <p className="stats-card-value" style={{ color: stats.todayProfit >= 0 ? '#10B981' : '#EF4444', fontSize: '32px' }}>
+          <p className="stats-card-value" style={{ color: stats.todayProfit >= 0 ? '#00D4AA' : '#EF4444', fontSize: '32px' }}>
             {formatFullCurrency(stats.todayProfit)}
           </p>
         </div>
@@ -191,74 +192,104 @@ export default function DashboardPage() {
               <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('fromSunday')}</p>
             </div>
           </div>
-          <p className="stats-card-value" style={{ color: stats.weekProfit >= 0 ? '#10B981' : '#EF4444', fontSize: '32px' }}>
+          <p className="stats-card-value" style={{ color: stats.weekProfit >= 0 ? '#00D4AA' : '#EF4444', fontSize: '32px' }}>
             {formatFullCurrency(stats.weekProfit)}
           </p>
         </div>
       </div>
 
-      {/* Stats Grid - 5 columns on PC */}
-      <div className="stats-grid stats-grid-5-cols">
+      {/* Stats Grid - 5 columns on PC with Stagger Animation */}
+      <AnimatedContainer className="stats-grid stats-grid-5-cols" staggerDelay={0.08}>
         {/* Total Profit */}
-        <div className="stats-card">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-            <span className="stats-card-label">{t('totalProfit')}</span>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TrendingUp style={{ width: '22px', height: '22px', color: '#10B981' }} />
+        <AnimatedItem>
+          <div className="stats-card">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+              <span className="stats-card-label">{t('totalProfit')}</span>
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(0, 212, 170, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <TrendingUp style={{ width: '22px', height: '22px', color: '#00D4AA' }} />
+              </div>
             </div>
+            <p className="stats-card-value" style={{ color: stats.totalProfit >= 0 ? '#00D4AA' : '#EF4444' }}>
+              {stats.totalProfit >= 0 ? '+' : '-'}
+              <CountUp
+                end={Math.abs(stats.totalProfit)}
+                duration={1.2}
+                separator=","
+                suffix={locale === 'ko' ? tUnits('won') : ''}
+                prefix={locale === 'en' ? '$' : locale === 'ja' ? '¥' : ''}
+              />
+            </p>
+            <p style={{ color: '#D4D4D8', fontSize: '13px', marginTop: '6px' }}>{t('sessions', { count: stats.totalSessions })}</p>
           </div>
-          <p className="stats-card-value" style={{ color: stats.totalProfit >= 0 ? '#10B981' : '#EF4444' }}>
-            {formatFullCurrency(stats.totalProfit)}
-          </p>
-          <p style={{ color: '#D4D4D8', fontSize: '13px', marginTop: '6px' }}>{t('sessions', { count: stats.totalSessions })}</p>
-        </div>
+        </AnimatedItem>
 
         {/* This Month */}
-        <div className="stats-card">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-            <span className="stats-card-label">{t('thisMonth')}</span>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(247, 37, 133, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Calendar style={{ width: '22px', height: '22px', color: '#F72585' }} />
+        <AnimatedItem>
+          <div className="stats-card">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+              <span className="stats-card-label">{t('thisMonth')}</span>
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(247, 37, 133, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Calendar style={{ width: '22px', height: '22px', color: '#F72585' }} />
+              </div>
             </div>
+            <p className="stats-card-value" style={{ color: stats.monthProfit >= 0 ? '#00D4AA' : '#EF4444' }}>
+              {stats.monthProfit >= 0 ? '+' : '-'}
+              <CountUp
+                end={Math.abs(stats.monthProfit)}
+                duration={1.2}
+                separator=","
+                suffix={locale === 'ko' ? tUnits('won') : ''}
+                prefix={locale === 'en' ? '$' : locale === 'ja' ? '¥' : ''}
+              />
+            </p>
           </div>
-          <p className="stats-card-value" style={{ color: stats.monthProfit >= 0 ? '#10B981' : '#EF4444' }}>
-            {formatFullCurrency(stats.monthProfit)}
-          </p>
-        </div>
+        </AnimatedItem>
 
         {/* Win Rate */}
-        <div className="stats-card">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-            <span className="stats-card-label">{t('winRate')}</span>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(255, 78, 163, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Target style={{ width: '22px', height: '22px', color: '#FF4EA3' }} />
+        <AnimatedItem>
+          <div className="stats-card">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+              <span className="stats-card-label">{t('winRate')}</span>
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(255, 78, 163, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Target style={{ width: '22px', height: '22px', color: '#FF4EA3' }} />
+              </div>
             </div>
+            <p className="stats-card-value" style={{ color: 'white' }}>
+              <CountUp end={stats.winRate} duration={1} decimals={0} suffix="%" />
+            </p>
           </div>
-          <p className="stats-card-value" style={{ color: 'white' }}>{stats.winRate}%</p>
-        </div>
+        </AnimatedItem>
 
         {/* Play Time */}
-        <div className="stats-card">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-            <span className="stats-card-label">{t('playTime')}</span>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(236, 72, 153, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Clock style={{ width: '22px', height: '22px', color: '#EC4899' }} />
+        <AnimatedItem>
+          <div className="stats-card">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+              <span className="stats-card-label">{t('playTime')}</span>
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(236, 72, 153, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Clock style={{ width: '22px', height: '22px', color: '#EC4899' }} />
+              </div>
             </div>
+            <p className="stats-card-value" style={{ color: 'white' }}>
+              <CountUp end={stats.totalHours} duration={1} decimals={1} suffix={tUnits('hours')} />
+            </p>
           </div>
-          <p className="stats-card-value" style={{ color: 'white' }}>{t('hours', { count: stats.totalHours })}</p>
-        </div>
+        </AnimatedItem>
 
         {/* Total Hands */}
-        <div className="stats-card">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-            <span className="stats-card-label">{t('totalHands')}</span>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(247, 37, 133, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Hash style={{ width: '22px', height: '22px', color: '#F72585' }} />
+        <AnimatedItem>
+          <div className="stats-card">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+              <span className="stats-card-label">{t('totalHands')}</span>
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(247, 37, 133, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Hash style={{ width: '22px', height: '22px', color: '#F72585' }} />
+              </div>
             </div>
+            <p className="stats-card-value" style={{ color: 'white' }}>
+              <CountUp end={stats.totalHands || 0} duration={1.2} separator="," />
+            </p>
           </div>
-          <p className="stats-card-value" style={{ color: 'white' }}>{(stats.totalHands || 0).toLocaleString()}</p>
-        </div>
-      </div>
+        </AnimatedItem>
+      </AnimatedContainer>
 
       {/* Two Column Layout for PC */}
       <div className="content-grid">
@@ -285,7 +316,7 @@ export default function DashboardPage() {
             ) : (
               activeChallenges.slice(0, 3).map((challenge, index) => {
                 const progress = Math.min((challenge.currentValue / challenge.targetValue) * 100, 100);
-                const progressColor = progress >= 100 ? '#10B981' : progress >= 50 ? '#F72585' : '#D91C6B';
+                const progressColor = progress >= 100 ? '#00D4AA' : progress >= 50 ? '#F72585' : '#D91C6B';
                 const daysRemaining = Math.max(0, Math.ceil((new Date(challenge.endDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
 
                 return (
@@ -358,14 +389,14 @@ export default function DashboardPage() {
                           width: '48px',
                           height: '48px',
                           borderRadius: '12px',
-                          background: profit >= 0 ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                          background: profit >= 0 ? 'rgba(0, 212, 170, 0.15)' : 'rgba(239, 68, 68, 0.15)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                         }}
                       >
                         {profit >= 0 ? (
-                          <TrendingUp style={{ width: '24px', height: '24px', color: '#10B981' }} />
+                          <TrendingUp style={{ width: '24px', height: '24px', color: '#00D4AA' }} />
                         ) : (
                           <TrendingDown style={{ width: '24px', height: '24px', color: '#EF4444' }} />
                         )}
@@ -377,7 +408,7 @@ export default function DashboardPage() {
                         </p>
                       </div>
                     </div>
-                    <p style={{ fontSize: '18px', fontWeight: 'bold', color: profit >= 0 ? '#10B981' : '#EF4444' }}>
+                    <p style={{ fontSize: '18px', fontWeight: 'bold', color: profit >= 0 ? '#00D4AA' : '#EF4444' }}>
                       {formatFullCurrency(profit)}
                     </p>
                   </div>

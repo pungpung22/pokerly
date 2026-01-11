@@ -72,7 +72,7 @@ export default function TournamentShowcase() {
                     style={{
                       fontSize: 'var(--section-subtitle)',
                       fontWeight: 'bold',
-                      color: profit >= 0 ? '#10B981' : '#EF4444'
+                      color: profit >= 0 ? '#00D4AA' : '#EF4444'
                     }}
                   >
                     {profit >= 0 ? '+' : ''}
@@ -124,7 +124,7 @@ export default function TournamentShowcase() {
                       flexShrink: 0
                     }}
                   >
-                    <Check style={{ width: '16px', height: '16px', color: '#10B981' }} />
+                    <Check style={{ width: '16px', height: '16px', color: '#00D4AA' }} />
                   </div>
                   <span style={{ color: 'white' }}>{feature}</span>
                 </li>

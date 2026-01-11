@@ -91,7 +91,7 @@ export default function Pricing() {
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '32px' }}>
                 {plan.features.map((feature) => (
                   <li key={feature} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <Check style={{ width: '22px', height: '22px', color: '#10B981', flexShrink: 0 }} />
+                    <Check style={{ width: '22px', height: '22px', color: '#00D4AA', flexShrink: 0 }} />
                     <span style={{ color: '#FAFAFA', fontSize: 'var(--body-text)' }}>{feature}</span>
                   </li>
                 ))}

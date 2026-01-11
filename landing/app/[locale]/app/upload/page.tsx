@@ -313,7 +313,7 @@ export default function UploadPage() {
                             <Loader2 style={{ width: '24px', height: '24px', color: '#F72585', animation: 'spin 1s linear infinite' }} />
                           )}
                           {file.status === 'success' && (
-                            <CheckCircle style={{ width: '24px', height: '24px', color: '#10B981' }} />
+                            <CheckCircle style={{ width: '24px', height: '24px', color: '#00D4AA' }} />
                           )}
                           {file.status === 'error' && (
                             <AlertCircle style={{ width: '24px', height: '24px', color: '#EF4444' }} />
@@ -373,7 +373,7 @@ export default function UploadPage() {
             {ocrStatus !== 'idle' && (
               <div className={`upload-ocr-status ${ocrStatus}`}>
                 {ocrStatus === 'processing' && <Loader2 style={{ width: '16px', height: '16px', color: '#F72585', animation: 'spin 1s linear infinite' }} />}
-                {ocrStatus === 'complete' && <CheckCircle style={{ width: '16px', height: '16px', color: '#10B981' }} />}
+                {ocrStatus === 'complete' && <CheckCircle style={{ width: '16px', height: '16px', color: '#00D4AA' }} />}
                 {ocrStatus === 'failed' && <AlertCircle style={{ width: '16px', height: '16px', color: '#EF4444' }} />}
                 {ocrStatus === 'duplicate' && <AlertCircle style={{ width: '16px', height: '16px', color: '#F59E0B' }} />}
                 <span className={`upload-ocr-status-text ${ocrStatus}`}>
@@ -445,7 +445,7 @@ export default function UploadPage() {
                 <div className="upload-guide-items">
                   {(t.raw('guide.bestPractices.good') as string[]).map((item, idx) => (
                     <span key={idx} className="upload-guide-item-inline">
-                      <CheckCircle style={{ width: '14px', height: '14px', color: '#10B981', flexShrink: 0 }} />{item}
+                      <CheckCircle style={{ width: '14px', height: '14px', color: '#00D4AA', flexShrink: 0 }} />{item}
                     </span>
                   ))}
                 </div>

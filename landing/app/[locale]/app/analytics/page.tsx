@@ -5,6 +5,7 @@ import { TrendingUp, Target, Zap, Award, Loader2, Calendar, AlertTriangle, Troph
 import { sessionsApi } from '@/lib/api';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTranslations, useLocale } from 'next-intl';
+import { CountUp, AnimatedCard, AnimatedContainer, AnimatedItem } from '@/components/ui';
 
 type PeriodType = 'today' | 'week' | 'month' | 'last30' | 'all' | 'custom';
 
@@ -375,49 +376,81 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
-      {/* Summary Cards - Equal Width Grid */}
-      <div className="analytics-summary-grid">
-        <div className="analytics-summary-card">
-          <div className="analytics-summary-icon" style={{ background: totals.profit >= 0 ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)' }}>
-            <DollarSign style={{ width: '20px', height: '20px', color: totals.profit >= 0 ? '#10B981' : '#EF4444' }} />
+      {/* Summary Cards - Equal Width Grid with Stagger Animation */}
+      <AnimatedContainer className="analytics-summary-grid" staggerDelay={0.08}>
+        <AnimatedItem>
+          <div className="analytics-summary-card">
+            <div className="analytics-summary-icon" style={{ background: totals.profit >= 0 ? 'rgba(0, 212, 170, 0.15)' : 'rgba(239, 68, 68, 0.15)' }}>
+              <DollarSign style={{ width: '20px', height: '20px', color: totals.profit >= 0 ? '#00D4AA' : '#EF4444' }} />
+            </div>
+            <div className="analytics-summary-content">
+              <p className="analytics-summary-label">{totals.profit >= 0 ? t('stats.totalProfit') : t('stats.totalLoss')}</p>
+              <p className="analytics-summary-value" style={{ color: totals.profit >= 0 ? '#00D4AA' : '#EF4444' }}>
+                {totals.profit >= 0 ? '+' : '-'}
+                <CountUp
+                  end={Math.abs(totals.profit)}
+                  duration={1.2}
+                  separator=","
+                  suffix={locale === 'ko' ? tUnits('won') : ''}
+                  prefix={locale === 'en' ? '$' : locale === 'ja' ? '¥' : ''}
+                />
+              </p>
+            </div>
           </div>
-          <div className="analytics-summary-content">
-            <p className="analytics-summary-label">{totals.profit >= 0 ? t('stats.totalProfit') : t('stats.totalLoss')}</p>
-            <p className="analytics-summary-value" style={{ color: totals.profit >= 0 ? '#10B981' : '#EF4444' }}>
-              {formatFullCurrency(totals.profit)}
-            </p>
+        </AnimatedItem>
+        <AnimatedItem>
+          <div className="analytics-summary-card">
+            <div className="analytics-summary-icon" style={{ background: 'rgba(247, 37, 133, 0.15)' }}>
+              <Hash style={{ width: '20px', height: '20px', color: '#F72585' }} />
+            </div>
+            <div className="analytics-summary-content">
+              <p className="analytics-summary-label">{t('stats.sessions')}</p>
+              <p className="analytics-summary-value">
+                <CountUp end={totals.sessions} duration={1} />
+                <span className="analytics-summary-unit">{locale === 'ko' ? '회' : ''}</span>
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="analytics-summary-card">
-          <div className="analytics-summary-icon" style={{ background: 'rgba(247, 37, 133, 0.15)' }}>
-            <Hash style={{ width: '20px', height: '20px', color: '#F72585' }} />
+        </AnimatedItem>
+        <AnimatedItem>
+          <div className="analytics-summary-card">
+            <div className="analytics-summary-icon" style={{ background: 'rgba(59, 130, 246, 0.15)' }}>
+              <Clock style={{ width: '20px', height: '20px', color: '#3B82F6' }} />
+            </div>
+            <div className="analytics-summary-content">
+              <p className="analytics-summary-label">{t('stats.playTime')}</p>
+              <p className="analytics-summary-value">
+                <CountUp end={totals.hours} duration={1} decimals={1} />
+                <span className="analytics-summary-unit">{tUnits('hours')}</span>
+              </p>
+            </div>
           </div>
-          <div className="analytics-summary-content">
-            <p className="analytics-summary-label">{t('stats.sessions')}</p>
-            <p className="analytics-summary-value">{totals.sessions}<span className="analytics-summary-unit">{locale === 'ko' ? '회' : ''}</span></p>
+        </AnimatedItem>
+        <AnimatedItem>
+          <div className="analytics-summary-card">
+            <div className="analytics-summary-icon" style={{ background: totals.hours > 0 && totals.profit / totals.hours >= 0 ? 'rgba(0, 212, 170, 0.15)' : 'rgba(239, 68, 68, 0.15)' }}>
+              <TrendingUp style={{ width: '20px', height: '20px', color: totals.hours > 0 && totals.profit / totals.hours >= 0 ? '#00D4AA' : '#EF4444' }} />
+            </div>
+            <div className="analytics-summary-content">
+              <p className="analytics-summary-label">{totals.hours > 0 && totals.profit / totals.hours >= 0 ? t('stats.hourlyRate') : t('stats.hourlyLoss')}</p>
+              <p className="analytics-summary-value" style={{ color: totals.hours > 0 ? (totals.profit / totals.hours >= 0 ? '#00D4AA' : '#EF4444') : '#71717A' }}>
+                {totals.hours > 0 ? (
+                  <>
+                    {totals.profit / totals.hours >= 0 ? '+' : '-'}
+                    <CountUp
+                      end={Math.abs(Math.round(totals.profit / totals.hours))}
+                      duration={1.2}
+                      separator=","
+                      suffix={locale === 'ko' ? tUnits('won') : ''}
+                      prefix={locale === 'en' ? '$' : locale === 'ja' ? '¥' : ''}
+                    />
+                  </>
+                ) : '-'}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="analytics-summary-card">
-          <div className="analytics-summary-icon" style={{ background: 'rgba(59, 130, 246, 0.15)' }}>
-            <Clock style={{ width: '20px', height: '20px', color: '#3B82F6' }} />
-          </div>
-          <div className="analytics-summary-content">
-            <p className="analytics-summary-label">{t('stats.playTime')}</p>
-            <p className="analytics-summary-value">{totals.hours}<span className="analytics-summary-unit">{tUnits('hours')}</span></p>
-          </div>
-        </div>
-        <div className="analytics-summary-card">
-          <div className="analytics-summary-icon" style={{ background: totals.hours > 0 && totals.profit / totals.hours >= 0 ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)' }}>
-            <TrendingUp style={{ width: '20px', height: '20px', color: totals.hours > 0 && totals.profit / totals.hours >= 0 ? '#10B981' : '#EF4444' }} />
-          </div>
-          <div className="analytics-summary-content">
-            <p className="analytics-summary-label">{totals.hours > 0 && totals.profit / totals.hours >= 0 ? t('stats.hourlyRate') : t('stats.hourlyLoss')}</p>
-            <p className="analytics-summary-value" style={{ color: totals.hours > 0 ? (totals.profit / totals.hours >= 0 ? '#10B981' : '#EF4444') : '#71717A' }}>
-              {totals.hours > 0 ? formatFullCurrency(Math.round(totals.profit / totals.hours)) : '-'}
-            </p>
-          </div>
-        </div>
-      </div>
+        </AnimatedItem>
+      </AnimatedContainer>
 
       {/* Profit Chart - SVG with Axes */}
       <div className="card analytics-chart-card">
@@ -508,6 +541,17 @@ export default function AnalyticsPage() {
                   viewBox={`0 0 ${barChartWidth} ${barChartHeight}`}
                   preserveAspectRatio="xMidYMid meet"
                 >
+                  {/* 그라데이션 정의 */}
+                  <defs>
+                    <linearGradient id="profitGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#00FFD0" />
+                      <stop offset="100%" stopColor="#007A63" />
+                    </linearGradient>
+                    <linearGradient id="lossGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#EF4444" />
+                      <stop offset="100%" stopColor="#991B1B" />
+                    </linearGradient>
+                  </defs>
                   {/* Y축 그리드 라인 & 레이블 */}
                   {yTicks.map((tick, i) => (
                     <g key={i}>
@@ -524,7 +568,7 @@ export default function AnalyticsPage() {
                         x={barPadding.left - 10}
                         y={getBarY(tick) + 4}
                         textAnchor="end"
-                        fill={tick > 0 ? '#10B981' : tick < 0 ? '#EF4444' : '#71717A'}
+                        fill={tick > 0 ? '#00D4AA' : tick < 0 ? '#EF4444' : '#71717A'}
                         fontSize="11"
                       >
                         {formatCurrency(tick)}
@@ -552,8 +596,8 @@ export default function AnalyticsPage() {
                           y={barY}
                           width={barWidth}
                           height={Math.max(barHeight, 8)}
-                          rx="3"
-                          fill={isPositive ? '#10B981' : '#EF4444'}
+                          rx="4"
+                          fill={isPositive ? 'url(#profitGradient)' : 'url(#lossGradient)'}
                           style={{ cursor: 'pointer', transition: 'opacity 0.15s' }}
                           opacity={hoveredBar && hoveredBar.idx !== idx ? 0.4 : 1}
                           onMouseEnter={() => setHoveredBar({
@@ -585,7 +629,7 @@ export default function AnalyticsPage() {
                     const tooltipAbove = hoveredBar.y > 80;
                     const tooltipY = tooltipAbove ? hoveredBar.y - 65 : hoveredBar.y + 60;
                     const sigma = hoveredBar.sigma || 0;
-                    const sigmaColor = Math.abs(sigma) >= 2 ? '#F59E0B' : sigma >= 0 ? '#10B981' : '#EF4444';
+                    const sigmaColor = Math.abs(sigma) >= 2 ? '#F59E0B' : sigma >= 0 ? '#00D4AA' : '#EF4444';
                     return (
                       <g>
                         <rect
@@ -603,7 +647,7 @@ export default function AnalyticsPage() {
                           x={hoveredBar.x}
                           y={tooltipY + 22}
                           textAnchor="middle"
-                          fill={hoveredBar.data.profit >= 0 ? '#10B981' : '#EF4444'}
+                          fill={hoveredBar.data.profit >= 0 ? '#00D4AA' : '#EF4444'}
                           fontSize="14"
                           fontWeight="700"
                         >
@@ -664,7 +708,7 @@ export default function AnalyticsPage() {
 
         const pathD = chartDataWithStart.map((d, i) => `${i === 0 ? 'M' : 'L'} ${getLineX(i)} ${getLineY(d.cumulative)}`).join(' ');
         const lastValue = chartDataWithStart[chartDataWithStart.length - 1]?.cumulative || 0;
-        const lineColor = lastValue >= 0 ? '#10B981' : '#EF4444';
+        const lineColor = lastValue >= 0 ? '#00D4AA' : '#EF4444';
 
         // Y축 눈금 계산 (5개 정도로 나누기)
         const yTickCount = 5;
@@ -681,7 +725,7 @@ export default function AnalyticsPage() {
                 <Activity className="analytics-section-icon" />
                 <h2 className="analytics-section-title">{t('cumulativeProfit') || '일별 누적 수익 추세'}</h2>
               </div>
-              <div className="analytics-cumulative-badge" style={{ background: lastValue >= 0 ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)' }}>
+              <div className="analytics-cumulative-badge" style={{ background: lastValue >= 0 ? 'rgba(0, 212, 170, 0.15)' : 'rgba(239, 68, 68, 0.15)' }}>
                 <span style={{ color: lineColor, fontWeight: 700, fontSize: '18px' }}>
                   {formatFullCurrency(lastValue)}
                 </span>
@@ -694,6 +738,17 @@ export default function AnalyticsPage() {
                 viewBox={`0 0 ${lineChartWidth} ${lineChartHeight}`}
                 preserveAspectRatio="xMidYMid meet"
               >
+                {/* 그라데이션 정의 */}
+                <defs>
+                  <linearGradient id="lineAreaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor={lineColor} stopOpacity="0.3" />
+                    <stop offset="100%" stopColor={lineColor} stopOpacity="0.02" />
+                  </linearGradient>
+                  <linearGradient id="lineStrokeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor={lastValue >= 0 ? '#007A63' : '#991B1B'} />
+                    <stop offset="100%" stopColor={lastValue >= 0 ? '#00FFD0' : '#EF4444'} />
+                  </linearGradient>
+                </defs>
                 {/* Y축 그리드 라인 & 레이블 */}
                 {lineYTicks.map((tick, i) => (
                   <g key={i}>
@@ -710,7 +765,7 @@ export default function AnalyticsPage() {
                       x={linePadding.left - 10}
                       y={getLineY(tick) + 4}
                       textAnchor="end"
-                      fill={tick > 0 ? '#10B981' : tick < 0 ? '#EF4444' : '#71717A'}
+                      fill={tick > 0 ? '#00D4AA' : tick < 0 ? '#EF4444' : '#71717A'}
                       fontSize="11"
                     >
                       {formatCurrency(tick)}
@@ -718,20 +773,19 @@ export default function AnalyticsPage() {
                   </g>
                 ))}
 
-                {/* 영역 채우기 */}
+                {/* 영역 채우기 - 그라데이션 */}
                 <path
                   d={`${pathD} L ${getLineX(chartDataWithStart.length - 1)} ${zeroLineY} L ${linePadding.left} ${zeroLineY} Z`}
-                  fill={lineColor}
-                  opacity="0.1"
+                  fill="url(#lineAreaGradient)"
                 />
 
-                {/* 라인 */}
-                <path d={pathD} fill="none" stroke={lineColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                {/* 라인 - 그라데이션 */}
+                <path d={pathD} fill="none" stroke="url(#lineStrokeGradient)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
 
                 {/* 점 */}
                 {chartDataWithStart.map((d, i) => (
                   <g key={d.date + i}>
-                    <circle cx={getLineX(i)} cy={getLineY(d.cumulative)} r="5" fill={d.cumulative >= 0 ? '#10B981' : '#EF4444'} />
+                    <circle cx={getLineX(i)} cy={getLineY(d.cumulative)} r="5" fill={d.cumulative >= 0 ? '#00D4AA' : '#EF4444'} />
                     <circle cx={getLineX(i)} cy={getLineY(d.cumulative)} r="2.5" fill="#18181B" />
                   </g>
                 ))}
@@ -815,7 +869,7 @@ export default function AnalyticsPage() {
                 <span>📈 평균 BB/100</span>
               </div>
               <div className="analytics-bb-value">
-                <span style={{ color: analytics.bbStats.avgBbPer100 >= 0 ? '#10B981' : '#EF4444', fontWeight: 700, fontSize: '24px' }}>
+                <span style={{ color: analytics.bbStats.avgBbPer100 >= 0 ? '#00D4AA' : '#EF4444', fontWeight: 700, fontSize: '24px' }}>
                   {analytics.bbStats.avgBbPer100 >= 0 ? '+' : ''}{analytics.bbStats.avgBbPer100.toFixed(2)}
                 </span>
               </div>
@@ -834,7 +888,7 @@ export default function AnalyticsPage() {
                 <span>📉 변동성 (σ)</span>
               </div>
               <div className="analytics-bb-value">
-                <span style={{ color: analytics.bbStats.volatilityLevel === 'stable' ? '#10B981' : analytics.bbStats.volatilityLevel === 'normal' ? '#F59E0B' : '#EF4444', fontWeight: 700, fontSize: '24px' }}>
+                <span style={{ color: analytics.bbStats.volatilityLevel === 'stable' ? '#00D4AA' : analytics.bbStats.volatilityLevel === 'normal' ? '#F59E0B' : '#EF4444', fontWeight: 700, fontSize: '24px' }}>
                   {analytics.bbStats.stdDev.toFixed(1)}
                 </span>
               </div>
@@ -872,14 +926,14 @@ export default function AnalyticsPage() {
         <div className="analytics-period-cards">
           <div className={`analytics-period-card success ${(!bestDay || bestDay.profit <= 0) ? 'empty-state' : ''}`}>
             <div className="analytics-period-card-icon">
-              <Trophy style={{ width: '24px', height: '24px', color: bestDay && bestDay.profit > 0 ? '#10B981' : '#52525B' }} />
+              <Trophy style={{ width: '24px', height: '24px', color: bestDay && bestDay.profit > 0 ? '#00D4AA' : '#52525B' }} />
             </div>
             <div className="analytics-period-card-content">
               <p className="analytics-period-card-label">{t('periodAnalysis.bestDay')}</p>
               {bestDay && bestDay.profit > 0 ? (
                 <>
                   <p className="analytics-period-card-date">{bestDay.date.slice(5).replace('-', '/')}</p>
-                  <p className="analytics-period-card-value" style={{ color: '#10B981' }}>{formatFullCurrency(bestDay.profit)}</p>
+                  <p className="analytics-period-card-value" style={{ color: '#00D4AA' }}>{formatFullCurrency(bestDay.profit)}</p>
                 </>
               ) : (
                 <p className="analytics-period-card-empty">{locale === 'ko' ? '아직 수익 기록 없음' : locale === 'ja' ? 'まだ収益記録なし' : 'No profit recorded yet'}</p>
@@ -916,7 +970,7 @@ export default function AnalyticsPage() {
           <div className="analytics-metric-list">
             <div className="analytics-metric-item">
               <span className="analytics-metric-label">{t('avgProfit') || '평균 수익'}</span>
-              <span className="analytics-metric-value" style={{ color: avgSessionProfit >= 0 ? '#10B981' : '#EF4444' }}>
+              <span className="analytics-metric-value" style={{ color: avgSessionProfit >= 0 ? '#00D4AA' : '#EF4444' }}>
                 {formatFullCurrency(Math.round(avgSessionProfit))}
               </span>
             </div>
@@ -926,7 +980,7 @@ export default function AnalyticsPage() {
             </div>
             <div className="analytics-metric-item">
               <span className="analytics-metric-label">{t('profitPerHour') || '시간당 수익'}</span>
-              <span className="analytics-metric-value" style={{ color: totals.hours > 0 ? (totals.profit / totals.hours >= 0 ? '#10B981' : '#EF4444') : '#71717A' }}>
+              <span className="analytics-metric-value" style={{ color: totals.hours > 0 ? (totals.profit / totals.hours >= 0 ? '#00D4AA' : '#EF4444') : '#71717A' }}>
                 {totals.hours > 0 ? formatFullCurrency(Math.round(totals.profit / totals.hours)) : '-'}
               </span>
             </div>
@@ -942,10 +996,10 @@ export default function AnalyticsPage() {
           <div className="analytics-metric-list">
             <div className="analytics-metric-item">
               <div className="analytics-metric-with-icon">
-                <Trophy style={{ width: '16px', height: '16px', color: '#10B981' }} />
+                <Trophy style={{ width: '16px', height: '16px', color: '#00D4AA' }} />
                 <span className="analytics-metric-label">{t('maxWinStreak') || '최장 연승'}</span>
               </div>
-              <span className="analytics-metric-value" style={{ color: '#10B981' }}>{streaks.winStreak}{t('days') || '일'}</span>
+              <span className="analytics-metric-value" style={{ color: '#00D4AA' }}>{streaks.winStreak}{t('days') || '일'}</span>
             </div>
             <div className="analytics-metric-item">
               <div className="analytics-metric-with-icon">
@@ -957,10 +1011,10 @@ export default function AnalyticsPage() {
             {streaks.currentStreak > 0 && (
               <div className="analytics-metric-item">
                 <div className="analytics-metric-with-icon">
-                  <Activity style={{ width: '16px', height: '16px', color: streaks.currentType === 'win' ? '#10B981' : '#EF4444' }} />
+                  <Activity style={{ width: '16px', height: '16px', color: streaks.currentType === 'win' ? '#00D4AA' : '#EF4444' }} />
                   <span className="analytics-metric-label">{t('currentStreak') || '현재 연속'}</span>
                 </div>
-                <span className="analytics-metric-value" style={{ color: streaks.currentType === 'win' ? '#10B981' : '#EF4444' }}>
+                <span className="analytics-metric-value" style={{ color: streaks.currentType === 'win' ? '#00D4AA' : '#EF4444' }}>
                   {streaks.currentStreak}{t('days') || '일'} {streaks.currentType === 'win' ? '연승' : '연패'}
                 </span>
               </div>
@@ -978,7 +1032,7 @@ export default function AnalyticsPage() {
           </div>
           <div className="analytics-roi-content">
             <div className="analytics-roi-main">
-              <p className="analytics-roi-value" style={{ color: (tournamentROI || 0) >= 0 ? '#10B981' : '#EF4444' }}>
+              <p className="analytics-roi-value" style={{ color: (tournamentROI || 0) >= 0 ? '#00D4AA' : '#EF4444' }}>
                 {(tournamentROI || 0) >= 0 ? '+' : ''}{(tournamentROI || 0).toFixed(1)}%
               </p>
               <p className="analytics-roi-label">ROI (Return on Investment)</p>
@@ -990,7 +1044,7 @@ export default function AnalyticsPage() {
               </div>
               <div className="analytics-roi-detail-item">
                 <span className="analytics-roi-detail-label">{t('tournamentProfit') || '총 수익'}</span>
-                <span className="analytics-roi-detail-value" style={{ color: tournamentStats.profit >= 0 ? '#10B981' : '#EF4444' }}>
+                <span className="analytics-roi-detail-value" style={{ color: tournamentStats.profit >= 0 ? '#00D4AA' : '#EF4444' }}>
                   {formatFullCurrency(tournamentStats.profit)}
                 </span>
               </div>
@@ -1040,7 +1094,7 @@ export default function AnalyticsPage() {
                   <div key={stat.type} className="analytics-stat-item-card">
                     <div className="analytics-stat-row">
                       <span className="analytics-stat-name">{stat.type}</span>
-                      <span className="analytics-stat-profit" style={{ color: stat.profit >= 0 ? '#10B981' : '#EF4444' }}>
+                      <span className="analytics-stat-profit" style={{ color: stat.profit >= 0 ? '#00D4AA' : '#EF4444' }}>
                         {formatFullCurrency(stat.profit)}
                       </span>
                     </div>
@@ -1049,7 +1103,7 @@ export default function AnalyticsPage() {
                         className="analytics-stat-bar-fill"
                         style={{
                           width: `${percent}%`,
-                          background: stat.profit >= 0 ? '#10B981' : '#EF4444'
+                          background: stat.profit >= 0 ? '#00D4AA' : '#EF4444'
                         }}
                       />
                     </div>
@@ -1081,7 +1135,7 @@ export default function AnalyticsPage() {
                   <div key={stat.stakes} className="analytics-stat-item-card">
                     <div className="analytics-stat-row">
                       <span className="analytics-stat-name">{stat.stakes}</span>
-                      <span className="analytics-stat-profit" style={{ color: stat.profit >= 0 ? '#10B981' : '#EF4444' }}>
+                      <span className="analytics-stat-profit" style={{ color: stat.profit >= 0 ? '#00D4AA' : '#EF4444' }}>
                         {formatFullCurrency(stat.profit)}
                       </span>
                     </div>
@@ -1090,7 +1144,7 @@ export default function AnalyticsPage() {
                         className="analytics-stat-bar-fill"
                         style={{
                           width: `${percent}%`,
-                          background: stat.profit >= 0 ? '#10B981' : '#EF4444'
+                          background: stat.profit >= 0 ? '#00D4AA' : '#EF4444'
                         }}
                       />
                     </div>
@@ -1122,7 +1176,7 @@ export default function AnalyticsPage() {
                 <div key={stat.venue} className="analytics-venue-item">
                   <div className="analytics-venue-row">
                     <span className="analytics-venue-name">{stat.venue}</span>
-                    <span className="analytics-venue-profit" style={{ color: stat.profit >= 0 ? '#10B981' : '#EF4444' }}>
+                    <span className="analytics-venue-profit" style={{ color: stat.profit >= 0 ? '#00D4AA' : '#EF4444' }}>
                       {formatFullCurrency(stat.profit)}
                     </span>
                   </div>
@@ -1131,7 +1185,7 @@ export default function AnalyticsPage() {
                       className="analytics-stat-bar-fill"
                       style={{
                         width: `${percent}%`,
-                        background: stat.profit >= 0 ? '#10B981' : '#EF4444'
+                        background: stat.profit >= 0 ? '#00D4AA' : '#EF4444'
                       }}
                     />
                   </div>
