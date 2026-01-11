@@ -34,6 +34,7 @@
     "notices": "Notices",
     "feedback": "Feedback",
     "settings": "Settings",
+    "donate": "Donate",
     "home": "Home",
     "more": "More",
     "todayProfit": "Today's Profit"
@@ -881,5 +882,21 @@
     "sessions": "sessions",
     "hands": "hands",
     "points": "points"
+  },
+  "Donate": {
+    "title": "Support Developer",
+    "subtitle": "Help us build Pokerly",
+    "message": "Pokerly is constantly evolving to provide a better poker experience. Your small donation makes a big difference. Support development with a cup of coffee! ☕",
+    "kakaopay": {
+      "title": "Donate with KakaoPay",
+      "description": "Easy payment with KakaoPay"
+    },
+    "buymeacoffee": {
+      "title": "Buy Me a Coffee",
+      "comingSoon": "International payment coming soon"
+    },
+    "comingSoon": "Coming Soon",
+    "mobileNotice": "KakaoPay is only available on mobile",
+    "thankYou": "Thank you for your support 💜"
   }
 }

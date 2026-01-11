@@ -34,6 +34,7 @@
     "notices": "お知らせ",
     "feedback": "フィードバック",
     "settings": "設定",
+    "donate": "応援する",
     "home": "ホーム",
     "more": "もっと見る",
     "todayProfit": "今日の収益"
@@ -881,5 +882,21 @@
     "sessions": "セッション",
     "hands": "ハンド",
     "points": "ポイント"
+  },
+  "Donate": {
+    "title": "開発者を応援",
+    "subtitle": "Pokerlyを応援してください",
+    "message": "Pokerlyはより良いポーカー体験のために進化し続けています。皆様の小さな応援が大きな力になります。コーヒー1杯で開発を応援してください！☕",
+    "kakaopay": {
+      "title": "KakaoPayで応援する",
+      "description": "KakaoPayで簡単に決済できます"
+    },
+    "buymeacoffee": {
+      "title": "Buy Me a Coffee",
+      "comingSoon": "海外決済準備中です"
+    },
+    "comingSoon": "準備中",
+    "mobileNotice": "KakaoPayはモバイルでのみ決済可能です",
+    "thankYou": "ご支援ありがとうございます 💜"
   }
 }

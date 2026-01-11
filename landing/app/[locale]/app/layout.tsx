@@ -31,6 +31,7 @@ import {
   Megaphone,
   MessageSquare,
   Settings,
+  Heart,
 } from 'lucide-react';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { sessionsApi, userApi } from '@/lib/api';
@@ -536,6 +537,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               { href: '/app/level', icon: Star, labelKey: 'level' },
               { href: '/app/notices', icon: Megaphone, labelKey: 'notices' },
               { href: '/app/feedback', icon: MessageSquare, labelKey: 'feedback' },
+              { href: '/app/donate', icon: Heart, labelKey: 'donate' },
               { href: '/app/settings', icon: Settings, labelKey: 'settings' },
             ].map((item) => {
               const isActive = pathname === item.href;
