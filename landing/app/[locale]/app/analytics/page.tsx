@@ -449,21 +449,23 @@ export default function AnalyticsPage() {
         ) : (() => {
           const displayData = chartData.slice(-12);
           const barChartHeight = 260;
-          const barPadding = { top: 35, bottom: 50, left: 70, right: 20 };
+          const barPadding = { top: 35, bottom: 50, left: 70, right: 30 };
           const barChartWidth = 700;
           const barGraphWidth = barChartWidth - barPadding.left - barPadding.right;
           const barGraphHeight = barChartHeight - barPadding.top - barPadding.bottom;
 
-          // 막대 너비와 위치 계산
+          // 막대 너비와 위치 계산 - 전체 너비에 균등 분배
           const barCount = displayData.length;
-          const barGap = barCount > 1 ? 20 : 0;
-          const totalBarSpace = barGraphWidth - (barGap * (barCount - 1));
-          const barWidth = Math.min(totalBarSpace / barCount, 60);
-          const actualTotalWidth = barWidth * barCount + barGap * (barCount - 1);
-          const startOffset = (barGraphWidth - actualTotalWidth) / 2;
+          const maxBarWidth = 50;
+          const minBarWidth = 20;
+          // 전체 그래프 영역을 barCount 등분
+          const sectionWidth = barGraphWidth / barCount;
+          const barWidth = Math.max(minBarWidth, Math.min(maxBarWidth, sectionWidth * 0.6));
 
           const getBarX = (idx: number) => {
-            return barPadding.left + startOffset + idx * (barWidth + barGap);
+            // 각 섹션 중앙에 막대 배치
+            const sectionCenter = barPadding.left + sectionWidth * idx + sectionWidth / 2;
+            return sectionCenter - barWidth / 2;
           };
 
           const profits = displayData.map(d => d.profit);
@@ -639,7 +641,7 @@ export default function AnalyticsPage() {
         ];
 
         const lineChartHeight = 280;
-        const linePadding = { top: 35, bottom: 50, left: 70, right: 20 };
+        const linePadding = { top: 35, bottom: 50, left: 70, right: 30 };
         const lineChartWidth = 700;
         const lineGraphWidth = lineChartWidth - linePadding.left - linePadding.right;
         const lineGraphHeight = lineChartHeight - linePadding.top - linePadding.bottom;
@@ -653,7 +655,7 @@ export default function AnalyticsPage() {
           if (lineMaxVal === lineMinVal) return linePadding.top + lineGraphHeight / 2;
           return linePadding.top + lineGraphHeight - ((val - lineMinVal) / lineRange) * lineGraphHeight;
         };
-        // X좌표: 전체 너비에 균등 분배 (왼쪽 끝 ~ 오른쪽 끝)
+        // X좌표: 시작점부터 끝점까지 전체 너비에 균등 분배 (좌우 끝에 맞춤)
         const getLineX = (idx: number) => {
           if (chartDataWithStart.length === 1) return linePadding.left + lineGraphWidth / 2;
           return linePadding.left + (idx / (chartDataWithStart.length - 1)) * lineGraphWidth;
@@ -868,9 +870,9 @@ export default function AnalyticsPage() {
       {/* Period Analysis - Best & Worst Day */}
       {dailyData.length > 0 && (bestDay || worstDay) && (
         <div className="analytics-period-cards">
-          <div className="analytics-period-card success">
+          <div className={`analytics-period-card success ${(!bestDay || bestDay.profit <= 0) ? 'empty-state' : ''}`}>
             <div className="analytics-period-card-icon">
-              <Trophy style={{ width: '24px', height: '24px', color: '#10B981' }} />
+              <Trophy style={{ width: '24px', height: '24px', color: bestDay && bestDay.profit > 0 ? '#10B981' : '#52525B' }} />
             </div>
             <div className="analytics-period-card-content">
               <p className="analytics-period-card-label">{t('periodAnalysis.bestDay')}</p>
@@ -880,13 +882,13 @@ export default function AnalyticsPage() {
                   <p className="analytics-period-card-value" style={{ color: '#10B981' }}>{formatFullCurrency(bestDay.profit)}</p>
                 </>
               ) : (
-                <p className="analytics-period-card-empty">-</p>
+                <p className="analytics-period-card-empty">{locale === 'ko' ? '아직 수익 기록 없음' : locale === 'ja' ? 'まだ収益記録なし' : 'No profit recorded yet'}</p>
               )}
             </div>
           </div>
-          <div className="analytics-period-card warning">
+          <div className={`analytics-period-card warning ${(!worstDay || worstDay.profit >= 0) ? 'empty-state' : ''}`}>
             <div className="analytics-period-card-icon">
-              <TrendingDown style={{ width: '24px', height: '24px', color: '#EF4444' }} />
+              <TrendingDown style={{ width: '24px', height: '24px', color: worstDay && worstDay.profit < 0 ? '#EF4444' : '#52525B' }} />
             </div>
             <div className="analytics-period-card-content">
               <p className="analytics-period-card-label">{t('periodAnalysis.worstDay')}</p>
@@ -896,7 +898,7 @@ export default function AnalyticsPage() {
                   <p className="analytics-period-card-value" style={{ color: '#EF4444' }}>{formatFullCurrency(worstDay.profit)}</p>
                 </>
               ) : (
-                <p className="analytics-period-card-empty">-</p>
+                <p className="analytics-period-card-empty">{locale === 'ko' ? '아직 손실 기록 없음' : locale === 'ja' ? 'まだ損失記録なし' : 'No loss recorded yet'}</p>
               )}
             </div>
           </div>

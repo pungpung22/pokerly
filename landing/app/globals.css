@@ -1621,8 +1621,18 @@ body {
 }
 
 .analytics-period-card-empty {
-  font-size: 20px;
-  color: #71717A;
+  font-size: 14px;
+  color: #52525B;
+  font-weight: 400;
+}
+
+.analytics-period-card.empty-state {
+  opacity: 0.6;
+  background: rgba(39, 39, 42, 0.5);
+}
+
+.analytics-period-card.empty-state .analytics-period-card-icon {
+  background: rgba(82, 82, 91, 0.2);
 }
 
 /* Dual Grid (2 columns) */
