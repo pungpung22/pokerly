@@ -19,10 +19,10 @@ export default function Home() {
       <Header />
       <HeroSection />
       <HowItWorks />
+      <AICoachShowcase />
       <CashGameShowcase />
       <TournamentShowcase />
       <StatsPreview />
-      <AICoachShowcase />
       <LevelShowcase />
       <MissionShowcase />
       <Testimonials />
