@@ -88,11 +88,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     label: t(item.labelKey)
   }));
 
+  // Skip auth redirect for login page
+  const isLoginPage = pathname === '/app/login';
+
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !user && !isLoginPage) {
       router.push('/app/login');
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, isLoginPage]);
 
   // Fetch today's profit and level info
   useEffect(() => {
@@ -127,12 +130,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     (path) => pathname === path || pathname.startsWith(path + '/')
   );
 
-  if (loading) {
+  // Show loading spinner (but not on login page)
+  if (loading && !isLoginPage) {
     return (
       <div style={{ minHeight: '100vh', background: '#0A0A0B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Loader2 style={{ width: '32px', height: '32px', color: '#F72585', animation: 'spin 1s linear infinite' }} />
       </div>
     );
+  }
+
+  // For login page, render children without dashboard layout
+  if (isLoginPage) {
+    return <>{children}</>;
   }
 
   if (!user) {
