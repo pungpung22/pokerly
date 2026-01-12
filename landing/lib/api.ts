@@ -294,3 +294,19 @@ export const uploadsApi = {
     return response.json();
   },
 };
+
+// AI API
+export interface AiReportResponse {
+  report: string;
+  generatedAt: string;
+  dataSnapshot: {
+    totalSessions: number;
+    totalProfit: number;
+    avgBbPer100: number;
+  };
+}
+
+export const aiApi = {
+  getReport: (locale: string = 'ko') =>
+    fetchWithAuth<AiReportResponse>(`/ai/report?locale=${locale}`),
+};

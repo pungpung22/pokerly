@@ -14,6 +14,7 @@ import { NoticesModule } from './notices/notices.module';
 import { FeedbacksModule } from './feedbacks/feedbacks.module';
 import { RewardsModule } from './rewards/rewards.module';
 import { UploadsModule } from './uploads/uploads.module';
+import { AiModule } from './ai/ai.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UploadsModule } from './uploads/uploads.module';
     FeedbacksModule,
     RewardsModule,
     UploadsModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

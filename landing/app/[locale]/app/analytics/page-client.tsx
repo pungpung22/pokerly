@@ -8,6 +8,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { CountUp, AnimatedCard, AnimatedContainer, AnimatedItem } from '@/components/ui';
 import { BB100Table } from '@/components/analytics/BB100Table';
 import { GTOHandRangeChart } from '@/components/analytics/GTOHandRangeChart';
+import { AICoachReport } from '@/components/analytics/AICoachReport';
 
 type PeriodType = 'today' | 'week' | 'month' | 'last30' | 'all' | 'custom';
 
@@ -478,6 +479,9 @@ export default function AnalyticsPage() {
           </div>
         </AnimatedItem>
       </AnimatedContainer>
+
+      {/* AI Coach Report */}
+      <AICoachReport locale={locale} />
 
       {/* Profit Chart - SVG with Axes */}
       <div className="card analytics-chart-card">
