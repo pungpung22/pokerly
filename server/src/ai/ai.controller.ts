@@ -1,7 +1,9 @@
-import { Controller, Get, Query, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { AiService } from './ai.service';
 import { SessionsService } from '../sessions/sessions.service';
 import { FirebaseAuthGuard } from '../auth/guards/firebase-auth.guard';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { User } from '../entities/user.entity';
 
 @Controller('ai')
 @UseGuards(FirebaseAuthGuard)
@@ -13,10 +15,10 @@ export class AiController {
 
   @Get('report')
   async getPersonalizedReport(
-    @Request() req,
+    @CurrentUser() user: User,
     @Query('locale') locale: string = 'ko',
   ) {
-    const userId = req.user.sub || req.user.userId;
+    const userId = user.id;
 
     // Get all necessary data
     const stats = await this.sessionsService.getStats(userId);
