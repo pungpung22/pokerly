@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Target, Info, ChevronDown } from 'lucide-react';
+import { Target, Info } from 'lucide-react';
 
 // Hand rankings (row = first card, col = second card)
 // Suited hands are above diagonal, offsuit below, pairs on diagonal
@@ -22,7 +22,6 @@ const HANDS = [
 ];
 
 // GTO opening ranges by position (simplified version)
-// 'R' = Raise, 'C' = Call/Mixed, 'F' = Fold
 type Action = 'R' | 'C' | 'F';
 
 interface PositionRange {
@@ -159,7 +158,6 @@ interface GTOHandRangeChartProps {
 export function GTOHandRangeChart({ locale = 'ko' }: GTOHandRangeChartProps) {
   const [selectedPosition, setSelectedPosition] = useState<string>('BTN');
   const [hoveredHand, setHoveredHand] = useState<string | null>(null);
-  const [showDropdown, setShowDropdown] = useState(false);
 
   const positions = ['UTG', 'MP', 'CO', 'BTN', 'SB'];
 
@@ -213,9 +211,9 @@ export function GTOHandRangeChart({ locale = 'ko' }: GTOHandRangeChartProps) {
 
   const getActionColor = (action: Action): string => {
     switch (action) {
-      case 'R': return 'bg-[#22C55E]'; // Green for raise
-      case 'C': return 'bg-[#F59E0B]'; // Yellow for call/mixed
-      case 'F': return 'bg-[#27272A]'; // Dark for fold
+      case 'R': return 'bg-[#22C55E]';
+      case 'C': return 'bg-[#F59E0B]';
+      case 'F': return 'bg-[#27272A]';
     }
   };
 
@@ -227,7 +225,6 @@ export function GTOHandRangeChart({ locale = 'ko' }: GTOHandRangeChartProps) {
     }
   };
 
-  // Calculate range stats
   const calculateRangeStats = () => {
     let raiseCount = 0;
     let callCount = 0;
@@ -236,7 +233,6 @@ export function GTOHandRangeChart({ locale = 'ko' }: GTOHandRangeChartProps) {
     HANDS.forEach((row, i) => {
       row.forEach((hand, j) => {
         const action = getHandAction(hand);
-        // Count combinations (pairs = 6, suited = 4, offsuit = 12)
         const combos = i === j ? 6 : (i < j ? 4 : 12);
         totalCombos += combos;
         if (action === 'R') raiseCount += combos;
@@ -261,44 +257,38 @@ export function GTOHandRangeChart({ locale = 'ko' }: GTOHandRangeChartProps) {
           <Target className="w-5 h-5 text-[#14B8A6]" />
           <h3 className="font-semibold text-white">{t.title}</h3>
         </div>
-        <div className="flex items-center gap-3">
-          {/* Position Selector */}
-          <div className="relative">
-            <button
-              onClick={() => setShowDropdown(!showDropdown)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-[#1C1C1E] border border-[#27272A] rounded-lg text-sm text-white hover:bg-[#27272A] transition-colors"
-            >
-              <span className="text-[#A1A1AA]">{t.position}:</span>
-              <span className="font-medium">{selectedPosition}</span>
-              <ChevronDown className="w-4 h-4 text-[#71717A]" />
-            </button>
-            {showDropdown && (
-              <div className="absolute right-0 top-full mt-1 z-20 bg-[#1C1C1E] border border-[#27272A] rounded-lg overflow-hidden shadow-lg">
-                {positions.map((pos) => (
-                  <button
-                    key={pos}
-                    onClick={() => { setSelectedPosition(pos); setShowDropdown(false); }}
-                    className={`w-full px-4 py-2 text-sm text-left hover:bg-[#27272A] transition-colors ${
-                      selectedPosition === pos ? 'bg-[#14B8A6]/20 text-[#14B8A6]' : 'text-white'
-                    }`}
-                  >
-                    {pos}
-                  </button>
-                ))}
-              </div>
-            )}
+        <div className="group relative">
+          <Info className="w-4 h-4 text-[#71717A] cursor-help" />
+          <div className="absolute right-0 top-6 z-10 w-72 p-3 bg-[#18181B] border border-[#27272A] rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all text-xs text-[#A1A1AA]">
+            {t.tooltip}
           </div>
-          <div className="group relative">
-            <Info className="w-4 h-4 text-[#71717A] cursor-help" />
-            <div className="absolute right-0 top-6 z-10 w-72 p-3 bg-[#18181B] border border-[#27272A] rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all text-xs text-[#A1A1AA]">
-              {t.tooltip}
-            </div>
+        </div>
+      </div>
+
+      {/* Position Tabs */}
+      <div className="px-5 py-3 border-b border-[#27272A] bg-[#0A0A0B]">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-[#71717A] mr-2">{t.position}:</span>
+          <div className="flex gap-1 p-1 bg-[#1A1A20] rounded-lg">
+            {positions.map((pos) => (
+              <button
+                key={pos}
+                onClick={() => setSelectedPosition(pos)}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                  selectedPosition === pos
+                    ? 'bg-[#14B8A6] text-white shadow-md'
+                    : 'text-[#A1A1AA] hover:text-white hover:bg-[#27272A]'
+                }`}
+              >
+                {pos}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Stats Bar */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[#27272A] bg-[#0A0A0B]">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[#27272A]">
         <div className="flex items-center gap-6 text-sm">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded bg-[#22C55E]" />
@@ -327,8 +317,6 @@ export function GTOHandRangeChart({ locale = 'ko' }: GTOHandRangeChartProps) {
           {HANDS.map((row, i) =>
             row.map((hand, j) => {
               const action = getHandAction(hand);
-              const isPair = i === j;
-              const isSuited = i < j;
               return (
                 <div
                   key={hand}

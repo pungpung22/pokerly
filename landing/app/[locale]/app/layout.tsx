@@ -254,64 +254,68 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </ul>
         </nav>
 
-        {/* User section */}
-        <div style={{ padding: sidebarCollapsed ? '16px 8px' : '16px', borderTop: '1px solid #27272A' }}>
-          <Link href="/app/level" style={{ display: 'flex', alignItems: 'center', justifyContent: sidebarCollapsed ? 'center' : 'flex-start', gap: '12px', marginBottom: '12px', textDecoration: 'none' }}>
-            <div style={{ position: 'relative' }}>
-              {user.photoURL ? (
-                <img
-                  src={user.photoURL}
-                  alt="Profile"
-                  style={{ width: '40px', height: '40px', borderRadius: '50%' }}
-                />
-              ) : (
-                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#14B8A6', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
-                  {user.displayName?.charAt(0) || user.email?.charAt(0) || '?'}
+        {/* User Profile Section - Visually Separated */}
+        <div className="sidebar-profile-section" style={{ borderTop: '1px solid #27272A' }}>
+          {/* Profile Card */}
+          <div className="sidebar-profile-card" style={{ padding: sidebarCollapsed ? '16px 8px' : '16px' }}>
+            <Link href="/app/level" className="sidebar-profile-link" style={{ display: 'flex', alignItems: 'center', justifyContent: sidebarCollapsed ? 'center' : 'flex-start', gap: '14px', textDecoration: 'none', padding: '12px', background: 'rgba(20, 184, 166, 0.05)', borderRadius: '12px', border: '1px solid #27272A', transition: 'all 0.2s' }}>
+              <div style={{ position: 'relative' }}>
+                {user.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt="Profile"
+                    style={{ width: '42px', height: '42px', borderRadius: '50%', border: '2px solid #27272A' }}
+                  />
+                ) : (
+                  <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'linear-gradient(135deg, #14B8A6 0%, #0D9488 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '16px', border: '2px solid #27272A' }}>
+                    {user.displayName?.charAt(0) || user.email?.charAt(0) || '?'}
+                  </div>
+                )}
+                {/* Level Badge */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '-2px',
+                    right: '-2px',
+                    width: '22px',
+                    height: '22px',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #14B8A6 0%, #2DD4BF 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '10px',
+                    fontWeight: 'bold',
+                    color: 'white',
+                    border: '2px solid #141416',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  {levelInfo?.level || <Crown style={{ width: '10px', height: '10px' }} />}
+                </div>
+              </div>
+              {!sidebarCollapsed && (
+                <div style={{ flex: 1, overflow: 'hidden' }}>
+                  <p style={{ color: 'white', fontWeight: 600, fontSize: '14px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginBottom: '2px' }}>
+                    {user.displayName || tSettings('user')}
+                  </p>
+                  <p style={{ color: '#71717A', fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {user.email}
+                  </p>
                 </div>
               )}
-              {/* Level Badge */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '-4px',
-                  right: '-4px',
-                  width: '20px',
-                  height: '20px',
-                  borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #14B8A6 0%, #2DD4BF 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '10px',
-                  fontWeight: 'bold',
-                  color: 'white',
-                  border: '2px solid #141416',
-                }}
-              >
-                {levelInfo?.level || <Crown style={{ width: '10px', height: '10px' }} />}
-              </div>
-            </div>
-            {!sidebarCollapsed && (
-              <div style={{ flex: 1, overflow: 'hidden' }}>
-                <p style={{ color: 'white', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {user.displayName || tSettings('user')}
-                </p>
-                <p style={{ color: '#D4D4D8', fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {user.email}
-                </p>
-              </div>
-            )}
-          </Link>
+            </Link>
+          </div>
 
           {/* XP Gauge Bar */}
           {levelInfo && !sidebarCollapsed && (
-            <div className="sidebar-xp-gauge">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+            <div className="sidebar-xp-gauge" style={{ padding: '0 16px 16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Zap style={{ width: '12px', height: '12px', color: '#14B8A6' }} />
-                  <span style={{ fontSize: '11px', color: '#A1A1AA' }}>Lv.{levelInfo.level}</span>
+                  <Zap style={{ width: '14px', height: '14px', color: '#14B8A6' }} />
+                  <span style={{ fontSize: '12px', color: '#D4D4D8', fontWeight: 500 }}>Lv.{levelInfo.level}</span>
                 </div>
-                <span style={{ fontSize: '11px', color: '#71717A' }}>{levelInfo.currentXp}/{levelInfo.requiredXp} XP</span>
+                <span style={{ fontSize: '11px', color: '#71717A' }}>{levelInfo.currentXp.toLocaleString()}/{levelInfo.requiredXp.toLocaleString()} XP</span>
               </div>
               <div className="xp-gauge-bar">
                 <div
@@ -324,7 +328,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
           {/* XP Gauge for collapsed mode */}
           {levelInfo && sidebarCollapsed && (
-            <div style={{ marginBottom: '12px' }}>
+            <div style={{ padding: '0 8px 12px' }}>
               <div className="xp-gauge-bar" style={{ height: '4px' }}>
                 <div
                   className="xp-gauge-fill"
@@ -334,32 +338,35 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           )}
 
-          {!sidebarCollapsed && (
-            <div style={{ marginBottom: '12px' }}>
+          {/* Action Buttons */}
+          <div style={{ padding: sidebarCollapsed ? '0 8px 16px' : '0 16px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {!sidebarCollapsed && (
               <LanguageSwitcher direction="up" />
-            </div>
-          )}
-          <button
-            onClick={handleSignOut}
-            title={sidebarCollapsed ? tCommon('logout') : undefined}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
-              gap: '8px',
-              width: '100%',
-              padding: sidebarCollapsed ? '10px' : '10px 16px',
-              background: 'transparent',
-              border: '1px solid #27272A',
-              borderRadius: '8px',
-              color: '#D4D4D8',
-              cursor: 'pointer',
-              fontSize: '14px',
-            }}
-          >
-            <LogOut style={{ width: '18px', height: '18px' }} />
-            {!sidebarCollapsed && tCommon('logout')}
-          </button>
+            )}
+            <button
+              onClick={handleSignOut}
+              title={sidebarCollapsed ? tCommon('logout') : undefined}
+              className="sidebar-logout-btn"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
+                gap: '10px',
+                width: '100%',
+                padding: sidebarCollapsed ? '10px' : '10px 14px',
+                background: 'transparent',
+                border: '1px solid #27272A',
+                borderRadius: '8px',
+                color: '#A1A1AA',
+                cursor: 'pointer',
+                fontSize: '13px',
+                transition: 'all 0.2s',
+              }}
+            >
+              <LogOut style={{ width: '16px', height: '16px' }} />
+              {!sidebarCollapsed && tCommon('logout')}
+            </button>
+          </div>
         </div>
       </aside>
 
@@ -676,6 +683,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           background: linear-gradient(90deg, #14B8A6 0%, #7B2FF7 100%);
           border-radius: 3px;
           transition: width 0.3s ease;
+        }
+        .sidebar-profile-section {
+          background: rgba(0, 0, 0, 0.15);
+        }
+        .sidebar-profile-link:hover {
+          background: rgba(20, 184, 166, 0.1) !important;
+          border-color: rgba(20, 184, 166, 0.3) !important;
+        }
+        .sidebar-logout-btn:hover {
+          background: rgba(239, 68, 68, 0.1) !important;
+          border-color: rgba(239, 68, 68, 0.3) !important;
+          color: #EF4444 !important;
         }
         .mobile-header {
           display: none;

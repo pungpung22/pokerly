@@ -769,11 +769,11 @@ export default function AnalyticsPage() {
                 viewBox={`0 0 ${lineChartWidth} ${lineChartHeight}`}
                 preserveAspectRatio="xMidYMid meet"
               >
-                {/* 그라데이션 정의 */}
+                {/* 그라데이션 정의 - 투명도 낮춰 부드럽게 */}
                 <defs>
                   <linearGradient id="lineAreaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor={lineColor} stopOpacity="0.3" />
-                    <stop offset="100%" stopColor={lineColor} stopOpacity="0.02" />
+                    <stop offset="0%" stopColor={lineColor} stopOpacity="0.15" />
+                    <stop offset="100%" stopColor={lineColor} stopOpacity="0.01" />
                   </linearGradient>
                   <linearGradient id="lineStrokeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor={lastValue >= 0 ? '#007A63' : '#991B1B'} />
@@ -854,117 +854,159 @@ export default function AnalyticsPage() {
         );
       })()}
 
-{/* BB/100 Statistics Card */}
-      {analytics?.bbStats && analytics.bbStats.sessionsWithData > 0 && (
-        <div className="card analytics-bb-card">
-          <div className="analytics-chart-header">
-            <div className="analytics-title-group">
-              <BarChart3 className="analytics-section-icon" />
-              <h2 className="analytics-section-title">BB/100 분석</h2>
+{/* ============================================= */}
+      {/* BB/100 분석 섹션 */}
+      {/* ============================================= */}
+      {(analytics?.bbStats && analytics.bbStats.sessionsWithData > 0) && (
+        <>
+          {/* Section Header for BB/100 */}
+          <div className="analytics-section-divider">
+            <div className="analytics-section-divider-line" />
+            <div className="analytics-section-divider-content">
+              <BarChart3 className="w-5 h-5 text-[#14B8A6]" />
+              <span className="analytics-section-divider-title">BB/100 성과 분석</span>
+              <span className="analytics-section-divider-badge">캐시게임</span>
+            </div>
+            <div className="analytics-section-divider-line" />
+          </div>
+
+          {/* BB/100 Statistics Card - Improved */}
+          <div className="card analytics-bb-card">
+            <div className="analytics-chart-header">
+              <div className="analytics-title-group">
+                <BarChart3 className="analytics-section-icon" />
+                <h2 className="analytics-section-title">BB/100 핵심 지표</h2>
+              </div>
+              <div className="analytics-bb-data-badge">
+                <Hash className="w-4 h-4" />
+                <span>{(analytics.totals.hands || 0).toLocaleString()}핸드 분석</span>
+              </div>
+            </div>
+
+            {/* 신뢰도 안내 - 상단에 눈에 띄게 */}
+            <div className={`analytics-bb-confidence-bar level-${analytics.bbStats.reliabilityLevel}`}>
+              <div className="analytics-bb-confidence-content">
+                <div className="analytics-bb-confidence-left">
+                  <span className="analytics-bb-confidence-icon">
+                    {analytics.bbStats.reliabilityLevel >= 5 ? '✅' : analytics.bbStats.reliabilityLevel >= 3 ? '📊' : '⚠️'}
+                  </span>
+                  <div className="analytics-bb-confidence-text">
+                    <span className="analytics-bb-confidence-label">
+                      데이터 신뢰도: <strong>{analytics.bbStats.reliabilityLabel}</strong>
+                    </span>
+                    <span className="analytics-bb-confidence-desc">
+                      {(analytics.totals.hands || 0).toLocaleString()}핸드 기록됨
+                      {analytics.bbStats.reliabilityLevel < 7 && (
+                        <> · 신뢰도 향상까지 {
+                          analytics.bbStats.reliabilityLevel === 1 ? `${Math.max(0, 10000 - (analytics.totals.hands || 0)).toLocaleString()}` :
+                          analytics.bbStats.reliabilityLevel === 2 ? `${Math.max(0, 30000 - (analytics.totals.hands || 0)).toLocaleString()}` :
+                          analytics.bbStats.reliabilityLevel === 3 ? `${Math.max(0, 60000 - (analytics.totals.hands || 0)).toLocaleString()}` :
+                          analytics.bbStats.reliabilityLevel === 4 ? `${Math.max(0, 100000 - (analytics.totals.hands || 0)).toLocaleString()}` :
+                          analytics.bbStats.reliabilityLevel === 5 ? `${Math.max(0, 200000 - (analytics.totals.hands || 0)).toLocaleString()}` :
+                          `${Math.max(0, 300000 - (analytics.totals.hands || 0)).toLocaleString()}`
+                        }핸드 필요</>
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <div className="analytics-bb-confidence-progress">
+                  <div
+                    className="analytics-bb-confidence-progress-fill"
+                    style={{
+                      width: `${Math.min(100, ((analytics.totals.hands || 0) / 300000) * 100)}%`,
+                      background: analytics.bbStats.reliabilityLevel >= 5 ? '#00D4AA' : analytics.bbStats.reliabilityLevel >= 3 ? '#F59E0B' : '#EF4444'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="analytics-bb-grid">
+              {/* 평균 BB/100 - 메인 지표 */}
+              <div className="analytics-bb-item main">
+                <div className="analytics-bb-label">
+                  <span>평균 BB/100</span>
+                </div>
+                <div className="analytics-bb-value">
+                  <span style={{ color: analytics.bbStats.avgBbPer100 >= 0 ? '#00D4AA' : '#EF4444', fontWeight: 700, fontSize: '32px' }}>
+                    {analytics.bbStats.avgBbPer100 >= 0 ? '+' : ''}{analytics.bbStats.avgBbPer100.toFixed(2)}
+                  </span>
+                </div>
+                <div className="analytics-bb-subtext">
+                  {analytics.bbStats.avgBbPer100 >= 5 ? '🔥 매우 좋음 (상위 10%)' :
+                   analytics.bbStats.avgBbPer100 >= 2 ? '👍 좋음 (수익 플레이어)' :
+                   analytics.bbStats.avgBbPer100 >= 0 ? '😐 손익분기점' :
+                   analytics.bbStats.avgBbPer100 >= -3 ? '⚠️ 소폭 손실' :
+                   '❌ 개선 필요'}
+                </div>
+              </div>
+
+              {/* 표준편차 */}
+              <div className="analytics-bb-item">
+                <div className="analytics-bb-label">
+                  <span>변동성 (σ)</span>
+                </div>
+                <div className="analytics-bb-value">
+                  <span style={{ color: analytics.bbStats.volatilityLevel === 'stable' ? '#00D4AA' : analytics.bbStats.volatilityLevel === 'normal' ? '#F59E0B' : '#EF4444', fontWeight: 700, fontSize: '24px' }}>
+                    {analytics.bbStats.stdDev.toFixed(1)}
+                  </span>
+                </div>
+                <div className="analytics-bb-subtext">
+                  {analytics.bbStats.volatilityLevel === 'stable' && '안정적 (σ < 15)'}
+                  {analytics.bbStats.volatilityLevel === 'normal' && '보통 (15 ≤ σ < 25)'}
+                  {analytics.bbStats.volatilityLevel === 'high' && '변동성 큼 (σ ≥ 25)'}
+                </div>
+              </div>
+
+              {/* 플레이 스타일 - 통일된 표시 */}
+              <div className="analytics-bb-item">
+                <div className="analytics-bb-label">
+                  <span>플레이 스타일</span>
+                </div>
+                <div className="analytics-bb-value">
+                  <span className={`analytics-bb-style-badge ${analytics.bbStats.playStyle}`}>
+                    {analytics.bbStats.playStyle === 'stable' && '안정형'}
+                    {analytics.bbStats.playStyle === 'highVariance' && '분산형'}
+                    {analytics.bbStats.playStyle === 'bigLoss' && '주의'}
+                  </span>
+                </div>
+                <div className="analytics-bb-subtext">
+                  {analytics.bbStats.playStyle === 'stable' && '꾸준한 수익 구조'}
+                  {analytics.bbStats.playStyle === 'highVariance' && '고분산 - 안정성 개선 필요'}
+                  {analytics.bbStats.playStyle === 'bigLoss' && '손절/뱅크롤 관리 점검'}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="analytics-bb-grid">
-            {/* 신뢰도 배지 */}
-            <div className="analytics-bb-item">
-              <div className="analytics-bb-label">
-                <span>📊 데이터 신뢰도</span>
-              </div>
-              <div className="analytics-bb-value">
-                <span className={`analytics-reliability-badge level-${analytics.bbStats.reliabilityLevel}`}>
-                  {analytics.bbStats.reliabilityLevel === 7 && '🏆 매우 높음'}
-                  {analytics.bbStats.reliabilityLevel === 6 && '✅✅ 높음'}
-                  {analytics.bbStats.reliabilityLevel === 5 && '✅ 보통 (상)'}
-                  {analytics.bbStats.reliabilityLevel === 4 && '📈 보통'}
-                  {analytics.bbStats.reliabilityLevel === 3 && '📊 보통 (하)'}
-                  {analytics.bbStats.reliabilityLevel === 2 && '🔶 낮음'}
-                  {analytics.bbStats.reliabilityLevel === 1 && '⚠️ 매우 낮음'}
-                </span>
-              </div>
-              <div className="analytics-bb-subtext">
-                {(analytics.totals.hands || 0).toLocaleString()}핸드 / 다음 레벨까지 {
-                  analytics.bbStats.reliabilityLevel === 1 ? `${(10000 - (analytics.totals.hands || 0)).toLocaleString()}핸드` :
-                  analytics.bbStats.reliabilityLevel === 2 ? `${(30000 - (analytics.totals.hands || 0)).toLocaleString()}핸드` :
-                  analytics.bbStats.reliabilityLevel === 3 ? `${(60000 - (analytics.totals.hands || 0)).toLocaleString()}핸드` :
-                  analytics.bbStats.reliabilityLevel === 4 ? `${(100000 - (analytics.totals.hands || 0)).toLocaleString()}핸드` :
-                  analytics.bbStats.reliabilityLevel === 5 ? `${(200000 - (analytics.totals.hands || 0)).toLocaleString()}핸드` :
-                  analytics.bbStats.reliabilityLevel === 6 ? `${(300000 - (analytics.totals.hands || 0)).toLocaleString()}핸드` :
-                  '최고 레벨 달성!'
-                }
-              </div>
-            </div>
+          {/* BB/100 by Stakes Table */}
+          {stakesStats.length > 0 && stakesStats.some(s => (s.hands || 0) > 0) && (
+            <BB100Table
+              data={stakesStats.map(s => ({
+                blind: s.stakes,
+                bb100: s.bbPer100,
+                totalProfit: s.profit,
+                games: s.sessions,
+                hands: s.hands || 0
+              }))}
+              locale={locale}
+            />
+          )}
+        </>
+      )}
 
-            {/* 평균 BB/100 */}
-            <div className="analytics-bb-item">
-              <div className="analytics-bb-label">
-                <span>📈 평균 BB/100</span>
-              </div>
-              <div className="analytics-bb-value">
-                <span style={{ color: analytics.bbStats.avgBbPer100 >= 0 ? '#00D4AA' : '#EF4444', fontWeight: 700, fontSize: '24px' }}>
-                  {analytics.bbStats.avgBbPer100 >= 0 ? '+' : ''}{analytics.bbStats.avgBbPer100.toFixed(2)}
-                </span>
-              </div>
-              <div className="analytics-bb-subtext">
-                {analytics.bbStats.avgBbPer100 >= 5 ? '🔥 매우 좋음 (상위 10%)' :
-                 analytics.bbStats.avgBbPer100 >= 2 ? '👍 좋음 (수익 플레이어)' :
-                 analytics.bbStats.avgBbPer100 >= 0 ? '😐 손익분기점' :
-                 analytics.bbStats.avgBbPer100 >= -3 ? '⚠️ 소폭 손실' :
-                 '❌ 개선 필요'}
-              </div>
-            </div>
-
-            {/* 표준편차 */}
-            <div className="analytics-bb-item">
-              <div className="analytics-bb-label">
-                <span>📉 변동성 (σ)</span>
-              </div>
-              <div className="analytics-bb-value">
-                <span style={{ color: analytics.bbStats.volatilityLevel === 'stable' ? '#00D4AA' : analytics.bbStats.volatilityLevel === 'normal' ? '#F59E0B' : '#EF4444', fontWeight: 700, fontSize: '24px' }}>
-                  {analytics.bbStats.stdDev.toFixed(1)}
-                </span>
-              </div>
-              <div className="analytics-bb-subtext">
-                {analytics.bbStats.volatilityLevel === 'stable' && '✅ 안정적 (σ < 15)'}
-                {analytics.bbStats.volatilityLevel === 'normal' && '📊 보통 (15 ≤ σ < 25)'}
-                {analytics.bbStats.volatilityLevel === 'high' && '⚠️ 변동성 큼 (σ ≥ 25)'}
-              </div>
-            </div>
-
-            {/* 플레이 스타일 */}
-            <div className="analytics-bb-item">
-              <div className="analytics-bb-label">
-                <span>🎯 플레이 스타일</span>
-              </div>
-              <div className="analytics-bb-value">
-                <span style={{ fontSize: '18px', fontWeight: 600 }}>
-                  {analytics.bbStats.playStyle === 'stable' && '✅ 안정적인 플레이'}
-                  {analytics.bbStats.playStyle === 'highVariance' && '📈 분산 큰 플레이'}
-                  {analytics.bbStats.playStyle === 'bigLoss' && '⚠️ 큰 손실 주의'}
-                </span>
-              </div>
-              <div className="analytics-bb-subtext">
-                {analytics.bbStats.playStyle === 'stable' && '꾸준한 수익 구조'}
-                {analytics.bbStats.playStyle === 'highVariance' && '대박 세션으로 평균 상승 - 안정성 개선 필요'}
-                {analytics.bbStats.playStyle === 'bigLoss' && '특정 세션 손실 큼 - 손절/뱅크롤 관리 점검'}
-              </div>
-            </div>
-          </div>
+      {/* ============================================= */}
+      {/* GTO 레인지 학습 섹션 */}
+      {/* ============================================= */}
+      <div className="analytics-section-divider">
+        <div className="analytics-section-divider-line" />
+        <div className="analytics-section-divider-content">
+          <Target className="w-5 h-5 text-[#14B8A6]" />
+          <span className="analytics-section-divider-title">GTO 레인지 학습</span>
+          <span className="analytics-section-divider-badge">참고 자료</span>
         </div>
-      )}
-
-      {/* BB/100 by Stakes Table */}
-      {stakesStats.length > 0 && stakesStats.some(s => (s.hands || 0) > 0) && (
-        <BB100Table
-          data={stakesStats.map(s => ({
-            blind: s.stakes,
-            bb100: s.bbPer100,
-            totalProfit: s.profit,
-            games: s.sessions,
-            hands: s.hands || 0
-          }))}
-          locale={locale}
-        />
-      )}
+        <div className="analytics-section-divider-line" />
+      </div>
 
       {/* GTO Hand Range Chart */}
       <GTOHandRangeChart locale={locale} />
