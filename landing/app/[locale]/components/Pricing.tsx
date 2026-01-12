@@ -99,7 +99,7 @@ export default function Pricing() {
 
               {/* CTA button */}
               <Link
-                href="/login"
+                href="/app/login"
                 className={plan.popular ? 'btn-primary' : 'btn-secondary'}
                 style={{
                   display: 'flex',

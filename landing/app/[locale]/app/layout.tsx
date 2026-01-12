@@ -90,7 +90,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/login');
+      router.push('/app/login');
     }
   }, [user, loading, router]);
 

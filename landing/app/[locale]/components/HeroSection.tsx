@@ -36,7 +36,7 @@ export default function HeroSection() {
 
         {/* CTA Buttons */}
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '16px', marginBottom: '48px', flexWrap: 'wrap' }}>
-          <Link href="/login" className="btn-primary">
+          <Link href="/app/login" className="btn-primary">
             {t('hero.cta')}
             <ArrowRight style={{ width: '20px', height: '20px' }} />
           </Link>

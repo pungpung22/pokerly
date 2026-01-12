@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { BarChart3, ArrowLeft, Loader2 } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '@/app/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/src/i18n/navigation';
 
