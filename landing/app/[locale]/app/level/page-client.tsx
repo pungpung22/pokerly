@@ -24,11 +24,11 @@ const levelColors: Record<number, string> = {
   1: '#D4D4D8',
   2: '#22C55E',
   3: '#3B82F6',
-  4: '#FF4EA3',
-  5: '#D91C6B',
+  4: '#2DD4BF',
+  5: '#0D9488',
   6: '#EF4444',
   7: '#EC4899',
-  8: '#F72585',
+  8: '#14B8A6',
 };
 
 const xpTypeKeys = ['dailyLogin', 'uploadScreenshot', 'manualRecord', 'viewAnalytics'] as const;
@@ -109,7 +109,7 @@ export default function LevelPage() {
   if (loading) {
     return (
       <div className="level-loading-container">
-        <Loader2 style={{ width: '32px', height: '32px', color: '#F72585', animation: 'spin 1s linear infinite' }} />
+        <Loader2 style={{ width: '32px', height: '32px', color: '#14B8A6', animation: 'spin 1s linear infinite' }} />
       </div>
     );
   }
@@ -188,7 +188,7 @@ export default function LevelPage() {
 
           {levelInfo.level < 8 && (
             <p className="level-next-level">
-              {t('nextLevelPreview', { name: '' })}<span style={{ color: levelColors[levelInfo.level + 1] || '#F72585' }}>{tTypes(`levelNames.${levelInfo.level + 1}`)}</span>
+              {t('nextLevelPreview', { name: '' })}<span style={{ color: levelColors[levelInfo.level + 1] || '#14B8A6' }}>{tTypes(`levelNames.${levelInfo.level + 1}`)}</span>
             </p>
           )}
         </div>
@@ -197,7 +197,7 @@ export default function LevelPage() {
         <div className="card">
         <div className="level-today-xp-header">
           <div className="level-today-xp-icon-wrapper">
-            <Zap style={{ width: '20px', height: '20px', color: '#F72585' }} />
+            <Zap style={{ width: '20px', height: '20px', color: '#14B8A6' }} />
           </div>
           <div>
             <p className="level-today-xp-text">{t('todayXp.title')}</p>
@@ -211,7 +211,7 @@ export default function LevelPage() {
           <div className={`level-claim-item ${levelInfo.canEarnLoginXp ? 'available' : 'completed'}`}>
             <div className="level-claim-left">
               {levelInfo.canEarnLoginXp ? (
-                <Circle style={{ width: '20px', height: '20px', color: '#F72585' }} />
+                <Circle style={{ width: '20px', height: '20px', color: '#14B8A6' }} />
               ) : (
                 <CheckCircle style={{ width: '20px', height: '20px', color: '#00D4AA' }} />
               )}
@@ -242,7 +242,7 @@ export default function LevelPage() {
           <div className={`level-claim-item ${levelInfo.canEarnAnalyticsXp ? 'available' : 'completed'}`}>
             <div className="level-claim-left">
               {levelInfo.canEarnAnalyticsXp ? (
-                <Circle style={{ width: '20px', height: '20px', color: '#F72585' }} />
+                <Circle style={{ width: '20px', height: '20px', color: '#14B8A6' }} />
               ) : (
                 <CheckCircle style={{ width: '20px', height: '20px', color: '#00D4AA' }} />
               )}
@@ -277,7 +277,7 @@ export default function LevelPage() {
         {/* XP Guide */}
         <div className="card">
         <h3 className="level-xp-guide-header">
-          <Star style={{ width: '18px', height: '18px', color: '#F72585' }} />
+          <Star style={{ width: '18px', height: '18px', color: '#14B8A6' }} />
           {t('xpGuide.title')}
         </h3>
 
@@ -329,7 +329,7 @@ export default function LevelPage() {
         {/* Level Roadmap */}
         <div className="card">
           <h3 className="level-roadmap-header">
-            <Trophy style={{ width: '18px', height: '18px', color: '#F72585' }} />
+            <Trophy style={{ width: '18px', height: '18px', color: '#14B8A6' }} />
             {t('roadmap.title')}
           </h3>
 

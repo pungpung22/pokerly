@@ -118,6 +118,8 @@ export interface CreateSessionDto {
   level?: PlayerLevel;
   blinds?: string;
   tags?: string[];
+  imageHash?: string;
+  rawText?: string;
 }
 
 // Challenge types

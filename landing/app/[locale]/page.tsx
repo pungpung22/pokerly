@@ -6,8 +6,9 @@ import HowItWorks from './components/HowItWorks';
 import CashGameShowcase from './components/CashGameShowcase';
 import TournamentShowcase from './components/TournamentShowcase';
 import StatsPreview from './components/StatsPreview';
+import LevelShowcase from './components/LevelShowcase';
+import MissionShowcase from './components/MissionShowcase';
 import Testimonials from './components/Testimonials';
-import Pricing from './components/Pricing';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
 
@@ -20,8 +21,9 @@ export default function Home() {
       <CashGameShowcase />
       <TournamentShowcase />
       <StatsPreview />
+      <LevelShowcase />
+      <MissionShowcase />
       <Testimonials />
-      <Pricing />
       <FinalCTA />
       <Footer />
     </main>

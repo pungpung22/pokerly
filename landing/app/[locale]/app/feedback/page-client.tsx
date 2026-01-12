@@ -20,13 +20,13 @@ import { feedbackApi } from '@/lib/api';
 
 const categoryIcons = {
   bug: { icon: Bug, color: '#EF4444' },
-  feature: { icon: Lightbulb, color: '#F72585' },
+  feature: { icon: Lightbulb, color: '#14B8A6' },
   question: { icon: HelpCircle, color: '#3B82F6' },
   other: { icon: Heart, color: '#8B5CF6' },
 };
 
 const statusColors: Record<string, string> = {
-  pending: '#F72585',
+  pending: '#14B8A6',
   reviewing: '#3B82F6',
   resolved: '#00D4AA',
   closed: '#D4D4D8',
@@ -121,13 +121,13 @@ export default function FeedbackPage() {
               width: '48px',
               height: '48px',
               borderRadius: '12px',
-              background: 'rgba(247, 37, 133, 0.2)',
+              background: 'rgba(20, 184, 166, 0.2)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <MessageSquare style={{ width: '24px', height: '24px', color: '#F72585' }} />
+            <MessageSquare style={{ width: '24px', height: '24px', color: '#14B8A6' }} />
           </div>
           <div>
             <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: 'white' }}>{t('title')}</h1>
@@ -308,9 +308,9 @@ export default function FeedbackPage() {
               <span
                 style={{
                   padding: '2px 8px',
-                  background: 'rgba(247, 37, 133, 0.2)',
+                  background: 'rgba(20, 184, 166, 0.2)',
                   borderRadius: '10px',
-                  color: '#F72585',
+                  color: '#14B8A6',
                   fontSize: '14px',
                   fontWeight: 500,
                 }}
@@ -330,7 +330,7 @@ export default function FeedbackPage() {
           <div style={{ marginTop: '12px' }}>
             {loadingFeedbacks ? (
               <div style={{ textAlign: 'center', padding: '24px' }}>
-                <Loader2 style={{ width: '24px', height: '24px', color: '#F72585', animation: 'spin 1s linear infinite' }} />
+                <Loader2 style={{ width: '24px', height: '24px', color: '#14B8A6', animation: 'spin 1s linear infinite' }} />
               </div>
             ) : myFeedbacks.length === 0 ? (
               <div

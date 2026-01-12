@@ -15,11 +15,11 @@ const levelColors: Record<number, string> = {
   1: '#D4D4D8',
   2: '#22C55E',
   3: '#3B82F6',
-  4: '#FF4EA3',
-  5: '#D91C6B',
+  4: '#2DD4BF',
+  5: '#0D9488',
   6: '#EF4444',
   7: '#EC4899',
-  8: '#F72585',
+  8: '#14B8A6',
 };
 
 // Confetti particle component
@@ -95,7 +95,7 @@ export default function LevelUpModal({ isOpen, onClose, newLevel, levelName }: L
       const newParticles = Array.from({ length: 30 }, (_, i) => ({
         id: i,
         delay: Math.random() * 0.5,
-        color: ['#F72585', '#7B2FF7', '#00D4AA', '#FFD700', '#FF6B6B'][Math.floor(Math.random() * 5)],
+        color: ['#14B8A6', '#7B2FF7', '#00D4AA', '#FFD700', '#FF6B6B'][Math.floor(Math.random() * 5)],
       }));
       setParticles(newParticles);
     }

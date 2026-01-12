@@ -330,7 +330,7 @@ export default function SessionsPage() {
         {filteredSessions.length === 0 ? (
           <div className="sessions-empty">
             <div className="sessions-empty-icon">
-              <Sparkles style={{ width: '32px', height: '32px', color: '#F72585' }} />
+              <Sparkles style={{ width: '32px', height: '32px', color: '#14B8A6' }} />
             </div>
             <p className="sessions-empty-text">
               {activeFiltersCount > 0 ? t('empty.noMatch') : t('empty.noSessions')}
@@ -377,7 +377,7 @@ export default function SessionsPage() {
                         )}
                         {session.tags && session.tags.length > 0 && (
                           <span className="session-indicator" title={session.tags.join(', ')}>
-                            <Tag style={{ width: '14px', height: '14px', color: '#F72585' }} />
+                            <Tag style={{ width: '14px', height: '14px', color: '#14B8A6' }} />
                             <span style={{ fontSize: '11px', color: '#A1A1AA' }}>{session.tags.length}</span>
                           </span>
                         )}

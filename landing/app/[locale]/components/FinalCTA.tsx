@@ -41,7 +41,7 @@ export default function FinalCTA() {
 
         {/* CTA Button */}
         <Link
-          href="/app/signin"
+          href="/login"
           style={{
             display: 'inline-flex',
             alignItems: 'center',

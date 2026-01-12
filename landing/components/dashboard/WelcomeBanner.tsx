@@ -13,9 +13,9 @@ export function WelcomeBanner({ userName }: WelcomeBannerProps) {
   if (!isVisible) return null;
 
   return (
-    <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-[#121216] via-[#121216] to-[#F72585]/5 border border-[#27272A] p-6">
+    <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-[#121216] via-[#121216] to-[#14B8A6]/5 border border-[#27272A] p-6">
       {/* 배경 장식 */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-[#F72585]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-[#14B8A6]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
       <button
         onClick={() => setIsVisible(false)}
@@ -25,8 +25,8 @@ export function WelcomeBanner({ userName }: WelcomeBannerProps) {
       </button>
 
       <div className="relative flex items-start gap-4">
-        <div className="p-3 rounded-xl bg-[#F72585]/20">
-          <Sparkles className="w-6 h-6 text-[#F72585]" />
+        <div className="p-3 rounded-xl bg-[#14B8A6]/20">
+          <Sparkles className="w-6 h-6 text-[#14B8A6]" />
         </div>
         <div className="space-y-3">
           <h2 className="text-lg font-semibold text-white">

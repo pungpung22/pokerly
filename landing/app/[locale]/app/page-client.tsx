@@ -54,10 +54,11 @@ export default function DashboardPage() {
     const safeValue = value ?? 0;
     const currencySymbol = locale === 'en' ? '$' : locale === 'ja' ? '¥' : '';
     const currencySuffix = locale === 'ko' ? tUnits('won') : '';
+    const sign = safeValue >= 0 ? '+' : '-';
     if (locale === 'en' || locale === 'ja') {
-      return `${safeValue >= 0 ? '+' : ''}${currencySymbol}${Math.abs(safeValue).toLocaleString()}`;
+      return `${sign}${currencySymbol}${Math.abs(safeValue).toLocaleString()}`;
     }
-    return `${safeValue >= 0 ? '+' : ''}${safeValue.toLocaleString()}${currencySuffix}`;
+    return `${sign}${Math.abs(safeValue).toLocaleString()}${currencySuffix}`;
   };
 
   useEffect(() => {
@@ -92,16 +93,18 @@ export default function DashboardPage() {
     }
   }, [user]);
 
-  const dismissWelcomeBanner = () => {
+  const dismissWelcomeBanner = (permanent: boolean = false) => {
     setShowWelcomeBanner(false);
-    localStorage.setItem('pokerly_welcome_banner_dismissed', 'true');
+    if (permanent) {
+      localStorage.setItem('pokerly_welcome_banner_dismissed', 'true');
+    }
   };
 
   if (loading) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
         <div style={{ textAlign: 'center' }}>
-          <Loader2 style={{ width: '40px', height: '40px', color: '#F72585', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }} />
+          <Loader2 style={{ width: '40px', height: '40px', color: '#14B8A6', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }} />
           <p style={{ color: '#D4D4D8' }}>{t('loadingData')}</p>
         </div>
       </div>
@@ -125,10 +128,10 @@ export default function DashboardPage() {
     <div className="app-page">
       {/* Welcome Banner */}
       {showWelcomeBanner && (
-        <div className="welcome-banner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
+        <div className="welcome-banner" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(247, 37, 133, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Sparkles style={{ width: '28px', height: '28px', color: '#F72585' }} />
+            <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(20, 184, 166, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Sparkles style={{ width: '28px', height: '28px', color: '#14B8A6' }} />
             </div>
             <div>
               <h3 style={{ color: 'white', fontWeight: 600, marginBottom: '6px', fontSize: '18px' }}>{t('welcome')}</h3>
@@ -137,9 +140,32 @@ export default function DashboardPage() {
               </p>
             </div>
           </div>
-          <button onClick={dismissWelcomeBanner} style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '8px', flexShrink: 0 }}>
-            <X style={{ width: '24px', height: '24px', color: '#D4D4D8' }} />
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', flexShrink: 0 }}>
+            <button
+              onClick={() => dismissWelcomeBanner(false)}
+              title={t('hideForNow')}
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '6px', borderRadius: '6px' }}
+              className="banner-close-btn"
+            >
+              <X style={{ width: '20px', height: '20px', color: '#A1A1AA' }} />
+            </button>
+            <button
+              onClick={() => dismissWelcomeBanner(true)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '4px 8px',
+                borderRadius: '4px',
+                fontSize: '11px',
+                color: '#71717A',
+                whiteSpace: 'nowrap',
+              }}
+              className="banner-hide-btn"
+            >
+              {t('dontShowAgain')}
+            </button>
+          </div>
         </div>
       )}
 
@@ -166,13 +192,13 @@ export default function DashboardPage() {
       {/* Today & This Week Stats - Full Width Highlighted */}
       <div className="stats-grid stats-grid-highlight">
         {/* Today */}
-        <div className="stats-card" style={{ background: 'linear-gradient(135deg, rgba(247, 37, 133, 0.15) 0%, rgba(217, 28, 107, 0.05) 100%)', border: '1px solid rgba(247, 37, 133, 0.25)' }}>
+        <div className="stats-card" style={{ background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(13, 148, 136, 0.05) 100%)', border: '1px solid rgba(20, 184, 166, 0.25)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
-            <div style={{ width: '52px', height: '52px', borderRadius: '12px', background: 'rgba(247, 37, 133, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Sun style={{ width: '28px', height: '28px', color: '#F72585' }} />
+            <div style={{ width: '52px', height: '52px', borderRadius: '12px', background: 'rgba(20, 184, 166, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Sun style={{ width: '28px', height: '28px', color: '#14B8A6' }} />
             </div>
             <div>
-              <p style={{ color: '#F72585', fontSize: '15px', fontWeight: 600 }}>{t('today')}</p>
+              <p style={{ color: '#14B8A6', fontSize: '15px', fontWeight: 600 }}>{t('today')}</p>
               <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{new Date().toLocaleDateString(locale === 'ko' ? 'ko-KR' : locale === 'ja' ? 'ja-JP' : 'en-US', { month: 'long', day: 'numeric' })}</p>
             </div>
           </div>
@@ -228,8 +254,8 @@ export default function DashboardPage() {
           <div className="stats-card">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
               <span className="stats-card-label">{t('thisMonth')}</span>
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(247, 37, 133, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Calendar style={{ width: '22px', height: '22px', color: '#F72585' }} />
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(20, 184, 166, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Calendar style={{ width: '22px', height: '22px', color: '#14B8A6' }} />
               </div>
             </div>
             <p className="stats-card-value" style={{ color: stats.monthProfit >= 0 ? '#00D4AA' : '#EF4444' }}>
@@ -250,8 +276,8 @@ export default function DashboardPage() {
           <div className="stats-card">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
               <span className="stats-card-label">{t('winRate')}</span>
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(255, 78, 163, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Target style={{ width: '22px', height: '22px', color: '#FF4EA3' }} />
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(45, 212, 191, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Target style={{ width: '22px', height: '22px', color: '#2DD4BF' }} />
               </div>
             </div>
             <p className="stats-card-value" style={{ color: 'white' }}>
@@ -280,8 +306,8 @@ export default function DashboardPage() {
           <div className="stats-card">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
               <span className="stats-card-label">{t('totalHands')}</span>
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(247, 37, 133, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Hash style={{ width: '22px', height: '22px', color: '#F72585' }} />
+              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(20, 184, 166, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Hash style={{ width: '22px', height: '22px', color: '#14B8A6' }} />
               </div>
             </div>
             <p className="stats-card-value" style={{ color: 'white' }}>
@@ -297,10 +323,10 @@ export default function DashboardPage() {
         <div className="full-width-card" style={{ padding: 0, overflow: 'hidden' }}>
           <div style={{ padding: '20px 24px', borderBottom: '1px solid #27272A', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Trophy style={{ width: '24px', height: '24px', color: '#F72585' }} />
+              <Trophy style={{ width: '24px', height: '24px', color: '#14B8A6' }} />
               <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>{t('activeChallenges')}</h2>
             </div>
-            <Link href="/app/challenges" style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#F72585', textDecoration: 'none', fontSize: '14px' }}>
+            <Link href="/app/challenges" style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#14B8A6', textDecoration: 'none', fontSize: '14px' }}>
               {tCommon('viewAll')}
               <ArrowUpRight style={{ width: '16px', height: '16px' }} />
             </Link>
@@ -316,7 +342,7 @@ export default function DashboardPage() {
             ) : (
               activeChallenges.slice(0, 3).map((challenge, index) => {
                 const progress = Math.min((challenge.currentValue / challenge.targetValue) * 100, 100);
-                const progressColor = progress >= 100 ? '#00D4AA' : progress >= 50 ? '#F72585' : '#D91C6B';
+                const progressColor = progress >= 100 ? '#00D4AA' : progress >= 50 ? '#14B8A6' : '#0D9488';
                 const daysRemaining = Math.max(0, Math.ceil((new Date(challenge.endDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
 
                 return (
@@ -324,7 +350,7 @@ export default function DashboardPage() {
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <span style={{ fontWeight: 500, color: 'white', fontSize: '15px' }}>{challenge.title}</span>
-                        <span style={{ padding: '3px 8px', background: 'rgba(247, 37, 133, 0.2)', borderRadius: '4px', fontSize: '12px', color: '#F72585' }}>
+                        <span style={{ padding: '3px 8px', background: 'rgba(20, 184, 166, 0.2)', borderRadius: '4px', fontSize: '12px', color: '#14B8A6' }}>
                           {tTypes(`challengeTypes.${challenge.type}`)}
                         </span>
                       </div>
@@ -351,10 +377,10 @@ export default function DashboardPage() {
         <div className="full-width-card" style={{ padding: 0, overflow: 'hidden' }}>
           <div style={{ padding: '20px 24px', borderBottom: '1px solid #27272A', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <History style={{ width: '24px', height: '24px', color: '#F72585' }} />
+              <History style={{ width: '24px', height: '24px', color: '#14B8A6' }} />
               <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>{t('recentSessions')}</h2>
             </div>
-            <Link href="/app/sessions" style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#F72585', textDecoration: 'none', fontSize: '14px' }}>
+            <Link href="/app/sessions" style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#14B8A6', textDecoration: 'none', fontSize: '14px' }}>
               {tCommon('viewAll')}
               <ArrowUpRight style={{ width: '16px', height: '16px' }} />
             </Link>

@@ -8,13 +8,13 @@
   --background-secondary: #14141C;
   --background-tertiary: #1A1A24;
 
-  /* 포인트 컬러 - 네온 바이브 */
-  --primary: #F72585;
-  --primary-light: #FF4EA3;
-  --primary-dark: #D91C6B;
-  --primary-gradient: linear-gradient(135deg, #F72585 0%, #7B2FF7 100%);
-  --secondary: #5CE1E6;
-  --tertiary: #BFFF00;
+  /* 포인트 컬러 - 시안/청록 바이브 (경쟁사 차별화) */
+  --primary: #14B8A6;
+  --primary-light: #2DD4BF;
+  --primary-dark: #0D9488;
+  --primary-gradient: linear-gradient(135deg, #14B8A6 0%, #8B5CF6 100%);
+  --secondary: #8B5CF6;
+  --tertiary: #F59E0B;
 
   /* 텍스트 */
   --foreground: #FAFAFA;
@@ -214,7 +214,7 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 0 20px rgba(247, 37, 133, 0.5), 0 0 40px rgba(123, 47, 247, 0.3);
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.5), 0 0 40px rgba(123, 47, 247, 0.3);
 }
 
 .btn-primary:hover::before {
@@ -263,7 +263,7 @@ body {
 .card:hover {
   transform: translateY(-2px);
   border-color: var(--border-hover);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(247, 37, 133, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(20, 184, 166, 0.1);
 }
 
 @media (min-width: 768px) {
@@ -629,7 +629,7 @@ body {
 }
 
 .filter-btn.active {
-  background: rgba(247, 37, 133, 0.2);
+  background: rgba(20, 184, 166, 0.2);
   border-color: var(--primary);
   color: var(--primary);
 }
@@ -651,8 +651,8 @@ body {
 
 /* Welcome banner */
 .welcome-banner {
-  background: linear-gradient(135deg, rgba(247, 37, 133, 0.2) 0%, rgba(255, 78, 163, 0.1) 100%);
-  border: 1px solid rgba(247, 37, 133, 0.3);
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(45, 212, 191, 0.1) 100%);
+  border: 1px solid rgba(20, 184, 166, 0.3);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
@@ -1033,7 +1033,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(247, 37, 133, 0.2);
+  background: rgba(20, 184, 166, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1047,7 +1047,7 @@ body {
 .level-today-xp-value {
   font-size: 24px;
   font-weight: bold;
-  color: #F72585;
+  color: #14B8A6;
 }
 
 .level-claimable-container {
@@ -1065,7 +1065,7 @@ body {
 }
 
 .level-claim-item.available {
-  background: rgba(247, 37, 133, 0.1);
+  background: rgba(20, 184, 166, 0.1);
   border: 1px solid var(--primary);
 }
 
@@ -1282,8 +1282,8 @@ body {
   gap: 12px;
   margin-bottom: 24px;
   padding: 20px;
-  background: linear-gradient(135deg, rgba(247, 37, 133, 0.1) 0%, rgba(255, 78, 163, 0.05) 100%);
-  border: 1px solid rgba(247, 37, 133, 0.2);
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(45, 212, 191, 0.05) 100%);
+  border: 1px solid rgba(20, 184, 166, 0.2);
   border-radius: 16px;
 }
 
@@ -1453,10 +1453,10 @@ body {
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  background: rgba(247, 37, 133, 0.1);
-  border: 1px solid rgba(247, 37, 133, 0.2);
+  background: rgba(20, 184, 166, 0.1);
+  border: 1px solid rgba(20, 184, 166, 0.2);
   border-radius: 20px;
-  color: #F72585;
+  color: #14B8A6;
   font-size: 13px;
   font-weight: 500;
   margin-top: 16px;
@@ -2165,7 +2165,7 @@ body {
 }
 
 .analytics-date-input::-webkit-calendar-picker-indicator:hover {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23F72585' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2314B8A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
 }
 
 .analytics-date-input:hover {
@@ -2481,7 +2481,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  background: rgba(247, 37, 133, 0.08);
+  background: rgba(20, 184, 166, 0.08);
   border-radius: 8px;
   color: #D4D4D8;
   font-size: 14px;
@@ -2816,7 +2816,7 @@ body {
 }
 
 .analytics-streak-item.current {
-  border-left: 3px solid #F72585;
+  border-left: 3px solid #14B8A6;
 }
 
 .analytics-streak-label {
@@ -2859,8 +2859,8 @@ body {
 /* Analytics ROI Card */
 .analytics-roi-card {
   padding: 24px;
-  background: linear-gradient(135deg, rgba(247, 37, 133, 0.1) 0%, rgba(255, 78, 163, 0.05) 100%);
-  border: 1px solid rgba(247, 37, 133, 0.2);
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(45, 212, 191, 0.05) 100%);
+  border: 1px solid rgba(20, 184, 166, 0.2);
   border-radius: 16px;
 }
 
@@ -3021,7 +3021,7 @@ body {
   align-items: center;
   gap: 6px;
   padding: 4px 10px;
-  background: rgba(247, 37, 133, 0.15);
+  background: rgba(20, 184, 166, 0.15);
   border-radius: 16px;
 }
 
@@ -3059,7 +3059,7 @@ body {
 }
 
 .upload-drop-zone.dragging {
-  background: rgba(247, 37, 133, 0.1);
+  background: rgba(20, 184, 166, 0.1);
   border-color: var(--primary);
   border-style: solid;
 }
@@ -3068,7 +3068,7 @@ body {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: rgba(247, 37, 133, 0.15);
+  background: rgba(20, 184, 166, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3182,7 +3182,7 @@ body {
 }
 
 .upload-ocr-status.processing {
-  background: rgba(247, 37, 133, 0.1);
+  background: rgba(20, 184, 166, 0.1);
   border: 1px solid var(--primary);
 }
 
@@ -3341,10 +3341,10 @@ body {
 
 .upload-guide-tag {
   padding: 6px 14px;
-  background: rgba(247, 37, 133, 0.1);
-  border: 1px solid rgba(247, 37, 133, 0.25);
+  background: rgba(20, 184, 166, 0.1);
+  border: 1px solid rgba(20, 184, 166, 0.25);
   border-radius: 16px;
-  color: #F72585;
+  color: #14B8A6;
   font-size: 17px;
   font-weight: 500;
 }
@@ -3486,7 +3486,7 @@ body {
 }
 
 .upload-form-input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23F72585' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2314B8A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
 }
 
 /* Form textarea */
@@ -3530,7 +3530,7 @@ body {
 }
 
 .upload-form-btn.active {
-  background: rgba(247, 37, 133, 0.2);
+  background: rgba(20, 184, 166, 0.2);
   border-color: var(--primary);
   color: var(--primary);
   font-weight: 600;
@@ -3619,7 +3619,7 @@ body {
 }
 
 .upload-level-btn.active {
-  background: rgba(247, 37, 133, 0.2);
+  background: rgba(20, 184, 166, 0.2);
   border-color: var(--primary);
   color: var(--primary);
   font-weight: 600;
@@ -3740,7 +3740,7 @@ body {
 }
 
 .sessions-filter-toggle.active {
-  background: rgba(247, 37, 133, 0.2);
+  background: rgba(20, 184, 166, 0.2);
   border: 1px solid var(--primary);
   color: var(--primary);
 }
@@ -3806,7 +3806,7 @@ body {
 }
 
 .sessions-filter-btn.active {
-  background: rgba(247, 37, 133, 0.2);
+  background: rgba(20, 184, 166, 0.2);
   border: 1px solid var(--primary);
   color: var(--primary);
 }
@@ -3869,7 +3869,7 @@ body {
 }
 
 .sessions-date-input::-webkit-calendar-picker-indicator:hover {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23F72585' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2314B8A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
 }
 
 .sessions-date-input:hover {
@@ -3904,7 +3904,7 @@ body {
   width: 64px;
   height: 64px;
   border-radius: 16px;
-  background: rgba(247, 37, 133, 0.1);
+  background: rgba(20, 184, 166, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3985,7 +3985,7 @@ body {
 }
 
 .session-item-badge.cash {
-  background: rgba(247, 37, 133, 0.2);
+  background: rgba(20, 184, 166, 0.2);
   color: var(--primary);
 }
 
@@ -4065,7 +4065,7 @@ body {
 }
 
 .session-item-clickable:hover {
-  background: rgba(247, 37, 133, 0.05);
+  background: rgba(20, 184, 166, 0.05);
 }
 
 .session-item-clickable:hover .session-item-arrow {
@@ -4248,7 +4248,7 @@ body {
 
 .analyzing-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #F72585, #FF4EA3, #F72585);
+  background: linear-gradient(90deg, #14B8A6, #2DD4BF, #14B8A6);
   background-size: 200% 100%;
   width: 100%;
   animation: progress-shimmer 1.5s ease-in-out infinite;
@@ -4350,7 +4350,7 @@ body {
 }
 
 .results-table tbody tr:hover {
-  background: rgba(247, 37, 133, 0.05);
+  background: rgba(20, 184, 166, 0.05);
 }
 
 .results-table tbody tr:last-child td {
@@ -4373,8 +4373,8 @@ body {
 }
 
 .type-badge.tournament {
-  background: rgba(247, 37, 133, 0.15);
-  color: #F72585;
+  background: rgba(20, 184, 166, 0.15);
+  color: #14B8A6;
 }
 
 .profit-positive {
@@ -4473,8 +4473,8 @@ body {
 }
 
 .results-type-btn.active {
-  background: #F72585;
-  border-color: #F72585;
+  background: #14B8A6;
+  border-color: #14B8A6;
   color: white;
 }
 
@@ -4508,7 +4508,7 @@ body {
 
 .results-edit-field input:focus {
   outline: none;
-  border-color: #F72585;
+  border-color: #14B8A6;
 }
 
 .results-edit-field input::placeholder {
@@ -4574,7 +4574,7 @@ body {
   left: -24px;
   right: -24px;
   height: 4px;
-  background: linear-gradient(90deg, #F72585, #FF4EA3, #F72585);
+  background: linear-gradient(90deg, #14B8A6, #2DD4BF, #14B8A6);
 }
 
 /* 레코드 번호 표시 */
@@ -4587,12 +4587,12 @@ body {
   display: block;
   font-size: 18px;
   font-weight: 700;
-  color: #F72585;
+  color: #14B8A6;
   margin-bottom: 20px;
   padding: 12px 16px;
-  background: rgba(247, 37, 133, 0.15);
+  background: rgba(20, 184, 166, 0.15);
   border-radius: 10px;
-  border-left: 4px solid #F72585;
+  border-left: 4px solid #14B8A6;
 }
 
 .results-modal-body .results-form-card:nth-child(2)::before {
@@ -4600,12 +4600,12 @@ body {
   display: block;
   font-size: 18px;
   font-weight: 700;
-  color: #F72585;
+  color: #14B8A6;
   margin-bottom: 20px;
   padding: 12px 16px;
-  background: rgba(247, 37, 133, 0.15);
+  background: rgba(20, 184, 166, 0.15);
   border-radius: 10px;
-  border-left: 4px solid #F72585;
+  border-left: 4px solid #14B8A6;
 }
 
 .results-modal-body .results-form-card:nth-child(3)::before {
@@ -4613,12 +4613,12 @@ body {
   display: block;
   font-size: 18px;
   font-weight: 700;
-  color: #F72585;
+  color: #14B8A6;
   margin-bottom: 20px;
   padding: 12px 16px;
-  background: rgba(247, 37, 133, 0.15);
+  background: rgba(20, 184, 166, 0.15);
   border-radius: 10px;
-  border-left: 4px solid #F72585;
+  border-left: 4px solid #14B8A6;
 }
 
 .results-modal-body .results-form-card:nth-child(4)::before {
@@ -4626,12 +4626,12 @@ body {
   display: block;
   font-size: 18px;
   font-weight: 700;
-  color: #F72585;
+  color: #14B8A6;
   margin-bottom: 20px;
   padding: 12px 16px;
-  background: rgba(247, 37, 133, 0.15);
+  background: rgba(20, 184, 166, 0.15);
   border-radius: 10px;
-  border-left: 4px solid #F72585;
+  border-left: 4px solid #14B8A6;
 }
 
 .results-modal-body .results-form-card:nth-child(5)::before {
@@ -4639,12 +4639,12 @@ body {
   display: block;
   font-size: 18px;
   font-weight: 700;
-  color: #F72585;
+  color: #14B8A6;
   margin-bottom: 20px;
   padding: 12px 16px;
-  background: rgba(247, 37, 133, 0.15);
+  background: rgba(20, 184, 166, 0.15);
   border-radius: 10px;
-  border-left: 4px solid #F72585;
+  border-left: 4px solid #14B8A6;
 }
 
 .results-modal-header {
@@ -4749,9 +4749,9 @@ body {
 }
 
 .results-form-type-btn.active.tournament {
-  background: rgba(247, 37, 133, 0.15);
-  border-color: #F72585;
-  color: #F72585;
+  background: rgba(20, 184, 166, 0.15);
+  border-color: #14B8A6;
+  color: #14B8A6;
 }
 
 .results-form-grid-2 {
@@ -4793,7 +4793,7 @@ body {
 
 .results-form-field input:focus {
   outline: none;
-  border-color: #F72585;
+  border-color: #14B8A6;
 }
 
 .results-form-field input::placeholder {
@@ -4844,11 +4844,11 @@ body {
 }
 
 .results-form-field input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23F72585' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2314B8A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
 }
 
 .results-form-field input[type="time"]::-webkit-calendar-picker-indicator:hover {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23F72585' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2314B8A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
 }
 
 /* Input with unit (핸드 수, 플레이 시간) */
@@ -4872,7 +4872,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #F72585;
+  background: #14B8A6;
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -4912,7 +4912,7 @@ body {
 /* 필수 입력 뱃지 */
 .required-badge {
   display: inline-block;
-  background: #F72585;
+  background: #14B8A6;
   color: white;
   font-size: 11px;
   font-weight: 700;
@@ -5025,7 +5025,7 @@ body {
 }
 
 .profit-input:focus {
-  border-color: #F72585 !important;
+  border-color: #14B8A6 !important;
 }
 
 /* Actions */
@@ -5057,14 +5057,14 @@ body {
 }
 
 .results-modal-btn.primary {
-  background: linear-gradient(135deg, #F72585 0%, #D91C6B 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
   border: none;
   color: white;
 }
 
 .results-modal-btn.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(247, 37, 133, 0.4);
+  box-shadow: 0 4px 20px rgba(20, 184, 166, 0.4);
 }
 
 .results-modal-btn.secondary {

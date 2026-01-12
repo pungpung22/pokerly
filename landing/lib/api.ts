@@ -224,6 +224,7 @@ interface ScreenshotResult {
   status: 'success' | 'pending_ocr' | 'ocr_complete' | 'duplicate' | 'error';
   message: string;
   duplicateSessionId?: string;
+  imageHash?: string;
   extractedData?: {
     date?: string;
     venue?: string;
@@ -234,6 +235,7 @@ interface ScreenshotResult {
     cashOut?: number;
     tableId?: string;
     hands?: number;
+    rawText?: string;
   };
 }
 

@@ -6,12 +6,14 @@ import { sessionsApi } from '@/lib/api';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTranslations, useLocale } from 'next-intl';
 import { CountUp, AnimatedCard, AnimatedContainer, AnimatedItem } from '@/components/ui';
+import { BB100Table } from '@/components/analytics/BB100Table';
+import { GTOHandRangeChart } from '@/components/analytics/GTOHandRangeChart';
 
 type PeriodType = 'today' | 'week' | 'month' | 'last30' | 'all' | 'custom';
 
 interface AnalyticsData {
   byGameType: { type: string; profit: number; sessions: number; winRate: number }[];
-  byStakes: { stakes: string; profit: number; sessions: number; bbPer100: number }[];
+  byStakes: { stakes: string; profit: number; sessions: number; hands?: number; bbPer100: number }[];
   byVenue: { venue: string; profit: number; sessions: number }[];
   dailyTrend: { date: string; profit: number; sessions: number; hands?: number }[];
   monthlyTrend: { month: string; profit: number; sessions: number }[];
@@ -303,7 +305,7 @@ export default function AnalyticsPage() {
         {/* Game Type Filter */}
         <div className="analytics-filter-group">
           <div className="analytics-filter-group-header">
-            <Target style={{ width: '16px', height: '16px', color: '#F72585' }} />
+            <Target style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
             <span className="analytics-filter-group-label">{t('filters.gameType')}</span>
           </div>
           <div className="analytics-filter-buttons">
@@ -324,7 +326,7 @@ export default function AnalyticsPage() {
         {/* Platform Filter */}
         <div className="analytics-filter-group">
           <div className="analytics-filter-group-header">
-            <Zap style={{ width: '16px', height: '16px', color: '#F72585' }} />
+            <Zap style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
             <span className="analytics-filter-group-label">{t('filters.platform')}</span>
           </div>
           <div className="analytics-filter-buttons">
@@ -345,7 +347,7 @@ export default function AnalyticsPage() {
         {/* Period Filter */}
         <div className="analytics-filter-group">
           <div className="analytics-filter-group-header">
-            <Calendar style={{ width: '16px', height: '16px', color: '#F72585' }} />
+            <Calendar style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
             <span className="analytics-filter-group-label">{t('filters.period')}</span>
           </div>
           <div className="analytics-filter-buttons">
@@ -425,8 +427,8 @@ export default function AnalyticsPage() {
         </AnimatedItem>
         <AnimatedItem>
           <div className="analytics-summary-card">
-            <div className="analytics-summary-icon" style={{ background: 'rgba(247, 37, 133, 0.15)' }}>
-              <Hash style={{ width: '20px', height: '20px', color: '#F72585' }} />
+            <div className="analytics-summary-icon" style={{ background: 'rgba(20, 184, 166, 0.15)' }}>
+              <Hash style={{ width: '20px', height: '20px', color: '#14B8A6' }} />
             </div>
             <div className="analytics-summary-content">
               <p className="analytics-summary-label">{t('stats.sessions')}</p>
@@ -945,6 +947,23 @@ export default function AnalyticsPage() {
           </div>
         </div>
       )}
+
+      {/* BB/100 by Stakes Table */}
+      {stakesStats.length > 0 && stakesStats.some(s => (s.hands || 0) > 0) && (
+        <BB100Table
+          data={stakesStats.map(s => ({
+            blind: s.stakes,
+            bb100: s.bbPer100,
+            totalProfit: s.profit,
+            games: s.sessions,
+            hands: s.hands || 0
+          }))}
+          locale={locale}
+        />
+      )}
+
+      {/* GTO Hand Range Chart */}
+      <GTOHandRangeChart locale={locale} />
 
       {/* Period Analysis - Best & Worst Day */}
       {dailyData.length > 0 && (bestDay || worstDay) && (

@@ -229,28 +229,28 @@ export default function SessionDetailModal({
                 marginBottom: '20px',
               }}>
                 <div className="session-detail-item">
-                  <MapPin style={{ width: '16px', height: '16px', color: '#F72585' }} />
+                  <MapPin style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
                   <div>
                     <span className="label">{t('detail.venue')}</span>
                     <span className="value">{session.venue}</span>
                   </div>
                 </div>
                 <div className="session-detail-item">
-                  <DollarSign style={{ width: '16px', height: '16px', color: '#F72585' }} />
+                  <DollarSign style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
                   <div>
                     <span className="label">{t('detail.stakes')}</span>
                     <span className="value">{session.stakes}</span>
                   </div>
                 </div>
                 <div className="session-detail-item">
-                  <Clock style={{ width: '16px', height: '16px', color: '#F72585' }} />
+                  <Clock style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
                   <div>
                     <span className="label">{t('detail.duration')}</span>
                     <span className="value">{formatDuration(session.durationMinutes)}</span>
                   </div>
                 </div>
                 <div className="session-detail-item">
-                  <Calendar style={{ width: '16px', height: '16px', color: '#F72585' }} />
+                  <Calendar style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
                   <div>
                     <span className="label">{t('detail.hands')}</span>
                     <span className="value">{session.hands || '-'}</span>
@@ -262,7 +262,7 @@ export default function SessionDetailModal({
               {screenshotUrl && !imageError && (
                 <div style={{ marginBottom: '20px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                    <ImageIcon style={{ width: '16px', height: '16px', color: '#F72585' }} />
+                    <ImageIcon style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
                     <span style={{ fontSize: '14px', fontWeight: 500, color: '#D4D4D8' }}>
                       {t('detail.screenshot')}
                     </span>
@@ -310,7 +310,7 @@ export default function SessionDetailModal({
               {/* Notes Section */}
               <div style={{ marginBottom: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                  <FileText style={{ width: '16px', height: '16px', color: '#F72585' }} />
+                  <FileText style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
                   <span style={{ fontSize: '14px', fontWeight: 500, color: '#D4D4D8' }}>
                     {t('detail.notes')}
                   </span>
@@ -367,7 +367,7 @@ export default function SessionDetailModal({
               {/* Tags Section */}
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                  <Tag style={{ width: '16px', height: '16px', color: '#F72585' }} />
+                  <Tag style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
                   <span style={{ fontSize: '14px', fontWeight: 500, color: '#D4D4D8' }}>
                     {t('detail.tags')}
                   </span>
@@ -383,11 +383,11 @@ export default function SessionDetailModal({
                         alignItems: 'center',
                         gap: '6px',
                         padding: '6px 12px',
-                        background: 'rgba(247, 37, 133, 0.15)',
-                        border: '1px solid rgba(247, 37, 133, 0.3)',
+                        background: 'rgba(20, 184, 166, 0.15)',
+                        border: '1px solid rgba(20, 184, 166, 0.3)',
                         borderRadius: '20px',
                         fontSize: '13px',
-                        color: '#F72585',
+                        color: '#14B8A6',
                       }}
                     >
                       #{tag}
@@ -436,7 +436,7 @@ export default function SessionDetailModal({
                     disabled={!newTag.trim()}
                     style={{
                       padding: '10px 16px',
-                      background: newTag.trim() ? '#F72585' : '#27272A',
+                      background: newTag.trim() ? '#14B8A6' : '#27272A',
                       border: 'none',
                       borderRadius: '8px',
                       color: 'white',
@@ -497,7 +497,7 @@ export default function SessionDetailModal({
                 disabled={saving}
                 style={{
                   padding: '10px 20px',
-                  background: 'linear-gradient(135deg, #F72585 0%, #7B2FF7 100%)',
+                  background: 'linear-gradient(135deg, #14B8A6 0%, #8B5CF6 100%)',
                   border: 'none',
                   borderRadius: '8px',
                   color: 'white',

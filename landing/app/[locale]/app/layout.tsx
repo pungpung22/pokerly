@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { Link } from '@/src/i18n/navigation';
+import { usePathname } from 'next/navigation';
+import { Link, useRouter } from '@/src/i18n/navigation';
 import { useAuth } from '../../contexts/AuthContext';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import {
   BarChart3,
   Home,
@@ -36,6 +36,7 @@ import {
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { sessionsApi, userApi } from '@/lib/api';
 import type { DashboardStats, LevelInfo } from '@/lib/types';
+import AppFooter from '../components/AppFooter';
 
 // Navigation items with translation keys
 const navItemsConfig = [
@@ -73,6 +74,33 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const tCommon = useTranslations('Common');
   const tSettings = useTranslations('Settings');
   const tUnits = useTranslations('Units');
+  const locale = useLocale();
+
+  // Locale-aware currency formatting for sidebar
+  const formatSidebarCurrency = (value: number, abbreviated = false): string => {
+    const sign = value >= 0 ? '+' : '-';
+    const absValue = Math.abs(value);
+
+    if (abbreviated && absValue >= 10000) {
+      // Abbreviated format for collapsed sidebar
+      if (locale === 'ko') {
+        return `${sign}${(absValue / 10000).toFixed(0)}만`;
+      } else if (locale === 'ja') {
+        return `${sign}¥${(absValue / 10000).toFixed(0)}万`;
+      } else {
+        // English uses K for thousands
+        return `${sign}$${(absValue / 1000).toFixed(0)}K`;
+      }
+    }
+
+    // Full format
+    if (locale === 'en') {
+      return `${sign}$${absValue.toLocaleString()}`;
+    } else if (locale === 'ja') {
+      return `${sign}¥${absValue.toLocaleString()}`;
+    }
+    return `${sign}${absValue.toLocaleString()}${tUnits('won')}`;
+  };
 
   // Remove locale prefix from pathname for matching (e.g., /ko/app -> /app)
   const pathname = rawPathname.replace(/^\/(ko|en|ja)/, '');
@@ -88,14 +116,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     label: t(item.labelKey)
   }));
 
-  // Skip auth redirect for login page
-  const isLoginPage = pathname === '/app/signin';
-
   useEffect(() => {
-    if (!loading && !user && !isLoginPage) {
-      router.push('/app/signin');
+    if (!loading && !user) {
+      router.push('/login');
     }
-  }, [user, loading, router, isLoginPage]);
+  }, [user, loading, router]);
 
   // Fetch today's profit and level info
   useEffect(() => {
@@ -130,18 +155,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     (path) => pathname === path || pathname.startsWith(path + '/')
   );
 
-  // Show loading spinner (but not on login page)
-  if (loading && !isLoginPage) {
+  if (loading) {
     return (
       <div style={{ minHeight: '100vh', background: '#0A0A0B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Loader2 style={{ width: '32px', height: '32px', color: '#F72585', animation: 'spin 1s linear infinite' }} />
+        <Loader2 style={{ width: '32px', height: '32px', color: '#14B8A6', animation: 'spin 1s linear infinite' }} />
       </div>
     );
-  }
-
-  // For login page, render children without dashboard layout
-  if (isLoginPage) {
-    return <>{children}</>;
   }
 
   if (!user) {
@@ -156,7 +175,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <div style={{ padding: sidebarCollapsed ? '24px 16px' : '24px', borderBottom: '1px solid #27272A' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Link href="/app" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-              <BarChart3 style={{ width: '32px', height: '32px', color: '#F72585' }} />
+              <BarChart3 style={{ width: '32px', height: '32px', color: '#14B8A6' }} />
               {!sidebarCollapsed && <span style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>Pokerly</span>}
             </Link>
             <button
@@ -176,7 +195,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               <div style={{ textAlign: 'center' }}>
                 <TrendingUp style={{ width: '18px', height: '18px', color: todayProfit >= 0 ? '#00D4AA' : '#EF4444' }} />
                 <p style={{ fontSize: '12px', fontWeight: 600, color: todayProfit >= 0 ? '#00D4AA' : '#EF4444', marginTop: '4px' }}>
-                  {todayProfit >= 0 ? '+' : ''}{Math.abs(todayProfit) >= 10000 ? `${(todayProfit / 10000).toFixed(0)}만` : todayProfit.toLocaleString()}
+                  {formatSidebarCurrency(todayProfit, true)}
                 </p>
               </div>
             ) : (
@@ -186,7 +205,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   <span style={{ fontSize: '12px', color: '#A1A1AA' }}>{t('todayProfit')}</span>
                 </div>
                 <p style={{ fontSize: '18px', fontWeight: 700, color: todayProfit >= 0 ? '#00D4AA' : '#EF4444' }}>
-                  {todayProfit >= 0 ? '+' : ''}{todayProfit.toLocaleString()}{tUnits('won')}
+                  {formatSidebarCurrency(todayProfit)}
                 </p>
               </>
             )}
@@ -213,19 +232,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                       textDecoration: 'none',
                       color: isActive ? 'white' : '#A1A1AA',
                       background: isActive
-                        ? 'linear-gradient(90deg, rgba(247, 37, 133, 0.3) 0%, rgba(247, 37, 133, 0.1) 100%)'
+                        ? 'linear-gradient(90deg, rgba(20, 184, 166, 0.3) 0%, rgba(20, 184, 166, 0.1) 100%)'
                         : 'transparent',
                       fontWeight: isActive ? 600 : 400,
-                      borderLeft: isActive ? '3px solid #F72585' : '3px solid transparent',
-                      boxShadow: isActive ? '0 2px 8px rgba(247, 37, 133, 0.2)' : 'none',
+                      borderLeft: isActive ? '3px solid #14B8A6' : '3px solid transparent',
+                      boxShadow: isActive ? '0 2px 8px rgba(20, 184, 166, 0.2)' : 'none',
                       transition: 'all 0.2s',
                     }}
                   >
                     <item.icon style={{
                       width: '20px',
                       height: '20px',
-                      color: isActive ? '#F72585' : '#A1A1AA',
-                      filter: isActive ? 'drop-shadow(0 0 4px rgba(247, 37, 133, 0.5))' : 'none',
+                      color: isActive ? '#14B8A6' : '#A1A1AA',
+                      filter: isActive ? 'drop-shadow(0 0 4px rgba(20, 184, 166, 0.5))' : 'none',
                     }} />
                     {!sidebarCollapsed && item.label}
                   </Link>
@@ -246,7 +265,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   style={{ width: '40px', height: '40px', borderRadius: '50%' }}
                 />
               ) : (
-                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#F72585', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#14B8A6', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
                   {user.displayName?.charAt(0) || user.email?.charAt(0) || '?'}
                 </div>
               )}
@@ -259,7 +278,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   width: '20px',
                   height: '20px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #F72585 0%, #FF4EA3 100%)',
+                  background: 'linear-gradient(135deg, #14B8A6 0%, #2DD4BF 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -289,7 +308,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="sidebar-xp-gauge">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Zap style={{ width: '12px', height: '12px', color: '#F72585' }} />
+                  <Zap style={{ width: '12px', height: '12px', color: '#14B8A6' }} />
                   <span style={{ fontSize: '11px', color: '#A1A1AA' }}>Lv.{levelInfo.level}</span>
                 </div>
                 <span style={{ fontSize: '11px', color: '#71717A' }}>{levelInfo.currentXp}/{levelInfo.requiredXp} XP</span>
@@ -347,7 +366,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Mobile Header */}
       <header className="mobile-header">
         <Link href="/app" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-          <BarChart3 style={{ width: '28px', height: '28px', color: '#F72585' }} />
+          <BarChart3 style={{ width: '28px', height: '28px', color: '#14B8A6' }} />
           <span style={{ fontSize: '18px', fontWeight: 'bold', color: 'white' }}>Pokerly</span>
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -361,8 +380,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: '50%',
-              background: pathname === '/app/notices' ? 'rgba(247, 37, 133, 0.2)' : 'transparent',
-              color: pathname === '/app/notices' ? '#F72585' : '#D4D4D8',
+              background: pathname === '/app/notices' ? 'rgba(20, 184, 166, 0.2)' : 'transparent',
+              color: pathname === '/app/notices' ? '#14B8A6' : '#D4D4D8',
             }}
           >
             <Bell style={{ width: '22px', height: '22px' }} />
@@ -422,11 +441,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                         borderRadius: '8px',
                         textDecoration: 'none',
                         color: isActive ? 'white' : '#D4D4D8',
-                        background: isActive ? 'rgba(247, 37, 133, 0.2)' : 'transparent',
+                        background: isActive ? 'rgba(20, 184, 166, 0.2)' : 'transparent',
                         fontWeight: isActive ? 500 : 400,
                       }}
                     >
-                      <item.icon style={{ width: '20px', height: '20px', color: isActive ? '#F72585' : '#D4D4D8' }} />
+                      <item.icon style={{ width: '20px', height: '20px', color: isActive ? '#14B8A6' : '#D4D4D8' }} />
                       {item.label}
                     </Link>
                   </li>
@@ -458,8 +477,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       )}
 
       {/* Main Content */}
-      <main className="app-main" style={{ flex: 1 }}>
-        {children}
+      <main className="app-main" style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <div style={{ flex: 1 }}>
+          {children}
+        </div>
+        <AppFooter />
       </main>
 
       {/* Mobile Bottom Tab Navigation */}
@@ -485,7 +507,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   background: 'transparent',
                   border: 'none',
                   cursor: 'pointer',
-                  color: isActive ? '#F72585' : '#D4D4D8',
+                  color: isActive ? '#14B8A6' : '#D4D4D8',
                 }}
               >
                 <item.icon style={{ width: '22px', height: '22px' }} />
@@ -507,7 +529,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 gap: '4px',
                 padding: '8px 0',
                 textDecoration: 'none',
-                color: isActive ? '#F72585' : '#D4D4D8',
+                color: isActive ? '#14B8A6' : '#D4D4D8',
               }}
             >
               <item.icon style={{ width: '22px', height: '22px' }} />
@@ -564,10 +586,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     borderRadius: '12px',
                     textDecoration: 'none',
                     color: isActive ? 'white' : '#D4D4D8',
-                    background: isActive ? 'rgba(247, 37, 133, 0.2)' : 'transparent',
+                    background: isActive ? 'rgba(20, 184, 166, 0.2)' : 'transparent',
                   }}
                 >
-                  <item.icon style={{ width: '22px', height: '22px', color: isActive ? '#F72585' : '#D4D4D8' }} />
+                  <item.icon style={{ width: '22px', height: '22px', color: isActive ? '#14B8A6' : '#D4D4D8' }} />
                   <span style={{ fontSize: '15px', fontWeight: isActive ? 500 : 400 }}>{t(item.labelKey)}</span>
                 </Link>
               );
@@ -630,9 +652,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           transition: all 0.2s;
         }
         .sidebar-toggle-btn:hover {
-          background: rgba(247, 37, 133, 0.1);
-          border-color: #F72585;
-          color: #F72585;
+          background: rgba(20, 184, 166, 0.1);
+          border-color: #14B8A6;
+          color: #14B8A6;
         }
         .today-profit-card {
           background: rgba(0, 212, 170, 0.08);
@@ -651,7 +673,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         }
         .xp-gauge-fill {
           height: 100%;
-          background: linear-gradient(90deg, #F72585 0%, #7B2FF7 100%);
+          background: linear-gradient(90deg, #14B8A6 0%, #7B2FF7 100%);
           border-radius: 3px;
           transition: width 0.3s ease;
         }

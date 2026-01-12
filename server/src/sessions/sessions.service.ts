@@ -272,11 +272,19 @@ export class SessionsService {
       venueStats.set(s.venue, existing);
     });
 
-    const stakesStats = new Map<string, { sessions: number; profit: number }>();
+    const stakesStats = new Map<string, { sessions: number; profit: number; hands: number; bbWon: number }>();
     sessions.forEach(s => {
-      const existing = stakesStats.get(s.stakes) || { sessions: 0, profit: 0 };
+      const existing = stakesStats.get(s.stakes) || { sessions: 0, profit: 0, hands: 0, bbWon: 0 };
       existing.sessions++;
-      existing.profit += Number(s.cashOut) - Number(s.buyIn);
+      const profit = Number(s.cashOut) - Number(s.buyIn);
+      existing.profit += profit;
+      existing.hands += s.hands || 0;
+      // Parse BB from stakes (e.g., "1/2" -> 2, "2/5" -> 5)
+      const stakesMatch = s.stakes?.match(/(\d+)\s*[\/\-]\s*(\d+)/);
+      const bigBlind = stakesMatch ? parseInt(stakesMatch[2], 10) : 0;
+      if (bigBlind > 0) {
+        existing.bbWon += profit / bigBlind;
+      }
       stakesStats.set(s.stakes, existing);
     });
 
@@ -359,8 +367,16 @@ export class SessionsService {
       stakes,
       profit: data.profit,
       sessions: data.sessions,
-      bbPer100: 0, // TODO: BB/100 계산 (블라인드 정보 필요)
-    }));
+      hands: data.hands,
+      bbPer100: data.hands > 0 ? Math.round((data.bbWon / data.hands) * 100 * 100) / 100 : 0,
+    })).sort((a, b) => {
+      // Sort by stakes (parse first number for comparison)
+      const aMatch = a.stakes.match(/(\d+)/);
+      const bMatch = b.stakes.match(/(\d+)/);
+      const aNum = aMatch ? parseInt(aMatch[1], 10) : 0;
+      const bNum = bMatch ? parseInt(bMatch[1], 10) : 0;
+      return aNum - bNum;
+    });
 
     const byVenue = Array.from(venueStats.entries()).map(([venue, data]) => ({
       venue,

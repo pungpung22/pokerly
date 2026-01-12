@@ -15,7 +15,7 @@ export default function DonatePage() {
           width: '80px',
           height: '80px',
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #F72585, #B5179E)',
+          background: 'linear-gradient(135deg, #14B8A6, #B5179E)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -130,11 +130,11 @@ export default function DonatePage() {
         gap: '8px',
         marginTop: '24px',
         padding: '12px',
-        background: 'rgba(247, 37, 133, 0.1)',
+        background: 'rgba(20, 184, 166, 0.1)',
         borderRadius: '8px',
       }}>
-        <Smartphone style={{ width: '16px', height: '16px', color: '#F72585' }} />
-        <p style={{ color: '#F72585', fontSize: '13px' }}>
+        <Smartphone style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
+        <p style={{ color: '#14B8A6', fontSize: '13px' }}>
           {t('mobileNotice')}
         </p>
       </div>

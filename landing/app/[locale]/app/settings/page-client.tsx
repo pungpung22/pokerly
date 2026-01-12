@@ -5,7 +5,8 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { User, Bell, Moon, Globe, Mail, Shield, LogOut, ChevronRight, ExternalLink, DollarSign, Hash, AlertTriangle, Trash2, Loader2, Trophy, Check } from 'lucide-react';
 import { userApi } from '../../../../lib/api';
 import { useTranslations, useLocale } from 'next-intl';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useRouter } from '@/src/i18n/navigation';
 
 type Currency = 'KRW' | 'USD' | 'JPY';
 
@@ -178,7 +179,7 @@ export default function SettingsPage() {
       {/* Profile Section */}
       <div className="card" style={{ marginBottom: '24px' }}>
         <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: 'white', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <User style={{ width: '18px', height: '18px', color: '#F72585' }} />
+          <User style={{ width: '18px', height: '18px', color: '#14B8A6' }} />
           {t('profile')}
         </h2>
 
@@ -190,7 +191,7 @@ export default function SettingsPage() {
               style={{ width: '64px', height: '64px', borderRadius: '50%' }}
             />
           ) : (
-            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#F72585', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'black', fontSize: '24px', fontWeight: 'bold' }}>
+            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#14B8A6', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'black', fontSize: '24px', fontWeight: 'bold' }}>
               {user?.displayName?.charAt(0) || user?.email?.charAt(0) || '?'}
             </div>
           )}
@@ -222,7 +223,7 @@ export default function SettingsPage() {
               width: '48px',
               height: '28px',
               borderRadius: '14px',
-              background: notifications ? '#F72585' : '#27272A',
+              background: notifications ? '#14B8A6' : '#27272A',
               border: 'none',
               cursor: 'pointer',
               position: 'relative',
@@ -259,7 +260,7 @@ export default function SettingsPage() {
               width: '48px',
               height: '28px',
               borderRadius: '14px',
-              background: darkMode ? '#F72585' : '#27272A',
+              background: darkMode ? '#14B8A6' : '#27272A',
               border: 'none',
               cursor: 'pointer',
               position: 'relative',
@@ -316,7 +317,7 @@ export default function SettingsPage() {
               <p style={{ color: 'white', fontWeight: 500 }}>{t('ranking.title')}</p>
               <p style={{ color: '#D4D4D8', fontSize: '13px' }}>{t('ranking.subtitle')}</p>
               {rankingOptIn && rankingNickname && (
-                <p style={{ color: '#F72585', fontSize: '12px', marginTop: '4px' }}>
+                <p style={{ color: '#14B8A6', fontSize: '12px', marginTop: '4px' }}>
                   {t('ranking.currentNickname')}: {rankingNickname}
                 </p>
               )}
@@ -329,7 +330,7 @@ export default function SettingsPage() {
               width: '48px',
               height: '28px',
               borderRadius: '14px',
-              background: rankingOptIn ? '#F72585' : '#27272A',
+              background: rankingOptIn ? '#14B8A6' : '#27272A',
               border: 'none',
               cursor: savingRanking ? 'not-allowed' : 'pointer',
               position: 'relative',
@@ -356,7 +357,7 @@ export default function SettingsPage() {
       {/* Display Settings */}
       <div className="card" style={{ marginBottom: '24px' }}>
         <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: 'white', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <DollarSign style={{ width: '18px', height: '18px', color: '#F72585' }} />
+          <DollarSign style={{ width: '18px', height: '18px', color: '#14B8A6' }} />
           {t('display.title')}
         </h2>
 
@@ -375,7 +376,7 @@ export default function SettingsPage() {
               width: '48px',
               height: '28px',
               borderRadius: '14px',
-              background: useKoreanUnit ? '#F72585' : '#27272A',
+              background: useKoreanUnit ? '#14B8A6' : '#27272A',
               border: 'none',
               cursor: 'pointer',
               position: 'relative',
@@ -412,7 +413,7 @@ export default function SettingsPage() {
               width: '48px',
               height: '28px',
               borderRadius: '14px',
-              background: roundToTenThousand ? '#F72585' : '#27272A',
+              background: roundToTenThousand ? '#14B8A6' : '#27272A',
               border: 'none',
               cursor: 'pointer',
               position: 'relative',
@@ -506,7 +507,7 @@ export default function SettingsPage() {
       {/* Account Management */}
       <div className="card" style={{ marginBottom: '24px' }}>
         <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: 'white', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <User style={{ width: '18px', height: '18px', color: '#F72585' }} />
+          <User style={{ width: '18px', height: '18px', color: '#14B8A6' }} />
           {t('account.title')}
         </h2>
 
@@ -595,7 +596,7 @@ export default function SettingsPage() {
 
             <div style={{ padding: '16px', background: '#0A0A0B', borderRadius: '8px', marginBottom: '20px' }}>
               <h4 style={{ color: 'white', fontWeight: 'bold', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Shield style={{ width: '16px', height: '16px', color: '#F72585' }} />
+                <Shield style={{ width: '16px', height: '16px', color: '#14B8A6' }} />
                 {t('ranking.privacyTitle')}
               </h4>
               <ul style={{ color: '#D4D4D8', fontSize: '14px', lineHeight: 1.8, paddingLeft: '20px' }}>
@@ -657,7 +658,7 @@ export default function SettingsPage() {
                 style={{
                   flex: 1,
                   padding: '14px',
-                  background: rankingNickname.trim() ? 'linear-gradient(135deg, #F72585, #B5179E)' : '#27272A',
+                  background: rankingNickname.trim() ? 'linear-gradient(135deg, #14B8A6, #B5179E)' : '#27272A',
                   border: 'none',
                   borderRadius: '8px',
                   color: rankingNickname.trim() ? 'white' : '#D4D4D8',

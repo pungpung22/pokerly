@@ -43,7 +43,7 @@ export default function Header() {
               {t('header.dashboard') || '대시보드'}
             </Link>
           ) : (
-            <Link href="/app/signin" className="btn-primary" style={{ padding: '12px 24px' }}>
+            <Link href="/login" className="btn-primary" style={{ padding: '12px 24px' }}>
               {t('hero.cta')}
             </Link>
           )}

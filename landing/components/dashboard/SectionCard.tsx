@@ -29,12 +29,12 @@ export function SectionCard({
       {/* 헤더 */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-[#27272A]">
         <div className="flex items-center gap-2">
-          <Icon className="w-5 h-5 text-[#F72585]" />
+          <Icon className="w-5 h-5 text-[#14B8A6]" />
           <h3 className="font-semibold text-white">{title}</h3>
         </div>
         <Link
           href={href}
-          className="text-sm text-[#D4D4D8] hover:text-[#F72585] transition-colors flex items-center gap-1"
+          className="text-sm text-[#D4D4D8] hover:text-[#14B8A6] transition-colors flex items-center gap-1"
         >
           전체 보기
           <ChevronRight className="w-4 h-4" />
@@ -48,7 +48,7 @@ export function SectionCard({
             <p className="text-[#D4D4D8]">{emptyMessage}</p>
             <Link
               href={actionHref}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#F72585]/10 hover:bg-[#F72585]/20 text-[#F72585] font-medium rounded-lg transition-colors border border-[#F72585]/20"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#14B8A6]/10 hover:bg-[#14B8A6]/20 text-[#14B8A6] font-medium rounded-lg transition-colors border border-[#14B8A6]/20"
             >
               {actionText}
             </Link>

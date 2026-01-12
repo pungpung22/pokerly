@@ -44,7 +44,7 @@ export default function NoticesPage() {
   if (loading) {
     return (
       <div style={{ padding: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
-        <Loader2 style={{ width: '32px', height: '32px', color: '#F72585', animation: 'spin 1s linear infinite' }} />
+        <Loader2 style={{ width: '32px', height: '32px', color: '#14B8A6', animation: 'spin 1s linear infinite' }} />
       </div>
     );
   }
@@ -59,13 +59,13 @@ export default function NoticesPage() {
               width: '48px',
               height: '48px',
               borderRadius: '12px',
-              background: 'rgba(247, 37, 133, 0.2)',
+              background: 'rgba(20, 184, 166, 0.2)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <Megaphone style={{ width: '24px', height: '24px', color: '#F72585' }} />
+            <Megaphone style={{ width: '24px', height: '24px', color: '#14B8A6' }} />
           </div>
           <div>
             <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white' }}>{t('title')}</h1>
@@ -106,7 +106,7 @@ export default function NoticesPage() {
               style={{
                 cursor: 'pointer',
                 transition: 'all 0.2s',
-                border: notice.isImportant ? '1px solid rgba(247, 37, 133, 0.3)' : undefined,
+                border: notice.isImportant ? '1px solid rgba(20, 184, 166, 0.3)' : undefined,
               }}
               onClick={() => setExpandedId(expandedId === notice.id ? null : notice.id)}
             >
@@ -115,7 +115,7 @@ export default function NoticesPage() {
                   <div
                     style={{
                       padding: '4px 8px',
-                      background: 'rgba(247, 37, 133, 0.2)',
+                      background: 'rgba(20, 184, 166, 0.2)',
                       borderRadius: '6px',
                       display: 'flex',
                       alignItems: 'center',
@@ -123,8 +123,8 @@ export default function NoticesPage() {
                       flexShrink: 0,
                     }}
                   >
-                    <Star style={{ width: '12px', height: '12px', color: '#F72585' }} />
-                    <span style={{ color: '#F72585', fontSize: '12px', fontWeight: 500 }}>{t('important')}</span>
+                    <Star style={{ width: '12px', height: '12px', color: '#14B8A6' }} />
+                    <span style={{ color: '#14B8A6', fontSize: '12px', fontWeight: 500 }}>{t('important')}</span>
                   </div>
                 )}
                 <div style={{ flex: 1 }}>

@@ -21,7 +21,7 @@ import {
 import { sessionsApi, userApi } from '@/lib/api';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTranslations, useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/src/i18n/navigation';
 import type { DashboardStats, RankingCategory, RankingEntry, MyRankingResponse } from '@/lib/types';
 
 // Mission template type
@@ -273,7 +273,7 @@ export default function MissionsPage() {
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-        <Loader2 style={{ width: '32px', height: '32px', color: '#F72585', animation: 'spin 1s linear infinite' }} />
+        <Loader2 style={{ width: '32px', height: '32px', color: '#14B8A6', animation: 'spin 1s linear infinite' }} />
       </div>
     );
   }
@@ -306,14 +306,14 @@ export default function MissionsPage() {
             borderRadius: '12px',
             border: 'none',
             background: mainTab === 'missions'
-              ? 'linear-gradient(135deg, #F72585 0%, #D91C6B 100%)'
+              ? 'linear-gradient(135deg, #14B8A6 0%, #0D9488 100%)'
               : 'transparent',
             color: mainTab === 'missions' ? 'white' : '#A1A1AA',
             fontSize: '15px',
             fontWeight: mainTab === 'missions' ? 600 : 400,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
-            boxShadow: mainTab === 'missions' ? '0 4px 16px rgba(247, 37, 133, 0.35)' : 'none',
+            boxShadow: mainTab === 'missions' ? '0 4px 16px rgba(20, 184, 166, 0.35)' : 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -355,7 +355,7 @@ export default function MissionsPage() {
       {/* Stats Banner */}
       <div className="challenges-stats-banner">
         <div className="challenges-stat-item">
-          <div style={{ color: '#F72585', marginBottom: '8px' }}>
+          <div style={{ color: '#14B8A6', marginBottom: '8px' }}>
             <Zap className="challenges-stat-icon" />
           </div>
           <p className="challenges-stat-value">{missionStats.inProgress}</p>
@@ -369,7 +369,7 @@ export default function MissionsPage() {
           <p className="challenges-stat-label">{t('stats.completed')}</p>
         </div>
         <div className="challenges-stat-item">
-          <div style={{ color: '#D91C6B', marginBottom: '8px' }}>
+          <div style={{ color: '#0D9488', marginBottom: '8px' }}>
             <Award className="challenges-stat-icon" />
           </div>
           <p className="challenges-stat-value">{missionStats.totalXP.toLocaleString()}</p>
@@ -395,14 +395,14 @@ export default function MissionsPage() {
             borderRadius: '8px',
             border: 'none',
             background: activeTab === 'available'
-              ? 'linear-gradient(135deg, #F72585 0%, #D91C6B 100%)'
+              ? 'linear-gradient(135deg, #14B8A6 0%, #0D9488 100%)'
               : 'transparent',
             color: activeTab === 'available' ? 'white' : '#A1A1AA',
             fontSize: '14px',
             fontWeight: activeTab === 'available' ? 600 : 400,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
-            boxShadow: activeTab === 'available' ? '0 4px 12px rgba(247, 37, 133, 0.3)' : 'none',
+            boxShadow: activeTab === 'available' ? '0 4px 12px rgba(20, 184, 166, 0.3)' : 'none',
           }}
         >
           {t('tabs.available')} ({missionsWithProgress.filter((m) => m.status === 'available').length})
@@ -415,14 +415,14 @@ export default function MissionsPage() {
             borderRadius: '8px',
             border: 'none',
             background: activeTab === 'inProgress'
-              ? 'linear-gradient(135deg, #F72585 0%, #D91C6B 100%)'
+              ? 'linear-gradient(135deg, #14B8A6 0%, #0D9488 100%)'
               : 'transparent',
             color: activeTab === 'inProgress' ? 'white' : '#A1A1AA',
             fontSize: '14px',
             fontWeight: activeTab === 'inProgress' ? 600 : 400,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
-            boxShadow: activeTab === 'inProgress' ? '0 4px 12px rgba(247, 37, 133, 0.3)' : 'none',
+            boxShadow: activeTab === 'inProgress' ? '0 4px 12px rgba(20, 184, 166, 0.3)' : 'none',
           }}
         >
           {t('tabs.inProgress')} ({missionsWithProgress.filter((m) => m.status === 'inProgress').length})
@@ -455,10 +455,10 @@ export default function MissionsPage() {
           onClick={() => setSelectedCategory('all')}
           style={{
             padding: '8px 16px',
-            background: selectedCategory === 'all' ? 'rgba(247, 37, 133, 0.2)' : '#18181B',
-            border: `1px solid ${selectedCategory === 'all' ? '#F72585' : '#27272A'}`,
+            background: selectedCategory === 'all' ? 'rgba(20, 184, 166, 0.2)' : '#18181B',
+            border: `1px solid ${selectedCategory === 'all' ? '#14B8A6' : '#27272A'}`,
             borderRadius: '20px',
-            color: selectedCategory === 'all' ? '#F72585' : '#D4D4D8',
+            color: selectedCategory === 'all' ? '#14B8A6' : '#D4D4D8',
             fontSize: '13px',
             cursor: 'pointer',
           }}
@@ -473,10 +473,10 @@ export default function MissionsPage() {
               onClick={() => setSelectedCategory(cat)}
               style={{
                 padding: '8px 16px',
-                background: selectedCategory === cat ? 'rgba(247, 37, 133, 0.2)' : '#18181B',
-                border: `1px solid ${selectedCategory === cat ? '#F72585' : '#27272A'}`,
+                background: selectedCategory === cat ? 'rgba(20, 184, 166, 0.2)' : '#18181B',
+                border: `1px solid ${selectedCategory === cat ? '#14B8A6' : '#27272A'}`,
                 borderRadius: '20px',
-                color: selectedCategory === cat ? '#F72585' : '#D4D4D8',
+                color: selectedCategory === cat ? '#14B8A6' : '#D4D4D8',
                 fontSize: '13px',
                 cursor: 'pointer',
                 display: 'flex',
@@ -530,7 +530,7 @@ export default function MissionsPage() {
                       left: 0,
                       height: '100%',
                       width: `${mission.progress}%`,
-                      background: `linear-gradient(90deg, rgba(247, 37, 133, 0.1), rgba(247, 37, 133, 0.02))`,
+                      background: `linear-gradient(90deg, rgba(20, 184, 166, 0.1), rgba(20, 184, 166, 0.02))`,
                       transition: 'width 0.3s ease',
                     }}
                   />
@@ -544,7 +544,7 @@ export default function MissionsPage() {
                         width: '48px',
                         height: '48px',
                         borderRadius: '12px',
-                        background: isCompleted ? 'rgba(16, 185, 129, 0.2)' : 'rgba(247, 37, 133, 0.2)',
+                        background: isCompleted ? 'rgba(16, 185, 129, 0.2)' : 'rgba(20, 184, 166, 0.2)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -556,7 +556,7 @@ export default function MissionsPage() {
                       ) : isLocked ? (
                         <Lock style={{ width: '24px', height: '24px', color: '#52525B' }} />
                       ) : (
-                        <Icon style={{ width: '24px', height: '24px', color: '#F72585' }} />
+                        <Icon style={{ width: '24px', height: '24px', color: '#14B8A6' }} />
                       )}
                     </div>
 
@@ -592,7 +592,7 @@ export default function MissionsPage() {
                           <span
                             style={{
                               fontSize: '13px',
-                              color: isCompleted ? '#00D4AA' : '#F72585',
+                              color: isCompleted ? '#00D4AA' : '#14B8A6',
                               fontWeight: 500,
                             }}
                           >
@@ -613,7 +613,7 @@ export default function MissionsPage() {
                               width: `${mission.progress}%`,
                               background: isCompleted
                                 ? '#00D4AA'
-                                : 'linear-gradient(90deg, #F72585, #D91C6B)',
+                                : 'linear-gradient(90deg, #14B8A6, #0D9488)',
                               borderRadius: '3px',
                               transition: 'width 0.3s ease',
                             }}
@@ -624,8 +624,8 @@ export default function MissionsPage() {
                       {/* Reward */}
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <Award style={{ width: '14px', height: '14px', color: isCompleted ? '#00D4AA' : '#D91C6B' }} />
-                          <span style={{ fontSize: '13px', color: isCompleted ? '#00D4AA' : '#D91C6B', fontWeight: 500 }}>
+                          <Award style={{ width: '14px', height: '14px', color: isCompleted ? '#00D4AA' : '#0D9488' }} />
+                          <span style={{ fontSize: '13px', color: isCompleted ? '#00D4AA' : '#0D9488', fontWeight: 500 }}>
                             {t('reward')}: {t('points', { count: mission.rewardXP })}
                           </span>
                         </div>
@@ -647,10 +647,10 @@ export default function MissionsPage() {
                           <span
                             style={{
                               padding: '4px 12px',
-                              background: 'rgba(247, 37, 133, 0.2)',
+                              background: 'rgba(20, 184, 166, 0.2)',
                               borderRadius: '12px',
                               fontSize: '12px',
-                              color: '#F72585',
+                              color: '#14B8A6',
                               fontWeight: 500,
                             }}
                           >
@@ -813,8 +813,8 @@ export default function MissionsPage() {
                       display: 'flex',
                       alignItems: 'center',
                       gap: '16px',
-                      background: isMe ? 'rgba(247, 37, 133, 0.1)' : isTop3 ? 'rgba(255, 215, 0, 0.05)' : '#141416',
-                      border: isMe ? '1px solid #F72585' : isTop3 ? '1px solid rgba(255, 215, 0, 0.3)' : '1px solid #27272A',
+                      background: isMe ? 'rgba(20, 184, 166, 0.1)' : isTop3 ? 'rgba(255, 215, 0, 0.05)' : '#141416',
+                      border: isMe ? '1px solid #14B8A6' : isTop3 ? '1px solid rgba(255, 215, 0, 0.3)' : '1px solid #27272A',
                     }}
                   >
                     {/* Rank */}
@@ -840,7 +840,7 @@ export default function MissionsPage() {
                     {/* Nickname & Level */}
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p style={{
-                        color: isMe ? '#F72585' : 'white',
+                        color: isMe ? '#14B8A6' : 'white',
                         fontWeight: isMe ? 600 : 500,
                         fontSize: '15px',
                         overflow: 'hidden',
@@ -857,7 +857,7 @@ export default function MissionsPage() {
                     {/* Value */}
                     <div style={{
                       textAlign: 'right',
-                      color: isTop3 ? '#FFD700' : isMe ? '#F72585' : '#D4D4D8',
+                      color: isTop3 ? '#FFD700' : isMe ? '#14B8A6' : '#D4D4D8',
                       fontWeight: 'bold',
                       fontSize: '16px',
                     }}>

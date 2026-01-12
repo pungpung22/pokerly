@@ -24,21 +24,21 @@ export function StatsCard({
 }: StatsCardProps) {
   const variants = {
     default: 'bg-[#121216] border-[#27272A]',
-    highlight: 'bg-gradient-to-br from-[#F72585]/10 to-[#D91C6B]/5 border-[#F72585]/20',
+    highlight: 'bg-gradient-to-br from-[#14B8A6]/10 to-[#0D9488]/5 border-[#14B8A6]/20',
     profit: 'bg-gradient-to-br from-[#22C55E]/10 to-[#22C55E]/5 border-[#22C55E]/20',
     loss: 'bg-gradient-to-br from-[#EF4444]/10 to-[#EF4444]/5 border-[#EF4444]/20',
   };
 
   const valueColors = {
     default: 'text-white',
-    highlight: 'text-[#F72585]',
+    highlight: 'text-[#14B8A6]',
     profit: 'text-[#22C55E]',
     loss: 'text-[#EF4444]',
   };
 
   const iconBg = {
     default: 'bg-[#1A1A20] text-[#D4D4D8]',
-    highlight: 'bg-[#F72585]/20 text-[#F72585]',
+    highlight: 'bg-[#14B8A6]/20 text-[#14B8A6]',
     profit: 'bg-[#22C55E]/20 text-[#22C55E]',
     loss: 'bg-[#EF4444]/20 text-[#EF4444]',
   };
@@ -46,14 +46,14 @@ export function StatsCard({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-xl border p-5 transition-all duration-300 hover:border-[#F72585]/30 hover:shadow-lg hover:shadow-[#F72585]/5',
+        'relative overflow-hidden rounded-xl border p-5 transition-all duration-300 hover:border-[#14B8A6]/30 hover:shadow-lg hover:shadow-[#14B8A6]/5',
         variants[variant],
         className
       )}
     >
       {/* 배경 글로우 효과 */}
       {variant === 'highlight' && (
-        <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#F72585]/10 rounded-full blur-3xl" />
+        <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#14B8A6]/10 rounded-full blur-3xl" />
       )}
 
       <div className="relative flex items-start justify-between">

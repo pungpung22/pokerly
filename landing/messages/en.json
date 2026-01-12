@@ -44,14 +44,14 @@
       "dashboard": "Dashboard"
     },
     "hero": {
-      "badge": "Used by 200+ players",
+      "badge": "Trusted by 200+ players",
       "title": {
-        "line1": "With just one screenshot",
-        "line2": "Analyze your poker skills"
+        "line1": "One Screenshot.",
+        "line2": "Transform Your Poker Game."
       },
       "subtitle": {
-        "line1": "Just take a screenshot and AI automatically extracts the data.",
-        "line2": "Check your win rate at a glance without complex inputs."
+        "line1": "Snap. Upload. Done. AI calculates your profits in 3 seconds.",
+        "line2": "Level up as you play and earn rewards by completing missions."
       },
       "cta": "Start for Free",
       "demo": "Watch Demo",
@@ -196,6 +196,61 @@
         }
       }
     },
+    "level": {
+      "badge": "Gamification",
+      "title": "Level Up as You Progress",
+      "subtitle": "Earn XP and level up with every activity. Track your poker journey through our 8-tier level system.",
+      "roadmapTitle": "Level Roadmap",
+      "roadmap": {
+        "1": "Observer",
+        "2": "Beginner",
+        "3": "Player",
+        "4": "Regular",
+        "5": "Shark",
+        "6": "Master",
+        "7": "Grandmaster",
+        "8": "Legend"
+      },
+      "xpSources": {
+        "screenshot": "Screenshot Upload",
+        "manual": "Manual Record",
+        "daily": "Daily Login",
+        "mission": "Mission Complete"
+      },
+      "highlight": "Unlock special badges and titles as you level up!"
+    },
+    "missions": {
+      "badge": "Mission System",
+      "title": "Complete Missions, Earn Rewards",
+      "subtitle": "Challenge yourself with various missions to earn XP. Win rate, profit, streaks, and more await you.",
+      "categories": {
+        "winRate": "Win Rate",
+        "profit": "Profit",
+        "streak": "Streak",
+        "sessions": "Sessions"
+      },
+      "items": {
+        "1": {
+          "title": "50% Win Rate",
+          "desc": "Achieve 50%+ overall win rate"
+        },
+        "2": {
+          "title": "$1,000 Profit",
+          "desc": "Reach $1,000 total profit"
+        },
+        "3": {
+          "title": "5 Win Streak",
+          "desc": "Win 5 sessions in a row"
+        },
+        "4": {
+          "title": "50 Sessions",
+          "desc": "Record 50 total sessions"
+        }
+      },
+      "progress": "Progress",
+      "cta": "Total",
+      "templates": "mission templates available"
+    },
     "pricing": {
       "title": "Simple Pricing",
       "subtitle": "Pay only for what you need",
@@ -279,6 +334,8 @@
   "Dashboard": {
     "welcome": "Welcome to Pokerly!",
     "welcomeSubtitle": "Record and analyze your sessions to improve your poker skills.",
+    "hideForNow": "Hide for now",
+    "dontShowAgain": "Don't show again",
     "greeting": "Hello, {name}",
     "defaultName": "Player",
     "subtitle": "Check your poker status today",
@@ -898,5 +955,136 @@
     "comingSoon": "Coming Soon",
     "mobileNotice": "KakaoPay is only available on mobile",
     "thankYou": "Thank you for your support 💜"
+  },
+  "Legal": {
+    "backToHome": "Back to Home",
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last Updated: January 12, 2026",
+      "sections": {
+        "intro": {
+          "title": "1. Introduction",
+          "content": "Poongpoong Studio ('Company') values your privacy when providing the Pokerly service ('Service') and complies with relevant privacy laws. This Privacy Policy explains what personal information we collect, how we use it, and how long we retain it."
+        },
+        "collect": {
+          "title": "2. Information We Collect",
+          "content": "We collect the following personal information to provide our services:",
+          "items": {
+            "email": "Email address (via Google Sign-In)",
+            "name": "Name or nickname",
+            "photo": "Profile photo (optional)",
+            "gameData": "Poker game data (sessions, profits, play time, etc.)",
+            "screenshots": "Uploaded game screenshots"
+          }
+        },
+        "use": {
+          "title": "3. How We Use Your Information",
+          "content": "The collected information is used for the following purposes:",
+          "items": {
+            "service": "Service provision and account management",
+            "analytics": "Game record analysis and statistics",
+            "improvement": "Service improvement and new feature development",
+            "support": "Customer support and technical assistance"
+          }
+        },
+        "storage": {
+          "title": "4. Data Retention",
+          "content": "We retain your personal information until you delete your account or withdraw consent for data collection. However, information required by law will be retained for the legally mandated period."
+        },
+        "sharing": {
+          "title": "5. Information Sharing",
+          "content": "We do not share your personal information with third parties except with your consent or when required by law."
+        },
+        "rights": {
+          "title": "6. Your Rights",
+          "content": "You have the following rights:",
+          "items": {
+            "access": "Request access to your data",
+            "correction": "Request correction of your data",
+            "deletion": "Request deletion of your data (account deletion)",
+            "export": "Request data portability"
+          }
+        },
+        "cookies": {
+          "title": "7. Cookies",
+          "content": "We may use cookies to improve your experience. You can refuse cookies through your browser settings, but some features may be limited."
+        },
+        "contact": {
+          "title": "8. Contact Us",
+          "content": "For privacy-related inquiries, please contact us at:",
+          "company": "Poongpoong Studio",
+          "email": "Email: pung0805@gmail.com"
+        }
+      }
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "lastUpdated": "Last Updated: January 12, 2026",
+      "sections": {
+        "agreement": {
+          "title": "1. Agreement to Terms",
+          "content": "These Terms govern your use of the Pokerly service ('Service') provided by Poongpoong Studio ('Company'). By using the Service, you agree to be bound by these Terms."
+        },
+        "service": {
+          "title": "2. Our Services",
+          "content": "We provide the following services:",
+          "items": {
+            "record": "Poker game record management",
+            "analytics": "Game data analysis and statistics",
+            "ocr": "Screenshot OCR recognition",
+            "challenges": "Missions and ranking system"
+          }
+        },
+        "account": {
+          "title": "3. Account Responsibilities",
+          "content": "You are responsible for:",
+          "items": {
+            "accurate": "Providing accurate information",
+            "secure": "Maintaining account security",
+            "responsible": "All activities under your account"
+          }
+        },
+        "usage": {
+          "title": "4. Prohibited Activities",
+          "content": "The following activities are prohibited:",
+          "items": {
+            "illegal": "Using the Service for illegal purposes",
+            "harmful": "Activities that harm other users",
+            "interfere": "Interfering with Service operations",
+            "reverse": "Reverse engineering or copying the Service"
+          }
+        },
+        "content": {
+          "title": "5. User Content",
+          "content": "You retain ownership of screenshots and game records you upload. However, we may use this content to provide and improve the Service."
+        },
+        "ip": {
+          "title": "6. Intellectual Property",
+          "content": "The Service and related software are owned by the Company. You may only use the Service for personal, non-commercial purposes and may not copy, distribute, or modify it."
+        },
+        "disclaimer": {
+          "title": "7. Disclaimer",
+          "content": "We do not guarantee the accuracy, completeness, or timeliness of the Service. We are not responsible for predicting game outcomes or guaranteeing profits. The Service is provided 'as is'."
+        },
+        "limitation": {
+          "title": "8. Limitation of Liability",
+          "content": "We are not liable for any direct, indirect, incidental, special, or consequential damages arising from your use of the Service, including but not limited to data loss, profit loss, or loss of opportunity."
+        },
+        "termination": {
+          "title": "9. Termination",
+          "content": "You may stop using the Service and delete your account at any time. We may restrict Service access without notice if you violate these Terms."
+        },
+        "changes": {
+          "title": "10. Changes to Terms",
+          "content": "We may modify these Terms as needed. Modified Terms become effective upon notice through the Service. If you do not agree to the modified Terms, you may stop using the Service."
+        },
+        "contact": {
+          "title": "11. Contact Us",
+          "content": "For inquiries about the Service, please contact us at:",
+          "company": "Poongpoong Studio",
+          "email": "Email: pung0805@gmail.com"
+        }
+      }
+    }
   }
 }

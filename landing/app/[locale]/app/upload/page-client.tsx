@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/src/i18n/navigation';
 import {
   Loader2,
   Upload,
@@ -35,6 +35,8 @@ interface ExtractedRecord {
   buyIn?: number;
   cashOut?: number;
   durationMinutes?: number;
+  imageHash?: string;
+  rawText?: string;
 }
 
 export default function UploadPage() {
@@ -175,6 +177,8 @@ export default function UploadPage() {
           buyIn: r.extractedData.buyIn,
           cashOut: r.extractedData.cashOut,
           durationMinutes: r.extractedData.playTime,
+          imageHash: r.imageHash,
+          rawText: r.extractedData.rawText,
         }));
 
       setExtractedRecords(extractedList);
@@ -229,7 +233,7 @@ export default function UploadPage() {
         <div className="card" style={{ padding: '28px', maxWidth: '720px', margin: '0 auto' }}>
           <div className="upload-section-header">
             <h2 className="upload-section-title">
-              <Camera style={{ width: '24px', height: '24px', color: '#F72585' }} />
+              <Camera style={{ width: '24px', height: '24px', color: '#14B8A6' }} />
               {t('screenshotUpload')}
             </h2>
             <div className="upload-xp-badge">
@@ -260,7 +264,7 @@ export default function UploadPage() {
                 style={{ display: 'none' }}
               />
               <div className="upload-drop-zone-icon">
-                <Upload style={{ width: '32px', height: '32px', color: '#F72585' }} />
+                <Upload style={{ width: '32px', height: '32px', color: '#14B8A6' }} />
               </div>
               <p className="upload-drop-zone-title">
                 {t('dropzone.title')}
@@ -310,7 +314,7 @@ export default function UploadPage() {
                       {file.status !== 'pending' && (
                         <div className="upload-file-overlay">
                           {file.status === 'uploading' && (
-                            <Loader2 style={{ width: '24px', height: '24px', color: '#F72585', animation: 'spin 1s linear infinite' }} />
+                            <Loader2 style={{ width: '24px', height: '24px', color: '#14B8A6', animation: 'spin 1s linear infinite' }} />
                           )}
                           {file.status === 'success' && (
                             <CheckCircle style={{ width: '24px', height: '24px', color: '#00D4AA' }} />
@@ -372,7 +376,7 @@ export default function UploadPage() {
             {/* OCR Status */}
             {ocrStatus !== 'idle' && (
               <div className={`upload-ocr-status ${ocrStatus}`}>
-                {ocrStatus === 'processing' && <Loader2 style={{ width: '16px', height: '16px', color: '#F72585', animation: 'spin 1s linear infinite' }} />}
+                {ocrStatus === 'processing' && <Loader2 style={{ width: '16px', height: '16px', color: '#14B8A6', animation: 'spin 1s linear infinite' }} />}
                 {ocrStatus === 'complete' && <CheckCircle style={{ width: '16px', height: '16px', color: '#00D4AA' }} />}
                 {ocrStatus === 'failed' && <AlertCircle style={{ width: '16px', height: '16px', color: '#EF4444' }} />}
                 {ocrStatus === 'duplicate' && <AlertCircle style={{ width: '16px', height: '16px', color: '#F59E0B' }} />}
@@ -459,7 +463,7 @@ export default function UploadPage() {
         <div className="modal-overlay">
           <div className="modal-content analyzing-modal">
             <div className="analyzing-header">
-              <Loader2 className="analyzing-spinner" style={{ color: '#F72585' }} />
+              <Loader2 className="analyzing-spinner" style={{ color: '#14B8A6' }} />
               <h2 className="analyzing-title">{t('modal.analyzing.title')}</h2>
               <p className="analyzing-subtitle">{t('modal.analyzing.subtitle')}</p>
             </div>
@@ -757,6 +761,8 @@ export default function UploadPage() {
                         hands: record.hands,
                         durationMinutes: record.durationMinutes || 120,
                         startTime: record.startTime || undefined,
+                        imageHash: record.imageHash,
+                        rawText: record.rawText,
                       };
                       await sessionsApi.create(sessionData);
                     }

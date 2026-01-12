@@ -13,7 +13,7 @@ export default function Testimonials() {
   ];
 
   return (
-    <section className="section" style={{ background: '#0A0A0B' }}>
+    <section id="testimonials" className="section" style={{ background: '#0A0A0B' }}>
       <div className="container">
         {/* Section header */}
         <div style={{ textAlign: 'center', marginBottom: '64px' }}>
@@ -32,7 +32,7 @@ export default function Testimonials() {
               {/* Stars */}
               <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
                 {Array.from({ length: testimonial.stars }).map((_, i) => (
-                  <Star key={i} style={{ width: '18px', height: '18px', fill: '#F72585', color: '#F72585' }} />
+                  <Star key={i} style={{ width: '18px', height: '18px', fill: '#14B8A6', color: '#14B8A6' }} />
                 ))}
               </div>
 

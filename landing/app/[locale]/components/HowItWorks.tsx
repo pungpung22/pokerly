@@ -13,7 +13,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="section" style={{ background: '#0A0A0B' }}>
+    <section id="how-it-works" className="section" style={{ background: '#0A0A0B' }}>
       <div className="container">
         {/* Section header */}
         <div style={{ textAlign: 'center', marginBottom: '64px' }}>
