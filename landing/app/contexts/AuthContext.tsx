@@ -18,12 +18,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('[AuthProvider] Setting up auth listener...');
+
+    // Timeout fallback in case Firebase fails to initialize
+    const timeout = setTimeout(() => {
+      console.log('[AuthProvider] Timeout - forcing loading to false');
+      setLoading(false);
+    }, 3000);
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('[AuthProvider] Auth state changed:', user?.email || 'no user');
+      clearTimeout(timeout);
       setUser(user);
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(timeout);
+      unsubscribe();
+    };
   }, []);
 
   const signIn = async () => {

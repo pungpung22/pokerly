@@ -89,11 +89,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }));
 
   // Skip auth redirect for login page
-  const isLoginPage = pathname === '/app/login';
+  const isLoginPage = pathname === '/app/signin';
 
   useEffect(() => {
     if (!loading && !user && !isLoginPage) {
-      router.push('/app/login');
+      router.push('/app/signin');
     }
   }, [user, loading, router, isLoginPage]);
 
