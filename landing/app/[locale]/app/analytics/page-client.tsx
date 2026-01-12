@@ -507,8 +507,20 @@ export default function AnalyticsPage() {
         </div>
 
         {chartData.length === 0 ? (
-          <div className="analytics-chart-empty">
-            <p className="analytics-empty-text">{t('noData')}</p>
+          <div className="analytics-chart-empty-enhanced">
+            <div className="analytics-empty-icon">
+              <BarChart3 className="w-12 h-12 text-[#27272A]" />
+            </div>
+            <p className="analytics-empty-title">
+              {locale === 'ko' ? '아직 표시할 데이터가 없습니다' : locale === 'ja' ? 'まだ表示するデータがありません' : 'No data to display yet'}
+            </p>
+            <p className="analytics-empty-desc">
+              {locale === 'ko'
+                ? '세션을 기록하면 수익 추이를 확인할 수 있어요'
+                : locale === 'ja'
+                  ? 'セッションを記録すると、収益推移を確認できます'
+                  : 'Record sessions to see your profit trends'}
+            </p>
           </div>
         ) : (() => {
           const displayData = chartData.slice(-12);
@@ -1003,7 +1015,29 @@ export default function AnalyticsPage() {
         <div className="analytics-section-divider-content">
           <Target className="w-5 h-5 text-[#14B8A6]" />
           <span className="analytics-section-divider-title">GTO 레인지 학습</span>
-          <span className="analytics-section-divider-badge">참고 자료</span>
+          <div className="group relative inline-flex items-center">
+            <span className="analytics-section-divider-badge cursor-help">
+              {locale === 'ko' ? '학습 도구' : locale === 'ja' ? '学習ツール' : 'Learning Tool'}
+            </span>
+            <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-20 w-72 p-3 bg-[#18181B] border border-[#27272A] rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all text-xs text-[#A1A1AA]">
+              <div className="font-medium text-white mb-2">
+                {locale === 'ko' ? 'GTO 레인지란?' : locale === 'ja' ? 'GTOレンジとは？' : 'What is GTO Range?'}
+              </div>
+              <p className="mb-2">
+                {locale === 'ko'
+                  ? 'GTO(Game Theory Optimal)는 게임 이론에 기반한 최적의 전략입니다. 각 포지션에서 어떤 핸드로 오픈할지 참고하세요.'
+                  : locale === 'ja'
+                    ? 'GTO(ゲーム理論最適)は、ゲーム理論に基づく最適な戦略です。各ポジションでどのハンドでオープンするか参考にしてください。'
+                    : 'GTO (Game Theory Optimal) is the optimal strategy based on game theory. Use this as a reference for which hands to open from each position.'}
+              </p>
+              <div className="flex items-center gap-2 text-[#14B8A6]">
+                <Target className="w-3 h-3" />
+                <span>
+                  {locale === 'ko' ? '셀을 클릭해 상세 비율 확인' : locale === 'ja' ? 'セルをクリックして詳細を確認' : 'Click cells for detailed ratios'}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="analytics-section-divider-line" />
       </div>
