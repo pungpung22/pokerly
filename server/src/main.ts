@@ -7,7 +7,15 @@ async function bootstrap() {
 
   // Enable CORS for Flutter web and Next.js
   app.enableCors({
-    origin: ['http://localhost:9999', 'http://localhost:8080', 'http://localhost:3000', 'http://localhost:3002', 'http://localhost:3003'],
+    origin: [
+      'http://localhost:9999',
+      'http://localhost:8080',
+      'http://localhost:3000',
+      'http://localhost:3002',
+      'http://localhost:3003',
+      'https://pokerly.pages.dev',
+      /\.pokerly\.pages\.dev$/,
+    ],
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
     credentials: true,
   });
