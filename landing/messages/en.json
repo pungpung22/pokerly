@@ -176,6 +176,32 @@
         }
       }
     },
+    "aiCoach": {
+      "title": "AI Coach Analyzes Your Play",
+      "subtitle": "GPT-4 powered AI analyzes your data and provides personalized coaching reports",
+      "features": {
+        "analysis": {
+          "title": "Play Pattern Analysis",
+          "desc": "Comprehensive analysis of session profits, time-based performance, and stake-level results"
+        },
+        "weakness": {
+          "title": "Weakness Diagnosis",
+          "desc": "Data-driven identification of areas that need improvement"
+        },
+        "improvement": {
+          "title": "Custom Strategy Tips",
+          "desc": "Specific improvement suggestions tailored to your play style"
+        }
+      },
+      "preview": {
+        "title": "AI Coach Report",
+        "subtitle": "Real-time Analysis",
+        "insight": "Key Insight",
+        "sampleText": "You've achieved +5.2 BB/100 at NL200 over the last 30 days. However, your 3bet frequency from late position seems a bit low. Increasing your steal frequency from the button could generate additional profit.",
+        "winRate": "Win Rate",
+        "grade": "Overall Grade"
+      }
+    },
     "testimonials": {
       "title": "Player Reviews",
       "items": {

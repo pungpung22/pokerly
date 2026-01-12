@@ -6,6 +6,7 @@ import HowItWorks from './components/HowItWorks';
 import CashGameShowcase from './components/CashGameShowcase';
 import TournamentShowcase from './components/TournamentShowcase';
 import StatsPreview from './components/StatsPreview';
+import AICoachShowcase from './components/AICoachShowcase';
 import LevelShowcase from './components/LevelShowcase';
 import MissionShowcase from './components/MissionShowcase';
 import Testimonials from './components/Testimonials';
@@ -21,6 +22,7 @@ export default function Home() {
       <CashGameShowcase />
       <TournamentShowcase />
       <StatsPreview />
+      <AICoachShowcase />
       <LevelShowcase />
       <MissionShowcase />
       <Testimonials />
