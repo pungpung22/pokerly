@@ -79,15 +79,20 @@ export default function DonatePage() {
           <ExternalLink style={{ width: '20px', height: '20px', color: '#FEE500' }} />
         </a>
 
-        {/* Buy Me a Coffee - Coming Soon */}
-        <div
+        {/* Buy Me a Coffee */}
+        <a
+          href="https://buymeacoffee.com/pung0805e"
+          target="_blank"
+          rel="noopener noreferrer"
           className="card"
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: '16px',
             padding: '20px',
-            opacity: 0.6,
+            textDecoration: 'none',
+            border: '2px solid #FFDD00',
+            transition: 'transform 0.2s, box-shadow 0.2s',
           }}
         >
           <div style={{
@@ -107,19 +112,11 @@ export default function DonatePage() {
               Buy Me a Coffee
             </p>
             <p style={{ color: '#A1A1AA', fontSize: '13px' }}>
-              {t('buymeacoffee.comingSoon')}
+              {t('buymeacoffee.description')}
             </p>
           </div>
-          <span style={{
-            padding: '4px 10px',
-            background: '#27272A',
-            borderRadius: '12px',
-            fontSize: '12px',
-            color: '#A1A1AA',
-          }}>
-            {t('comingSoon')}
-          </span>
-        </div>
+          <ExternalLink style={{ width: '20px', height: '20px', color: '#FFDD00' }} />
+        </a>
       </div>
 
       {/* Mobile Notice */}
