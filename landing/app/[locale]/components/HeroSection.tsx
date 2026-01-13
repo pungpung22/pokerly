@@ -3,6 +3,7 @@
 import { ArrowRight, Play, Lock, Zap, CreditCard, Camera, Trophy, Target } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/src/i18n/navigation';
+import { trackStartFreeTrial } from '@/lib/analytics';
 
 export default function HeroSection() {
   const t = useTranslations('Landing');
@@ -101,7 +102,11 @@ export default function HeroSection() {
 
         {/* CTA Buttons */}
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '16px', marginBottom: '48px', flexWrap: 'wrap' }}>
-          <Link href="/login" className="btn-primary">
+          <Link
+            href="/login"
+            className="btn-primary"
+            onClick={() => trackStartFreeTrial('hero')}
+          >
             {t('hero.cta')}
             <ArrowRight style={{ width: '20px', height: '20px' }} />
           </Link>

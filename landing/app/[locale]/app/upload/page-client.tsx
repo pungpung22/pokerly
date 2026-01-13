@@ -14,6 +14,7 @@ import {
 import type { CreateSessionDto } from '@/lib/types';
 import { userApi, uploadsApi } from '@/lib/api';
 import { useTranslations } from 'next-intl';
+import { trackSessionRecorded, trackOCRUpload } from '@/lib/analytics';
 
 interface UploadedFile {
   file: File;
@@ -162,6 +163,10 @@ export default function UploadPage() {
 
       // Award XP for screenshot upload
       await userApi.addXp('uploadScreenshot');
+
+      // Track OCR upload event
+      const successCount = result.results.filter((r: any) => r.status === 'success' || r.status === 'ocr_complete').length;
+      trackOCRUpload(pendingFiles.length, successCount > 0);
 
       // 추출된 기록들 저장
       const extractedList: ExtractedRecord[] = result.results
@@ -769,6 +774,15 @@ export default function UploadPage() {
 
                     // XP 지급
                     await userApi.addXp('manualRecord');
+
+                    // Track session recorded events
+                    for (const record of extractedRecords) {
+                      trackSessionRecorded({
+                        gameType: record.gameType || 'cash',
+                        method: record.imageHash ? 'ocr' : 'manual',
+                        profit: record.profit,
+                      });
+                    }
 
                     alert(`${extractedRecords.length}개의 세션이 저장되었습니다!`);
                     setShowResultsModal(false);

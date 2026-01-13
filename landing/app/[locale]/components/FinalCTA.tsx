@@ -3,6 +3,7 @@
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/src/i18n/navigation';
+import { trackStartFreeTrial } from '@/lib/analytics';
 
 export default function FinalCTA() {
   const t = useTranslations('Landing');
@@ -42,6 +43,7 @@ export default function FinalCTA() {
         {/* CTA Button */}
         <Link
           href="/login"
+          onClick={() => trackStartFreeTrial('final_cta')}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
