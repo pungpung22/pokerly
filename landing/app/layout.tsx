@@ -12,8 +12,8 @@ export const metadata: Metadata = {
     default: 'Pokerly - 스크린샷으로 포커 수익 자동 기록',
     template: '%s | Pokerly'
   },
-  description: '게임 화면만 찍으면 AI가 자동으로 데이터를 추출합니다. 복잡한 입력 없이 당신의 수익률을 한눈에 확인하세요.',
-  keywords: ['포커', '포커 기록', '포커 수익', '포커 통계', '홀덤', 'poker tracker', 'poker log', 'poker bankroll', 'poker analytics'],
+  description: 'WPL, 홀덤 등 다양한 포커 게임 수익을 스크린샷으로 자동 기록. AI가 데이터를 추출해 수익률을 분석합니다.',
+  keywords: ['포커', '포커 기록', '포커 수익', '포커 통계', '홀덤', 'WPL', 'WPL 포커', 'WPL 홀덤', 'WPL 수익 기록', '월드포커리그', 'World Poker League', 'poker tracker', 'poker log', 'poker bankroll', 'poker analytics'],
   authors: [{ name: '풍풍스튜디' }],
   creator: '풍풍스튜디',
   publisher: '풍풍스튜디',
@@ -28,12 +28,12 @@ export const metadata: Metadata = {
     url: 'https://pokerly.co.kr',
     siteName: 'Pokerly',
     title: 'Pokerly - 스크린샷으로 포커 수익 자동 기록',
-    description: '게임 화면만 찍으면 AI가 자동으로 데이터를 추출합니다. 복잡한 입력 없이 당신의 수익률을 한눈에 확인하세요.',
+    description: 'WPL, 홀덤 등 다양한 포커 게임 수익을 스크린샷으로 자동 기록. AI가 데이터를 추출해 수익률을 분석합니다.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Pokerly - 스크린샷으로 포커 수익 자동 기록',
-    description: '게임 화면만 찍으면 AI가 자동으로 데이터를 추출합니다.',
+    description: 'WPL, 홀덤 등 다양한 포커 게임 수익을 스크린샷으로 자동 기록합니다.',
   },
   verification: {
     google: '2RhNv4GUsffIqqYVIaJSaN8bgHdvTXXcUDNL4ye81qs',
@@ -47,7 +47,7 @@ const jsonLd = {
   name: 'Pokerly',
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web',
-  description: '스크린샷 한 장으로 포커 수익을 자동 기록하고 분석하는 스마트 트래커',
+  description: 'WPL, 홀덤 등 다양한 포커 게임을 스크린샷 한 장으로 자동 기록하고 분석하는 스마트 트래커',
   url: 'https://pokerly.co.kr',
   author: {
     '@type': 'Organization',
@@ -67,6 +67,7 @@ const jsonLd = {
   featureList: [
     'AI OCR 스크린샷 분석',
     '포커 수익 자동 기록',
+    'WPL, 홀덤 등 다양한 게임 지원',
     '상세 통계 및 분석',
     '레벨 및 미션 시스템',
     'BB/100 및 ROI 계산',

@@ -22,7 +22,7 @@
   },
   "Metadata": {
     "title": "Pokerly - Auto-track Poker Profits with Screenshots",
-    "description": "Just take a screenshot and AI automatically extracts the data. Check your win rate at a glance without complex inputs."
+    "description": "Auto-track profits from WPL, Hold'em and various poker games with screenshots. AI extracts data and analyzes your win rate."
   },
   "Navigation": {
     "dashboard": "Dashboard",
@@ -64,7 +64,7 @@
     },
     "howItWorks": {
       "title": "How does it work?",
-      "subtitle": "Perfect poker analysis in just 3 steps",
+      "subtitle": "Analyze WPL, Hold'em and all poker games in 3 steps",
       "step1": {
         "title": "Capture",
         "desc": "Take a screenshot of your game results"
@@ -81,7 +81,7 @@
     "cashGame": {
       "badge": "Cash Game",
       "title": "Automatically record session profits",
-      "subtitle": "Auto-detect table info, hand count, and profits from screenshots",
+      "subtitle": "Auto-detect WPL, Hold'em tables, hand count, and profits",
       "currency": "$",
       "features": {
         "1": "Auto-detect blind levels",
