@@ -13,7 +13,21 @@ export const metadata: Metadata = {
     template: '%s | Pokerly'
   },
   description: 'WPL, 홀덤 등 다양한 포커 게임 수익을 스크린샷으로 자동 기록. AI가 데이터를 추출해 수익률을 분석합니다.',
-  keywords: ['포커', '포커 기록', '포커 수익', '포커 통계', '홀덤', 'WPL', 'WPL 포커', 'WPL 홀덤', 'WPL 수익 기록', '월드포커리그', 'World Poker League', 'WPL poker', 'WPL tracker', 'WPL profit tracker', 'WPL bankroll', 'WPL results', 'poker tracker', 'poker log', 'poker bankroll', 'poker analytics', 'poker profit tracker', 'holdem tracker', 'poker session tracker'],
+  keywords: [
+    // 한국어
+    '포커', '포커 기록', '포커 수익', '포커 통계', '홀덤', '텍사스 홀덤',
+    'WPL', 'WPL 포커', 'WPL 홀덤', 'WPL 수익 기록', '월드포커리그',
+    // English
+    'poker tracker', 'poker bankroll', 'poker analytics', 'poker profit tracker',
+    'poker session tracker', 'poker log', 'poker results',
+    'Texas Holdem tracker', 'Holdem profit tracker', 'online poker tracker',
+    'WPL poker', 'WPL tracker', 'WPL profit tracker', 'WPL bankroll', 'WPL results',
+    'World Poker League', 'poker income tracker', 'poker win rate',
+    // 日本語
+    'ポーカー', 'ポーカー収益', 'ポーカー記録', 'ポーカートラッカー',
+    'ホールデム', 'テキサスホールデム', 'オンラインポーカー',
+    'ポーカー収支管理', 'ポーカー成績', 'ポーカー分析'
+  ],
   authors: [{ name: '풍풍스튜디' }],
   creator: '풍풍스튜디',
   publisher: '풍풍스튜디',
