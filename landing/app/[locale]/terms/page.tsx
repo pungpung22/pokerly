@@ -1,16 +1,43 @@
 export const runtime = 'edge';
 
+import type { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/src/i18n/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Footer from '../components/Footer';
+import { routing } from '@/src/i18n/routing';
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+const BASE_URL = 'https://pokerly.co.kr';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Legal' });
+
+  const alternateLanguages: Record<string, string> = {};
+  routing.locales.forEach((loc) => {
+    alternateLanguages[loc] = `${BASE_URL}/${loc}/terms`;
+  });
+
   return {
     title: t('terms.title'),
+    description: locale === 'ko'
+      ? 'Pokerly 서비스 이용약관입니다. 서비스 이용 전 반드시 확인해주세요.'
+      : locale === 'ja'
+      ? 'Pokerlyサービスの利用規約です。サービス利用前に必ずご確認ください。'
+      : 'Terms of Service for Pokerly. Please review before using our service.',
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/terms`,
+      languages: {
+        ...alternateLanguages,
+        'x-default': `${BASE_URL}/ko/terms`,
+      },
+    },
+    openGraph: {
+      title: t('terms.title'),
+      url: `${BASE_URL}/${locale}/terms`,
+      type: 'website',
+    },
   };
 }
 

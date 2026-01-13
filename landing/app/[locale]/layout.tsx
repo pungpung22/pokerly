@@ -11,15 +11,54 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
+const BASE_URL = 'https://pokerly.co.kr';
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
+  const localeToOgLocale: Record<string, string> = {
+    ko: 'ko_KR',
+    en: 'en_US',
+    ja: 'ja_JP',
+  };
+
+  const alternateLanguages: Record<string, string> = {};
+  routing.locales.forEach((loc) => {
+    alternateLanguages[loc] = `${BASE_URL}/${loc}`;
+  });
+
   return {
     title: t("title"),
     description: t("description"),
+    metadataBase: new URL(BASE_URL),
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        ...alternateLanguages,
+        'x-default': `${BASE_URL}/ko`,
+      },
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: `${BASE_URL}/${locale}`,
+      siteName: 'Pokerly',
+      locale: localeToOgLocale[locale] || 'ko_KR',
+      alternateLocale: Object.values(localeToOgLocale).filter(l => l !== localeToOgLocale[locale]),
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t("title"),
+      description: t("description"),
+    },
     verification: {
       google: '2RhNv4GUsffIqqYVIaJSaN8bgHdvTXXcUDNL4ye81qs',
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }

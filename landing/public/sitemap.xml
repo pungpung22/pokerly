@@ -1,39 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Homepage -->
   <url>
     <loc>https://pokerly.co.kr</loc>
-    <lastmod>2025-01-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko"/>
+    <lastmod>2026-01-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Korean Pages -->
   <url>
     <loc>https://pokerly.co.kr/ko</loc>
-    <lastmod>2025-01-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko"/>
+    <lastmod>2026-01-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- English Pages -->
   <url>
     <loc>https://pokerly.co.kr/en</loc>
-    <lastmod>2025-01-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko"/>
+    <lastmod>2026-01-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+
+  <!-- Japanese Pages -->
   <url>
     <loc>https://pokerly.co.kr/ja</loc>
-    <lastmod>2025-01-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko"/>
+    <lastmod>2026-01-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+
+  <!-- Terms of Service - All Languages -->
   <url>
     <loc>https://pokerly.co.kr/ko/terms</loc>
-    <lastmod>2025-01-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko/terms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko/terms"/>
+    <lastmod>2026-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://pokerly.co.kr/ko/privacy</loc>
-    <lastmod>2025-01-12</lastmod>
+    <loc>https://pokerly.co.kr/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko/terms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko/terms"/>
+    <lastmod>2026-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://pokerly.co.kr/ja/terms</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko/terms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko/terms"/>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Privacy Policy - All Languages -->
+  <url>
+    <loc>https://pokerly.co.kr/ko/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko/privacy"/>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://pokerly.co.kr/en/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko/privacy"/>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://pokerly.co.kr/ja/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pokerly.co.kr/ko/privacy"/>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Login Pages -->
+  <url>
+    <loc>https://pokerly.co.kr/ko/login</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko/login"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en/login"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja/login"/>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pokerly.co.kr/en/login</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko/login"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en/login"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja/login"/>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pokerly.co.kr/ja/login</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pokerly.co.kr/ko/login"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pokerly.co.kr/en/login"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pokerly.co.kr/ja/login"/>
+    <lastmod>2026-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

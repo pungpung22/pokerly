@@ -1,16 +1,43 @@
 export const runtime = 'edge';
 
+import type { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/src/i18n/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Footer from '../components/Footer';
+import { routing } from '@/src/i18n/routing';
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+const BASE_URL = 'https://pokerly.co.kr';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Legal' });
+
+  const alternateLanguages: Record<string, string> = {};
+  routing.locales.forEach((loc) => {
+    alternateLanguages[loc] = `${BASE_URL}/${loc}/privacy`;
+  });
+
   return {
     title: t('privacy.title'),
+    description: locale === 'ko'
+      ? 'Pokerly 개인정보처리방침입니다. 개인정보 수집, 이용, 보호에 관한 정책을 안내합니다.'
+      : locale === 'ja'
+      ? 'Pokerlyのプライバシーポリシーです。個人情報の収集、利用、保護に関するポリシーをご案内します。'
+      : 'Privacy Policy for Pokerly. Learn about our data collection, usage, and protection practices.',
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/privacy`,
+      languages: {
+        ...alternateLanguages,
+        'x-default': `${BASE_URL}/ko/privacy`,
+      },
+    },
+    openGraph: {
+      title: t('privacy.title'),
+      url: `${BASE_URL}/${locale}/privacy`,
+      type: 'website',
+    },
   };
 }
 
