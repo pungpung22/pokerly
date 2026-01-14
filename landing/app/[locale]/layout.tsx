@@ -23,26 +23,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ja: 'ja_JP',
   };
 
+  // as-needed 모드: 기본 언어(ko)는 루트 사용, 나머지는 /en, /ja
+  const getLocalePath = (loc: string) => loc === 'ko' ? '' : `/${loc}`;
+
   const alternateLanguages: Record<string, string> = {};
   routing.locales.forEach((loc) => {
-    alternateLanguages[loc] = `${BASE_URL}/${loc}`;
+    alternateLanguages[loc] = `${BASE_URL}${getLocalePath(loc)}`;
   });
+
+  const currentPath = getLocalePath(locale);
 
   return {
     title: t("title"),
     description: t("description"),
     metadataBase: new URL(BASE_URL),
     alternates: {
-      canonical: `${BASE_URL}/${locale}`,
+      canonical: `${BASE_URL}${currentPath}`,
       languages: {
         ...alternateLanguages,
-        'x-default': `${BASE_URL}/ko`,
+        'x-default': BASE_URL,
       },
     },
     openGraph: {
       title: t("title"),
       description: t("description"),
-      url: `${BASE_URL}/${locale}`,
+      url: `${BASE_URL}${currentPath}`,
       siteName: 'Pokerly',
       locale: localeToOgLocale[locale] || 'ko_KR',
       alternateLocale: Object.values(localeToOgLocale).filter(l => l !== localeToOgLocale[locale]),
